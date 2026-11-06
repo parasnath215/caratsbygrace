@@ -26,7 +26,7 @@
   const fallbackPieces = [
     {
       id: 'sovereign-cushion',
-      title: 'The Sovereign Cushion',
+      title: 'The Carats by Grace Sovereign Cushion',
       category: 'solitaires',
       categoryLabel: 'Solitaire Ring',
       carat: '5.42 ct',
@@ -35,7 +35,7 @@
       cut: 'Triple Excellent',
       shape: 'Cushion Modified Brilliant',
       metal: 'Platinum 950 Hand-Forged',
-      origin: 'Golconda Lineage / Archival Type IIa',
+      origin: 'Carats by Grace Archival Vault',
       giaNumber: 'GIA 2185492014',
       dimensions: '11.82 x 10.45 x 6.72 mm',
       table: '56.0%',
@@ -47,7 +47,7 @@
     },
     {
       id: 'luminescence-riviera',
-      title: 'The Luminescence Riviera',
+      title: 'The Carats by Grace Luminescence Riviera',
       category: 'necklaces',
       categoryLabel: 'River Diamond Necklace',
       carat: '42.80 ctw',
@@ -56,7 +56,7 @@
       cut: 'Hearts & Arrows Ideal',
       shape: 'Graduated Round Brilliant',
       metal: 'Platinum 950 Micro-Articulated',
-      origin: 'Archival Vault Selection',
+      origin: 'Carats by Grace Vault Selection',
       giaNumber: 'GIA Suite Dossier 7810',
       dimensions: '16.5 inches (42 cm) length',
       table: '56.5% average',
@@ -68,16 +68,16 @@
     },
     {
       id: 'ethereal-oval',
-      title: 'The Ethereal Oval',
+      title: 'The Carats by Grace Ethereal Oval',
       category: 'solitaires',
       categoryLabel: 'Solitaire Pavé Ring',
       carat: '4.15 ct',
       color: 'D (Exceptional White+)',
       clarity: 'VVS1 (Collector Grade)',
-      cut: 'Grace Master Oval Cut',
+      cut: 'Carats by Grace Master Oval Cut',
       shape: 'Oval Brilliant (1.42 Ratio)',
       metal: 'Platinum 950 with 18k Rose Gold Gallery',
-      origin: 'Botswana Archival Rough',
+      origin: 'Carats by Grace Archival Rough',
       giaNumber: 'GIA 6291048591',
       dimensions: '13.14 x 9.25 x 5.61 mm',
       table: '57.0%',
@@ -89,16 +89,16 @@
     },
     {
       id: 'cascade-pear-drops',
-      title: 'The Cascade Pear Drops',
+      title: 'The Carats by Grace Cascade Pear Drops',
       category: 'earrings',
       categoryLabel: 'High Jewelry Drops',
       carat: '6.84 ctw',
       color: 'D Color (Twin Matched)',
       clarity: 'VVS1 / VVS2',
-      cut: 'Grace Custom Faceted Pear',
+      cut: 'Carats by Grace Custom Faceted Pear',
       shape: 'Matched Pear Brilliant Pair',
       metal: 'Platinum 950 Hand-Wired',
-      origin: 'South African Premier Deposit',
+      origin: 'Carats by Grace Archival Deposit',
       giaNumber: 'GIA Twin Pairs 51920-A/B',
       dimensions: '10.85 x 7.12 mm each drop',
       table: '58.0%',
@@ -110,23 +110,23 @@
     },
     {
       id: 'hero-oval-specimen',
-      title: 'The Grace Oval Solitaire',
+      title: 'The Carats by Grace Oval Solitaire',
       category: 'solitaires',
-      categoryLabel: 'Iconic Maison Ring',
+      categoryLabel: 'Carats by Grace Solitaire',
       carat: '4.82 ct',
       color: 'D Color (Finest White)',
       clarity: 'Flawless (FL)',
-      cut: 'Grace Master Oval Cut',
+      cut: 'Carats by Grace Master Oval Cut',
       shape: 'Oval Brilliant',
       metal: 'Platinum 950 Whisper Band',
-      origin: 'Archival Vault Specimen',
+      origin: 'Carats by Grace Vault Specimen',
       giaNumber: 'GIA 2185492014',
       dimensions: '13.60 x 9.52 x 5.80 mm',
       table: '56.5%',
       depth: '60.9%',
       priceUsd: 195000,
       image: 'images/hero-ring.jpg',
-      description: 'The archetype of Maison Grace: an oval solitaire of optical perfection with four eagle-claw prongs set on an ultra-refined 1.5mm comfort-fit shank.',
+      description: 'The archetype of Carats by Grace: an oval solitaire of optical perfection with four eagle-claw prongs set on an ultra-refined 1.5mm comfort-fit shank in cold-forged platinum 950.',
       accent: 'Ref. 984-Oval'
     }
   ];
@@ -1121,7 +1121,7 @@
 
     // Loading state
     submitBtn.disabled = true;
-    submitBtn.innerHTML = `<span>Securing Invitation...</span>`;
+    submitBtn.innerHTML = `<span>Booking Appointment...</span>`;
 
     const payload = {
       name: nameInput.value.trim(),
@@ -1169,7 +1169,7 @@
       openModal(elements.confirmModal);
     } finally {
       submitBtn.disabled = false;
-      submitBtn.innerHTML = `<span>Request Private Invitation</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`;
+      submitBtn.innerHTML = `<span>Book Private Appointment</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`;
     }
   }
 
