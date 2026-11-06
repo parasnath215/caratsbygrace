@@ -171,13 +171,13 @@ const dossiers = [
     clarity: 'FL (Flawless)',
     color: 'D (Exceptional)',
     cut: 'Triple Ex',
-    origin: 'Golconda Lineage',
-    fluorescence: 'None (Zero Inertia)',
-    spectroscopy: 'Type IIa 100% Nitrogen Free (FTIR Spectrometer Analysis Verified)',
-    lightScintillation: '99.8 / 100 Brilliance Index',
+    origin: 'South African Kimberlite Pipe',
+    fluorescence: 'None',
+    spectroscopy: 'Type IIa — Nitrogen below detection threshold (FTIR)',
+    lightScintillation: 'Excellent / Excellent (GIA)',
     opticalAngle: 'Crown 34.4° | Pavilion 40.8°',
     image: 'images/macro-loupe.jpg',
-    notes: 'Zero atomic nitrogen defects within crystal lattice. Exceptional transparency categorized as top 0.001% of all gem-grade rough worldwide.'
+    notes: 'Kimberlite pipe origin with zero detectable nitrogen lattice defects. FTIR and Raman laser spectroscopy confirmed.'
   },
   {
     id: 'golconda-resonance',
@@ -189,8 +189,8 @@ const dossiers = [
     cut: 'Old Mine Cushion Cut',
     origin: 'Historic Krishna River Valley',
     fluorescence: 'None',
-    spectroscopy: 'Ultra-pure carbon isotope ratio with natural optical limpidity',
-    lightScintillation: '99.5 / 100 Brilliance Index',
+    spectroscopy: 'Optical limpidity — pure carbon crystal symmetry confirmed',
+    lightScintillation: 'Excellent / Excellent (GIA)',
     opticalAngle: 'Crown 35.1° | Pavilion 41.0°',
     image: 'images/diamond-rough.jpg',
     notes: 'Preserves the legendary watery translucence (limpidité) characteristic of legendary historical Golconda stones.'
@@ -205,8 +205,8 @@ const dossiers = [
     cut: 'Architectural Step Cut',
     origin: 'Premier Mine Deep Kimberlite',
     fluorescence: 'None',
-    spectroscopy: 'Nitrogen aggregation below detection threshold of 5 ppm',
-    lightScintillation: '98.9 / 100 Brilliance Index',
+    spectroscopy: 'Parallel step-faceting engineered for infinite mirror depth',
+    lightScintillation: 'Very Good / Excellent (GIA)',
     opticalAngle: 'Crown 33.8° | Pavilion 42.2°',
     image: 'images/solitaire-pave.jpg',
     notes: 'Engineered with parallel planar step faceting calibrated to create infinite internal reflection corridors.'
@@ -221,11 +221,11 @@ const dossiers = [
     cut: '70-Facet Modified Brilliant',
     origin: 'Botswana Deep Pipe Specimen',
     fluorescence: 'None',
-    spectroscopy: 'Type IIa verified by Raman Laser Spectroscopy',
-    lightScintillation: '99.9 / 100 Brilliance Index',
+    spectroscopy: 'Type IIa certified by Raman Laser Spectroscopy',
+    lightScintillation: 'Excellent / Excellent (GIA)',
     opticalAngle: 'Crown 34.6° | Pavilion 40.6°',
     image: 'images/cushion-ring.jpg',
-    notes: 'Calculated using Snell refraction modeling to reflect 99.8% of incoming ambient light directly back into the observer’s eye.'
+    notes: '70-facet hybrid geometry delivering maximum chromatic fire across every angle.'
   }
 ];
 
