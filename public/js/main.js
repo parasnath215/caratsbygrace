@@ -140,11 +140,11 @@
       clarity: 'FL',
       color: 'D',
       cut: 'Triple Ex',
-      origin: 'Golconda Lineage / Primary Alluvial',
-      spectroscopy: 'Type IIa 100% Nitrogen Free (FTIR Verified)',
-      scintillation: '99.8 / 100 Refraction Brilliance',
+      origin: 'South African Kimberlite Pipe',
+      spectroscopy: 'Type IIa — Nitrogen below detection threshold (FTIR)',
+      scintillation: 'Excellent / Excellent (GIA)',
       image: 'images/macro-loupe.jpg',
-      desc: 'Historic alluvial deposit lineage with zero detectable nitrogen lattice defects.'
+      desc: 'Kimberlite pipe origin with zero detectable nitrogen lattice defects. FTIR and Raman laser spectroscopy confirmed.'
     },
     {
       id: 'golconda-resonance',
@@ -155,8 +155,8 @@
       color: 'D',
       cut: 'Old Mine Cushion',
       origin: 'Krishna River Valley Archival Reserve',
-      spectroscopy: 'Optical limpidity with pure carbon crystal symmetry',
-      scintillation: '99.5 / 100 Refraction Brilliance',
+      spectroscopy: 'Optical limpidity — pure carbon crystal symmetry confirmed',
+      scintillation: 'Excellent / Excellent (GIA)',
       image: 'images/diamond-rough.jpg',
       desc: 'Historic alluvial deposit lineage with zero detectable nitrogen lattice defects.'
     },
@@ -169,8 +169,8 @@
       color: 'E',
       cut: 'Architectural Step Cut',
       origin: 'Premier Mine Deep Kimberlite',
-      spectroscopy: 'Parallel step-faceting engineered for infinite mirrors',
-      scintillation: '98.9 / 100 Refraction Brilliance',
+      spectroscopy: 'Parallel step-faceting engineered for infinite mirror depth',
+      scintillation: 'Very Good / Excellent (GIA)',
       image: 'images/solitaire-pave.jpg',
       desc: 'Step-cut parallel mirrors engineered for infinite optical reflection depth.'
     },
@@ -184,7 +184,7 @@
       cut: '70-Facet Modified',
       origin: 'Botswana Deep Pipe Specimen',
       spectroscopy: 'Type IIa certified by Raman Laser Spectroscopy',
-      scintillation: '99.9 / 100 Refraction Brilliance',
+      scintillation: 'Excellent / Excellent (GIA)',
       image: 'images/cushion-ring.jpg',
       desc: '70-facet hybrid geometry delivering maximum chromatic fire across every angle.'
     }
@@ -200,7 +200,7 @@
   // DOM Elements
   const elements = {
     productsGrid: document.getElementById('products-grid'),
-    filterPills: document.querySelectorAll('.filter-pill'),
+    filterTabs: document.querySelectorAll('.filter-tab'),
     currencySelect: document.getElementById('currency-select'),
     vaultCount: document.getElementById('vault-count'),
     vaultTrigger: document.getElementById('vault-trigger'),
@@ -336,7 +336,7 @@
     elements.dossierSpecCut.textContent = dossier.cut;
     elements.dossierSpecOrigin.textContent = dossier.origin;
     elements.dossierSpecSpectroscopy.textContent = dossier.spectroscopy;
-    elements.dossierSpecScintillation.textContent = dossier.scintillation || dossier.lightScintillation || '99.8 / 100 Refraction Brilliance';
+    elements.dossierSpecScintillation.textContent = dossier.scintillation || dossier.lightScintillation || 'Excellent / Excellent (GIA)';
 
     if (dossier.image) {
       elements.dossierActiveImg.src = dossier.image;
@@ -377,7 +377,7 @@
             <p class="product-specs-line">${piece.carat} • ${piece.color} • ${piece.clarity}</p>
             
             <div class="product-price-row">
-              <span class="product-price">${formatPrice(piece.priceUsd)}</span>
+              <span class="product-price-poa">Price upon private inquiry</span>
               <span class="product-gia-tag">${piece.giaNumber || 'GIA Verified'}</span>
             </div>
 
@@ -738,11 +738,11 @@
     });
 
     // Category filter tabs
-    elements.filterPills.forEach(pill => {
-      pill.addEventListener('click', () => {
-        elements.filterPills.forEach(p => p.classList.remove('active'));
-        pill.classList.add('active');
-        state.activeCategory = pill.getAttribute('data-filter');
+    elements.filterTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        elements.filterTabs.forEach(p => p.classList.remove('active'));
+        tab.classList.add('active');
+        state.activeCategory = tab.getAttribute('data-filter');
         renderProducts();
       });
     });
@@ -928,7 +928,9 @@
     document.getElementById('modal-accent-chip').textContent = piece.accent;
     document.getElementById('modal-category').textContent = piece.categoryLabel;
     document.getElementById('modal-title').textContent = piece.title;
-    document.getElementById('modal-price').textContent = formatPrice(piece.priceUsd);
+    // Price upon inquiry — no raw price shown
+    const modalPriceEl = document.getElementById('modal-price');
+    if (modalPriceEl) modalPriceEl.textContent = 'Price upon private inquiry';
     document.getElementById('modal-desc').textContent = piece.description;
     document.getElementById('modal-carat').textContent = piece.carat;
     document.getElementById('modal-color').textContent = piece.color;
@@ -983,7 +985,7 @@
         <img src="${piece.image}" alt="${piece.title}" class="search-result-thumb">
         <div class="search-result-meta">
           <h5>${piece.title}</h5>
-          <p>${piece.carat} • ${piece.color} / ${piece.clarity} • ${formatPrice(piece.priceUsd)}</p>
+          <p>${piece.carat} • ${piece.color} / ${piece.clarity} • Price upon inquiry</p>
         </div>
       </div>
     `).join('');
@@ -1025,7 +1027,7 @@
             <img src="${p.image}" alt="${p.title}" class="vault-item-img">
             <div>
               <h5 class="vault-item-title">${p.title}</h5>
-              <span class="vault-item-spec">${p.carat} • ${formatPrice(p.priceUsd)}</span>
+              <span class="vault-item-spec">${p.carat} • Price upon inquiry</span>
             </div>
           </div>
           <button type="button" class="vault-remove-btn" onclick="app.removeFromVault('${p.id}')">Remove</button>
@@ -1050,7 +1052,7 @@
     if (!piece) return;
 
     if (elements.resNotesInput) {
-      elements.resNotesInput.value = `Private inquiry regarding: ${piece.title} (${piece.carat}, ${piece.color}/${piece.clarity}, ${formatPrice(piece.priceUsd)}).`;
+      elements.resNotesInput.value = `Private inquiry regarding: ${piece.title} (${piece.carat}, ${piece.color}/${piece.clarity}).`;
     }
 
     // Scroll smoothly to reservation section

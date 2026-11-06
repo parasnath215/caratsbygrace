@@ -82,3 +82,4 @@ caratsbygrace/
 ## 📜 License
 
 ISC License. Copyright © 2026 Carats by Grace.
+
