@@ -295,6 +295,11 @@ app.post('/api/newsletter', (req, res) => {
   });
 });
 
+// Serve Classic Mockup Page (1:1 with original reference)
+app.get(['/classic', '/original', '/mockup'], (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'classic.html'));
+});
+
 // Fallback to index.html for SPA feel
 app.use((req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
