@@ -176,7 +176,7 @@ const PAGE_CSS = `
 @media (max-width:768px){
   .cp-grid{grid-template-columns:repeat(2,1fr);gap:20px 12px}
   .cp-filters__inner{flex-wrap:nowrap;overflow-x:auto;padding-bottom:12px;
-    scrollbar-width:none}
+    scrollbar-width:none;-ms-overflow-style:none}
   .cp-filters__inner::-webkit-scrollbar{display:none}
   .cp-filters__spacer,.cp-filters__count{display:none}
   .cp-sort{flex:none}

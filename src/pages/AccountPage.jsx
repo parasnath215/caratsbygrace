@@ -161,6 +161,7 @@ const ACCOUNT_CSS = `
     flex-direction: row;
     overflow-x: auto;
     scrollbar-width: none;
+    -ms-overflow-style: none;
     padding: 6px;
     gap: 6px;
   }

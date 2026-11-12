@@ -25,7 +25,7 @@ const BRAND_CSS = `
   --sans:"Jost","Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
   --ease:cubic-bezier(.22,.61,.36,1);
   --pad-x:clamp(20px,5vw,80px);
-  --section-y:clamp(64px,9vw,140px);
+  --section-y:clamp(38px,4.8vw,64px);
 }
 *{box-sizing:border-box}
 html,body{margin:0;padding:0}
@@ -224,9 +224,8 @@ button{font-family:inherit;cursor:pointer;background:none;border:0}
 .cg-tab:hover{color:var(--ink)}
 .cg-rail{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(240px,1fr);
   gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px;
-  scrollbar-width:thin;scrollbar-color:var(--line) transparent}
-.cg-rail::-webkit-scrollbar{height:4px}
-.cg-rail::-webkit-scrollbar-thumb{background:var(--line)}
+  scrollbar-width:none;-ms-overflow-style:none}
+.cg-rail::-webkit-scrollbar{display:none}
 .cg-rail > *{scroll-snap-align:start}
 
 .cg-card{position:relative;background:var(--ivory)}
@@ -263,7 +262,9 @@ button{font-family:inherit;cursor:pointer;background:none;border:0}
 /* Limited edition */
 .cg-limited__grid{display:grid;grid-auto-flow:column;
   grid-auto-columns:minmax(260px,1fr);gap:20px;overflow-x:auto;
-  scroll-snap-type:x mandatory;padding-bottom:8px;scrollbar-width:thin}
+  scroll-snap-type:x mandatory;padding-bottom:8px;
+  scrollbar-width:none;-ms-overflow-style:none}
+.cg-limited__grid::-webkit-scrollbar{display:none}
 .cg-limited__card{position:relative;aspect-ratio:3/4;overflow:hidden;
   scroll-snap-align:start;background:var(--wine-deep)}
 .cg-limited__card img{width:100%;height:100%;object-fit:cover;
@@ -281,7 +282,7 @@ button{font-family:inherit;cursor:pointer;background:none;border:0}
 .cg-story{background:var(--burgundy);color:var(--ivory);position:relative;
   overflow:hidden}
 .cg-story__inner{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(32px,6vw,80px);
-  align-items:center;padding-block:clamp(80px,12vw,160px)}
+  align-items:center;padding-block:clamp(48px,6vw,80px)}
 .cg-story__title{font-family:var(--serif);font-weight:400;
   font-size:clamp(2.2rem,4.8vw,4rem);line-height:1.04;margin:18px 0 22px;
   max-width:16ch}
@@ -343,7 +344,7 @@ button{font-family:inherit;cursor:pointer;background:none;border:0}
 /* Testimonials — 3 reviews visible simultaneously with smooth scrolling */
 .cg-testi{background:var(--ivory);overflow:hidden}
 .cg-testi__head{display:flex;justify-content:space-between;align-items:flex-end;
-  gap:24px;flex-wrap:wrap;margin-bottom:36px}
+  gap:24px;flex-wrap:wrap;margin-bottom:24px}
 .cg-testi__controls{display:flex;gap:10px;align-items:center}
 .cg-testi__arrow{width:44px;height:44px;border:1px solid var(--line);
   border-radius:999px;display:grid;place-items:center;color:var(--ink);
@@ -351,7 +352,7 @@ button{font-family:inherit;cursor:pointer;background:none;border:0}
 .cg-testi__arrow:hover:not(:disabled){background:var(--burgundy);color:var(--ivory);border-color:var(--burgundy)}
 .cg-testi__arrow:disabled{opacity:.4;cursor:not-allowed}
 .cg-testi__rail{display:flex;gap:24px;overflow-x:auto;scroll-snap-type:x mandatory;
-  padding:8px 0 16px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  padding:8px 0 16px;scrollbar-width:none;-ms-overflow-style:none;-webkit-overflow-scrolling:touch}
 .cg-testi__rail::-webkit-scrollbar{display:none}
 .cg-testi__card{flex:0 0 calc((100% - 48px) / 3);min-width:0;
   scroll-snap-align:start;background:var(--white);border:1px solid var(--line);
@@ -420,7 +421,7 @@ button{font-family:inherit;cursor:pointer;background:none;border:0}
 /* Footer */
 .cg-footer{background:var(--wine-deep);color:var(--ivory);position:relative}
 .cg-footer__top{display:grid;grid-template-columns:1.5fr repeat(3,1fr);gap:40px;
-  padding-block:clamp(56px,8vw,96px)}
+  padding-block:clamp(42px,5.5vw,68px)}
 .cg-footer h4{font-size:.7rem;letter-spacing:.24em;text-transform:uppercase;
   color:rgba(250,246,241,.6);margin:0 0 18px;font-weight:500}
 .cg-footer ul{list-style:none;margin:0;padding:0}
@@ -501,7 +502,9 @@ button{font-family:inherit;cursor:pointer;background:none;border:0}
   .cg-hero__ctas .cg-btn{width:100%}
   .cg-cat__grid{grid-template-columns:1fr;grid-auto-rows:auto;
     grid-auto-flow:column;grid-auto-columns:78%;overflow-x:auto;
-    scroll-snap-type:x mandatory;padding-bottom:8px}
+    scroll-snap-type:x mandatory;padding-bottom:8px;
+    scrollbar-width:none;-ms-overflow-style:none}
+  .cg-cat__grid::-webkit-scrollbar{display:none}
   .cg-tile{scroll-snap-align:start;aspect-ratio:3/4;min-height:240px}
   .cg-tile--tall,.cg-tile--wide{grid-row:auto;grid-column:auto;aspect-ratio:3/4;min-height:240px}
   .cg-story__imgs{gap:12px}

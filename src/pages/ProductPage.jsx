@@ -156,16 +156,15 @@ const PDP_CSS = `
 .pd-acc__inner ul{margin:0;padding-left:18px}
 
 /* Related sections */
-.pd-related{background:var(--ivory);padding-block:clamp(56px,8vw,96px)}
+.pd-related{background:var(--ivory);padding-block:clamp(40px,5.5vw,64px)}
 .pd-related__head{display:flex;justify-content:space-between;align-items:end;
-  gap:24px;flex-wrap:wrap;margin-bottom:32px}
+  gap:24px;flex-wrap:wrap;margin-bottom:24px}
 .pd-related__title{font-family:var(--serif);font-size:clamp(1.6rem,3vw,2.3rem);
   margin-top:12px}
 .pd-rail{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(220px,1fr);
   gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px;
-  scrollbar-width:thin;scrollbar-color:var(--line) transparent}
-.pd-rail::-webkit-scrollbar{height:4px}
-.pd-rail::-webkit-scrollbar-thumb{background:var(--line)}
+  scrollbar-width:none;-ms-overflow-style:none}
+.pd-rail::-webkit-scrollbar{display:none}
 .pd-rail > *{scroll-snap-align:start}
 
 .pd-card{position:relative;background:var(--white);display:block;color:inherit}
@@ -199,7 +198,8 @@ const PDP_CSS = `
 }
 @media (max-width:480px){
   .pd-opt{min-height:38px;padding:0 10px;font-size:.74rem}
-  .pd-crumb{font-size:.64rem;padding-block:14px;overflow-x:auto;white-space:nowrap}
+  .pd-crumb{font-size:.64rem;padding-block:14px;overflow-x:auto;white-space:nowrap;scrollbar-width:none;-ms-overflow-style:none}
+  .pd-crumb::-webkit-scrollbar{display:none}
   .pd-trust{grid-template-columns:1fr;gap:10px}
   .pd-trust__item{flex-direction:row;justify-content:center;gap:8px}
 }

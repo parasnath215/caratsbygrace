@@ -120,16 +120,15 @@ const WISH_CSS = `
 .wl-toast.is-visible{opacity:1;transform:translate(-50%, 0)}
 
 /* Recommended */
-.wl-related{background:var(--ivory);padding-block:clamp(56px,8vw,96px)}
+.wl-related{background:var(--ivory);padding-block:clamp(40px,5.5vw,64px)}
 .wl-related__head{display:flex;justify-content:space-between;align-items:end;
-  gap:24px;flex-wrap:wrap;margin-bottom:32px}
+  gap:24px;flex-wrap:wrap;margin-bottom:24px}
 .wl-related__title{font-family:var(--serif);font-size:clamp(1.6rem,3vw,2.3rem);
   margin-top:12px}
 .wl-rail{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(220px,1fr);
   gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px;
-  scrollbar-width:thin;scrollbar-color:var(--line) transparent}
-.wl-rail::-webkit-scrollbar{height:4px}
-.wl-rail::-webkit-scrollbar-thumb{background:var(--line)}
+  scrollbar-width:none;-ms-overflow-style:none}
+.wl-rail::-webkit-scrollbar{display:none}
 .wl-rail > *{scroll-snap-align:start}
 
 /* Responsive */
