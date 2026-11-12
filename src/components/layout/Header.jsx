@@ -8,6 +8,7 @@ import { Search, Heart, User, ShoppingBag, Menu, X, ChevronDown } from 'lucide-r
 import { useCart } from '../../context/CartContext';
 import { useWishlist } from '../../context/WishlistContext';
 import { useUI } from '../../context/UIContext';
+import BrandLogo from '../ui/BrandLogo';
 import styles from './Header.module.css';
 
 export default function Header() {
@@ -93,7 +94,7 @@ export default function Header() {
         {/* ── Logo (Centered) ── */}
         <div className={styles.logoWrap}>
           <Link to="/" className={styles.logoLink} aria-label="Carats by Grace — Home">
-            <span className={styles.logoText}>CG · CARATS BY GRACE</span>
+            <BrandLogo height={44} />
           </Link>
         </div>
 
@@ -121,7 +122,7 @@ export default function Header() {
 
           <button
             className={styles.iconBtn}
-            onClick={() => navigate('/wishlist')}
+            onClick={() => navigate('/account')}
             aria-label="Account"
             type="button"
           >
@@ -192,9 +193,7 @@ export default function Header() {
             className={styles.logoLink}
             onClick={() => setMobileOpen(false)}
           >
-            <span className={styles.logoText} style={{ fontSize: '1.15rem' }}>
-              CG · CARATS BY GRACE
-            </span>
+            <BrandLogo height={34} />
           </Link>
           <button
             className={styles.iconBtn}

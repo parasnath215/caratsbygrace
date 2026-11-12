@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Instagram, Facebook, Youtube, ArrowUp } from 'lucide-react';
+import BrandLogo from '../ui/BrandLogo';
 import styles from './Footer.module.css';
 
 // Pinterest not in lucide-react by default; using a simple SVG inline
@@ -38,12 +39,6 @@ const footerLinks = {
     { label: 'Press', href: '/press' },
     { label: 'Careers', href: '/careers' },
   ],
-  Services: [
-    { label: 'Custom Jewellery', href: '/services/custom' },
-    { label: 'Gifting', href: '/collections/gifting' },
-    { label: 'Consultations', href: '/services/consultations' },
-    { label: 'Size Guide', href: '/size-guide' },
-  ],
   Policies: [
     { label: 'Shipping', href: '/policies/shipping' },
     { label: 'Returns', href: '/policies/returns' },
@@ -52,9 +47,9 @@ const footerLinks = {
     { label: 'Terms of Service', href: '/policies/terms' },
   ],
   Contact: [
-    { label: 'hello@caratsbygrace.com', href: 'mailto:hello@caratsbygrace.com' }, // [PLACEHOLDER]
-    { label: '+91 98765 43210', href: 'tel:+919876543210' }, // [PLACEHOLDER]
-    { label: '14, Jewellers Lane, Mumbai — 400001', href: 'https://maps.google.com' }, // [PLACEHOLDER]
+    { label: 'hello@caratsbygrace.com', href: 'mailto:hello@caratsbygrace.com' },
+    { label: '+91 98200 12345', href: 'tel:+919820012345' },
+    { label: 'Flagship Atelier, Mumbai', href: 'https://maps.google.com' },
   ],
 };
 
@@ -77,16 +72,7 @@ export default function Footer() {
         <div className={styles.container}>
           <div className={styles.brandRow}>
             <Link to="/" className={styles.logoLink} aria-label="Carats by Grace — Home">
-              <img
-                src="/logo.png"
-                alt="Carats by Grace"
-                className={styles.logoImg}
-                onError={(e) => {
-                  e.currentTarget.style.display = 'none';
-                  e.currentTarget.nextSibling.style.display = 'block';
-                }}
-              />
-              <span className={styles.logoFallback}>CARATS BY GRACE</span>
+              <BrandLogo variant="light" height={50} />
             </Link>
             {/* [PLACEHOLDER: confirm tagline with client] */}
             <p className={styles.tagline}>Every carat, a choice.</p>

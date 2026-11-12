@@ -6,7 +6,10 @@
 //           → Sort dropdown → 4-col grid (3 tablet, 2 mobile) → Load more.
 
 import React, { useMemo, useRef, useState, useEffect } from "react";
+import { useParams, Link } from "react-router-dom";
 import { useUI } from "../context/UIContext";
+import { useWishlist } from "../context/WishlistContext";
+import { useDocumentTitle } from "../hooks/useDocumentTitle";
 
 /* ===========================================================================
    1. SHARED TOKENS (subset — full set lives in global.css)
@@ -167,9 +170,11 @@ const PAGE_CSS = `
 @media (max-width:1024px){
   .cp-grid{grid-template-columns:repeat(3,1fr)}
   .cp-filter__panel{min-width:220px}
+  .cp-card__wish{opacity:1;transform:none}
+  .cp-card__add{opacity:1;transform:none}
 }
 @media (max-width:768px){
-  .cp-grid{grid-template-columns:repeat(2,1fr);gap:22px 14px}
+  .cp-grid{grid-template-columns:repeat(2,1fr);gap:20px 12px}
   .cp-filters__inner{flex-wrap:nowrap;overflow-x:auto;padding-bottom:12px;
     scrollbar-width:none}
   .cp-filters__inner::-webkit-scrollbar{display:none}
@@ -180,8 +185,11 @@ const PAGE_CSS = `
   .cp-hero__copy{max-width:none}
 }
 @media (max-width:480px){
-  .cp-card__name{font-size:.94rem}
-  .cp-card__price{font-size:.84rem}
+  .cp-grid{grid-template-columns:repeat(2,1fr);gap:16px 10px}
+  .cp-card__name{font-size:.92rem}
+  .cp-card__price{font-size:.82rem}
+  .cp-card__wish{width:34px;height:34px}
+  .cp-card__add{min-height:36px;font-size:.62rem;letter-spacing:.14em}
 }
 `;
 
@@ -363,15 +371,76 @@ function ProductCard({ p, index, saved, onToggleSave, onEnquire }) {
    6. PAGE
 =========================================================================== */
 export default function CollectionPage() {
+  const { slug } = useParams();
+
+  const slugTitleMap = {
+    rings: "Rings",
+    earrings: "Earrings",
+    necklaces: "Necklaces",
+    bracelets: "Bracelets",
+    bangles: "Bangles",
+    pendants: "Pendants",
+    bridal: "The Bridal Edit",
+    gifting: "The Gifting Edit",
+    "high-jewellery": "High Jewellery",
+    bestsellers: "Bestsellers",
+    everyday: "Everyday Fine",
+    festive: "Festive Edit",
+    anniversary: "Anniversary Collection",
+    "under-50k": "Under ₹50,000",
+    "50k-1l": "₹50,000 – ₹1,00,000",
+    "above-1l": "Above ₹1,00,000",
+  };
+
+  const collectionTitle = slug ? (slugTitleMap[slug.toLowerCase()] || slug.charAt(0).toUpperCase() + slug.slice(1)) : "All Jewellery";
+
+  useDocumentTitle(collectionTitle);
+
   // ---- filter state
-  const [categories, setCategories] = useState([]); // array of cat names
+  const [categories, setCategories] = useState(() => {
+    if (slug) {
+      const match = CATEGORIES.find((c) => c.toLowerCase() === slug.toLowerCase());
+      return match ? [match] : [];
+    }
+    return [];
+  });
   const [metals, setMetals] = useState([]);
-  const [occasions, setOccasions] = useState([]);
-  const [priceBand, setPriceBand] = useState(null); // key or null
+  const [occasions, setOccasions] = useState(() => {
+    if (slug) {
+      const match = OCCASIONS.find((o) => o.toLowerCase() === slug.toLowerCase());
+      return match ? [match] : [];
+    }
+    return [];
+  });
+  const [priceBand, setPriceBand] = useState(() => {
+    if (slug === "under-50k") return "lt50";
+    if (slug === "50k-1l") return "50to100";
+    if (slug === "above-1l") return "gt100";
+    return null;
+  });
   const [sort, setSort] = useState("featured");
   const [visible, setVisible] = useState(PAGE_SIZE);
-  const [saved, setSaved] = useState({});
   const [openMenu, setOpenMenu] = useState(null); // 'category' | 'price' | 'metal' | 'occasion' | null
+
+  const { isWishlisted, toggleWishlist } = useWishlist();
+
+  // reset filters when slug changes
+  useEffect(() => {
+    if (slug) {
+      const matchCat = CATEGORIES.find((c) => c.toLowerCase() === slug.toLowerCase());
+      setCategories(matchCat ? [matchCat] : []);
+      const matchOcc = OCCASIONS.find((o) => o.toLowerCase() === slug.toLowerCase());
+      setOccasions(matchOcc ? [matchOcc] : []);
+      if (slug === "under-50k") setPriceBand("lt50");
+      else if (slug === "50k-1l") setPriceBand("50to100");
+      else if (slug === "above-1l") setPriceBand("gt100");
+      else setPriceBand(null);
+    } else {
+      setCategories([]);
+      setOccasions([]);
+      setPriceBand(null);
+    }
+  }, [slug]);
 
   // reset pagination whenever filters/sort change
   useEffect(() => { setVisible(PAGE_SIZE); }, [categories, metals, occasions, priceBand, sort]);
@@ -437,8 +506,10 @@ export default function CollectionPage() {
           />
         </div>
         <div className="cp-hero__copy">
-          <span className="cp-hero__crumb">Home · Collections · Rings</span>
-          <h1 className="cp-hero__title">Rings, considered.</h1>
+          <span className="cp-hero__crumb">
+            <Link to="/" style={{ color: "inherit" }}>Home</Link> · <Link to="/collections" style={{ color: "inherit" }}>Collections</Link> · {collectionTitle}
+          </span>
+          <h1 className="cp-hero__title">{collectionTitle}, considered.</h1>
           <p className="cp-hero__lede">
             Everyday fine and once-in-a-lifetime. Quietly luminous pieces,
             made to be worn.
@@ -565,8 +636,17 @@ export default function CollectionPage() {
           <div className="cp-grid">
             {shown.map((p, i) => (
               <ProductCard key={p.id} p={p} index={i}
-                saved={!!saved[p.id]}
-                onToggleSave={onToggleSave}
+                saved={isWishlisted(p.name)}
+                onToggleSave={() => toggleWishlist({
+                  id: p.id,
+                  name: p.name,
+                  cat: p.cat,
+                  spec: p.spec,
+                  price: p.price,
+                  img: p.img,
+                  hover: p.hover,
+                  inStock: true,
+                })}
                 onEnquire={openQuickView} />
             ))}
           </div>

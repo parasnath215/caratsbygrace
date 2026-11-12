@@ -231,6 +231,16 @@ const MODAL_CSS = `
 .pq-field textarea{
   resize:vertical;min-height:70px;
 }
+.pq-form-error{
+  color:var(--pq-burgundy);
+  background:rgba(123,30,58,0.06);
+  border:1px solid rgba(123,30,58,0.2);
+  padding:10px 14px;
+  font-size:0.78rem;
+  letter-spacing:0.04em;
+  margin-bottom:14px;
+  border-radius:2px;
+}
 
 /* Success State */
 .pq-success{
@@ -248,11 +258,15 @@ const MODAL_CSS = `
 }
 
 @media (max-width:680px){
+  .pq-backdrop{padding:10px}
+  .pq-panel{max-height:94vh;border-radius:6px}
   .pq-grid{grid-template-columns:1fr}
-  .pq-media-col{padding:20px;border-right:none;border-bottom:1px solid var(--pq-line)}
-  .pq-info-col{padding:24px 20px}
+  .pq-media-col{padding:18px 18px 12px;border-right:none;border-bottom:1px solid var(--pq-line)}
+  .pq-img-wrap{aspect-ratio:1/1;max-height:240px}
+  .pq-info-col{padding:20px 18px}
   .pq-field-row{grid-template-columns:1fr;gap:0}
-  .pq-form-wrap{padding:24px 20px}
+  .pq-form-wrap{padding:20px 18px}
+  .pq-field input,.pq-field textarea,.pq-field select{font-size:16px}
 }
 `;
 
@@ -268,6 +282,7 @@ export default function ProductQuickViewModal({ product, isOpen, onClose }) {
   const [clientPhone, setClientPhone] = useState("");
   const [clientEmail, setClientEmail] = useState("");
   const [clientNote, setClientNote] = useState("");
+  const [formError, setFormError] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -280,6 +295,7 @@ export default function ProductQuickViewModal({ product, isOpen, onClose }) {
       setClientPhone("");
       setClientEmail("");
       setClientNote("");
+      setFormError("");
     }
   }, [product]);
 
@@ -309,17 +325,19 @@ export default function ProductQuickViewModal({ product, isOpen, onClose }) {
   const priceVal = product.price ? INR(product.price) : "Price on Request";
 
   // Pre-filled WhatsApp enquiry link
+  const waPhone = import.meta.env.VITE_WHATSAPP_NUMBER || "919820123456";
   const waText = encodeURIComponent(
     `Hello Carats by Grace, I would like to enquire about "${product.name}" (${selectedMetal}, ${product.spec || ""}, ${priceVal}). Could you please share more details?`
   );
-  const waUrl = `https://wa.me/919820000000?text=${waText}`;
+  const waUrl = `https://wa.me/${waPhone}?text=${waText}`;
 
   const handleSubmitEnquiry = (e) => {
     e.preventDefault();
-    if (!clientName || !clientPhone) {
-      alert("Please provide your name and contact number.");
+    if (!clientName.trim() || !clientPhone.trim()) {
+      setFormError("Please provide your name and contact phone number.");
       return;
     }
+    setFormError("");
     setSubmitting(true);
     setTimeout(() => {
       setSubmitting(false);
@@ -559,6 +577,12 @@ export default function ProductQuickViewModal({ product, isOpen, onClose }) {
                       onChange={(e) => setClientNote(e.target.value)}
                     />
                   </div>
+
+                  {formError && (
+                    <div className="pq-form-error" role="alert">
+                      {formError}
+                    </div>
+                  )}
 
                   <div style={{ marginTop: 14 }}>
                     <button

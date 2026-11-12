@@ -10,7 +10,7 @@
   --burgundy:   #7B1E3A;
   --wine:       #4A1124;
   --gold:       #C6A15B;
-  --ink:        #1C1517;
+  --ink:        #17120F;
   --muted:      #7A6F70;
   --line:       #E9E1D8;
   --blush:      #F1E3DC;
@@ -20,8 +20,13 @@
   --ink-dark:   #17120F;
 
   /* ── Typography ──────────────────────────────────────────── */
-  --font-serif: 'Cormorant Garamond', Georgia, serif;
-  --font-sans:  'Jost', system-ui, sans-serif;
+  --font-serif: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+  --font-sans:  'Jost', 'Inter', system-ui, -apple-system, sans-serif;
+  --serif:      var(--font-serif);
+  --sans:       var(--font-sans);
+  --ease:       cubic-bezier(.22, .61, .36, 1);
+  --pad-x:      clamp(20px, 5vw, 80px);
+  --section-y:  clamp(64px, 9vw, 140px);
 
   /* ── Type Scale ──────────────────────────────────────────── */
   --text-xs:   0.75rem;

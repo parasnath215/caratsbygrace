@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 64" fill="none">
+  <!-- Monogram Crest -->
+  <g transform="translate(10, 8)">
+    <circle cx="24" cy="24" r="23" stroke="#C6A15B" stroke-width="1" opacity="0.8" />
+    <circle cx="24" cy="24" r="20" stroke="#FAF6F1" stroke-width="0.8" opacity="0.9" />
+    <!-- Center Sparkle -->
+    <path d="M24 10 L25 15 L30 16 L25 17 L24 22 L23 17 L18 16 L23 15 Z" fill="#C6A15B" />
+    <!-- CG Monogram -->
+    <text x="24" y="32" font-family="'Cormorant Garamond', Georgia, serif" font-size="19" font-weight="500" fill="#FAF6F1" text-anchor="middle" letter-spacing="0.05em">CG</text>
+  </g>
+  <!-- Wordmark -->
+  <text x="72" y="31" font-family="'Cormorant Garamond', Georgia, serif" font-size="22" font-weight="400" fill="#FAF6F1" letter-spacing="0.14em">CARATS BY GRACE</text>
+  <text x="74" y="46" font-family="'Jost', system-ui, sans-serif" font-size="8.5" font-weight="400" fill="#FAF6F1" opacity="0.8" letter-spacing="0.32em">FINE JEWELLERY · ATELIER</text>
+  <!-- Accent Line -->
+  <line x1="240" y1="43" x2="280" y2="43" stroke="#C6A15B" stroke-width="0.75" opacity="0.8" />
+</svg>
+

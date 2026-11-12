@@ -8,6 +8,7 @@ const HomePage       = lazy(() => import('./pages/HomePage'));
 const CollectionPage = lazy(() => import('./pages/CollectionPage'));
 const ProductPage    = lazy(() => import('./pages/ProductPage'));
 const WishlistPage   = lazy(() => import('./pages/WishlistPage'));
+const AccountPage    = lazy(() => import('./pages/AccountPage'));
 const CartDrawer     = lazy(() => import('./components/cart/CartDrawer'));
 const SearchOverlay  = lazy(() => import('./components/search/SearchOverlay'));
 const ProductQuickViewModal = lazy(() => import('./components/product/ProductQuickViewModal'));
@@ -43,7 +44,8 @@ function GlobalCart() {
         navigate('/collections/rings');
       }}
       onCheckout={() => {
-        alert('Thank you for exploring Carats by Grace! Checkout feature active.');
+        toggleCart();
+        navigate('/account');
       }}
     />
   );
@@ -61,6 +63,39 @@ function GlobalProductModal() {
   );
 }
 
+function BrandedFallback() {
+  return (
+    <div
+      style={{
+        minHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        background: '#FAF6F1',
+        color: '#7B1E3A',
+        fontFamily: "'Cormorant Garamond', Georgia, serif",
+      }}
+    >
+      <span style={{ fontSize: '1.8rem', color: '#C6A15B', marginBottom: 12 }}>✦</span>
+      <span style={{ fontSize: '1.35rem', letterSpacing: '0.14em', textTransform: 'uppercase' }}>
+        Carats by Grace
+      </span>
+      <span
+        style={{
+          fontSize: '0.72rem',
+          fontFamily: "'Jost', sans-serif",
+          color: '#7A6F70',
+          letterSpacing: '0.28em',
+          marginTop: 6,
+        }}
+      >
+        FINE JEWELLERY · ATELIER
+      </span>
+    </div>
+  );
+}
+
 function AppRoutes() {
   const location = useLocation();
   const isHome = location.pathname === '/';
@@ -75,7 +110,7 @@ function AppRoutes() {
         <Route path="/products/:slug"     element={<ProductPage />} />
         <Route path="/product/:slug"      element={<ProductPage />} />
         <Route path="/wishlist"           element={<WishlistPage />} />
-        <Route path="/account"            element={<WishlistPage />} />
+        <Route path="/account"            element={<AccountPage />} />
       </Routes>
       {!isHome && <Footer />}
     </>
@@ -87,7 +122,7 @@ function App() {
     <CartProvider>
       <WishlistProvider>
         <UIProvider>
-          <Suspense fallback={null}>
+          <Suspense fallback={<BrandedFallback />}>
             {/* Global overlays — always mounted, toggled by context */}
             <GlobalProductModal />
             <GlobalCart />

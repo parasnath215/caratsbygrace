@@ -5,9 +5,11 @@
 // items with "Move to bag" & "Remove" → Empty state → Recommended rail.
 
 import React, { useEffect, useMemo, useState } from "react";
+import { Link } from "react-router-dom";
 import { useWishlist } from "../context/WishlistContext";
 import { useCart } from "../context/CartContext";
 import { useUI } from "../context/UIContext";
+import { useDocumentTitle } from "../hooks/useDocumentTitle";
 
 /* ===========================================================================
    1. PAGE CSS (subset of brand tokens)
@@ -133,17 +135,20 @@ const WISH_CSS = `
 /* Responsive */
 @media (max-width:1024px){
   .wl-grid{grid-template-columns:repeat(3,1fr)}
+  .wl-card__remove{opacity:1;transform:none}
 }
 @media (max-width:768px){
-  .wl-grid{grid-template-columns:repeat(2,1fr);gap:22px 14px}
+  .wl-grid{grid-template-columns:repeat(2,1fr);gap:20px 12px}
   .wl-toolbar{padding-block:14px}
   .wl-card__name{font-size:.94rem}
   .wl-card__price{font-size:.84rem}
-  .wl-card__remove{opacity:1;transform:none}
 }
 @media (max-width:480px){
+  .wl-grid{grid-template-columns:repeat(2,1fr);gap:14px 8px}
   .wl-toolbar__actions{gap:6px}
-  .wl-btn{padding:0 16px;font-size:.7rem}
+  .wl-btn{padding:0 14px;font-size:.68rem}
+  .wl-card__remove{width:34px;height:34px}
+  .wl-card__move{min-height:38px;font-size:.64rem;letter-spacing:.12em}
 }
 `;
 
@@ -284,6 +289,7 @@ function WishlistCard({ item, onRemove, onEnquire }) {
    5. PAGE
 =========================================================================== */
 export default function WishlistPage({ onAddToCart, onRemoveFromWishlist }) {
+  useDocumentTitle('Saved Wishlist');
   const { items: wishlistItems, toggleWishlist, clearWishlist: clearWishlistCtx } = useWishlist();
   const { addItem: addCartItem } = useCart();
   const { openQuickView } = useUI();
@@ -380,9 +386,9 @@ export default function WishlistPage({ onAddToCart, onRemoveFromWishlist }) {
                 The pieces you return to. Kept safe here so nothing slips.
               </p>
             </div>
-            <a className="wl-btn wl-btn--ghost" href="/collections">
+            <Link className="wl-btn wl-btn--ghost" to="/collections">
               Continue shopping
-            </a>
+            </Link>
           </div>
         </div>
       </section>
@@ -422,10 +428,10 @@ export default function WishlistPage({ onAddToCart, onRemoveFromWishlist }) {
             <div className="wl-empty__spark" aria-hidden="true">✦ ✦ ✦</div>
             <h3>Nothing saved, yet.</h3>
             <p>When you find something worth returning to, it lives here.</p>
-            <a className="wl-btn wl-btn--solid" href="/collections"
+            <Link className="wl-btn wl-btn--solid" to="/collections"
               style={{ display: "inline-flex" }}>
               Explore collections
-            </a>
+            </Link>
           </div>
         ) : (
           <div className="wl-grid">
@@ -445,10 +451,10 @@ export default function WishlistPage({ onAddToCart, onRemoveFromWishlist }) {
               <span className="wl-eyebrow">You may also like</span>
               <h2 id="wl-rec" className="wl-related__title">A few we love for you</h2>
             </div>
-            <a className="wl-btn wl-btn--ghost" href="/collections"
+            <Link className="wl-btn wl-btn--ghost" to="/collections"
               style={{ minHeight: 44 }}>
               Explore All
-            </a>
+            </Link>
           </div>
           <div className="wl-rail">
             {RECOMMENDED.map((p) => <MiniCard key={p.id} p={p} onEnquire={openQuickView} />)}

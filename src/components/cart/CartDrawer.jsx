@@ -162,6 +162,7 @@ const CART_CSS = `
   .cd-body{padding:4px 18px}
   .cd-note,.cd-opts,.cd-foot,.cd-progress{padding-inline:18px}
   .cd-item{grid-template-columns:72px 1fr auto;gap:12px}
+  .cd-note textarea{font-size:16px}
 }
 @media (max-height:560px){
   .cd-panel{overflow-y:auto}
