@@ -199,23 +199,23 @@ const COLLECTIONS = [
 
 const PRODUCTS = [
   { id: "r1", name: "The Aurelia Ring", spec: "18K Gold · 0.42 ct", price: 64000, cat: "Rings", keywords: "ring gold solitaire aurelia",
-    img: "/assets/model1/m1_8252_final.jpg" },
+    img: "/assets/model1/m1_8252_final.webp" },
   { id: "r2", name: "Ruby Halo", spec: "Rose Gold · Ruby", price: 132000, cat: "Rings", keywords: "ring ruby rose gold cocktail",
-    img: "/assets/model1/m1_8403_final.jpg" },
+    img: "/assets/model1/m1_8403_final.webp" },
   { id: "r3", name: "Grace Solitaire", spec: "18K · 0.60 ct", price: 98000, cat: "Rings", keywords: "ring solitaire white gold bridal",
-    img: "/assets/model2/m2_8124.jpg" },
+    img: "/assets/model2/m2_8124.webp" },
   { id: "e1", name: "Drop Lumière", spec: "18K · 0.30 ct", price: 76000, cat: "Earrings", keywords: "earrings drops gold diamonds",
-    img: "/assets/model1/m1_8440_final.jpg" },
+    img: "/assets/model1/m1_8440_final.webp" },
   { id: "e2", name: "Petal Studs", spec: "Rose Gold", price: 32000, cat: "Earrings", keywords: "earrings studs rose gold everyday",
-    img: "/assets/model2/m2_8126.jpg" },
+    img: "/assets/model2/m2_8126.webp" },
   { id: "e3", name: "Nightfall Hoops", spec: "18K · Diamonds", price: 118000, cat: "Earrings", keywords: "earrings hoops diamonds",
-    img: "/assets/model1/m1_8306_final.jpg" },
+    img: "/assets/model1/m1_8306_final.webp" },
   { id: "n1", name: "Lumen Pendant", spec: "18K · 0.25 ct", price: 54000, cat: "Necklaces", keywords: "necklace pendant gold",
-    img: "/assets/model2/cg_jewellers8471.jpg" },
+    img: "/assets/model2/cg_jewellers8471.webp" },
   { id: "n3", name: "Étoile Necklace", spec: "18K · Diamonds", price: 156000, cat: "Necklaces", keywords: "necklace diamonds bridal",
-    img: "/assets/model1/m1_8247_final.jpg" },
+    img: "/assets/model1/m1_8247_final.webp" },
   { id: "b1", name: "Slip Bracelet", spec: "18K Gold", price: 58000, cat: "Bracelets", keywords: "bracelet gold everyday",
-    img: "/assets/model2/m2_8124.jpg" },
+    img: "/assets/model2/m2_8124.webp" },
 ];
 
 const RECENT_KEY = "cbg_recent_searches_v1";

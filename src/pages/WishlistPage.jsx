@@ -179,48 +179,48 @@ const INITIAL_ITEMS = [
   {
     id: "r1", name: "The Aurelia Ring", cat: "Rings",
     spec: "18K Gold · 0.42 ct", price: 64000, inStock: true,
-    img: "/assets/model1/m1_8252_final.jpg",
-    hover: "/assets/model1/m1_8253_final.jpg",
+    img: "/assets/model1/m1_8252_final.webp",
+    hover: "/assets/model1/m1_8253_final.webp",
   },
   {
     id: "r2", name: "Ruby Halo", cat: "Rings",
     spec: "Rose Gold · Ruby", price: 132000, inStock: true, lowStock: true,
-    img: "/assets/model1/m1_8403_final.jpg",
-    hover: "/assets/model1/m1_8425_final.jpg",
+    img: "/assets/model1/m1_8403_final.webp",
+    hover: "/assets/model1/m1_8425_final.webp",
   },
   {
     id: "e2", name: "Petal Studs", cat: "Earrings",
     spec: "Rose Gold", price: 32000, inStock: true,
-    img: "/assets/model2/m2_8126.jpg",
-    hover: "/assets/model2/m2_8135.jpg",
+    img: "/assets/model2/m2_8126.webp",
+    hover: "/assets/model2/m2_8135.webp",
   },
   {
     id: "n3", name: "Étoile Necklace", cat: "Necklaces",
     spec: "18K · Diamonds", price: 156000, inStock: false,
-    img: "/assets/model1/m1_8247_final.jpg",
-    hover: "/assets/model1/m1_8201_final.jpg",
+    img: "/assets/model1/m1_8247_final.webp",
+    hover: "/assets/model1/m1_8201_final.webp",
   },
   {
     id: "b1", name: "Slip Bracelet", cat: "Bracelets",
     spec: "18K Gold", price: 58000, inStock: true,
-    img: "/assets/model2/m2_8124.jpg",
-    hover: "/assets/model2/m2_8182.jpg",
+    img: "/assets/model2/m2_8124.webp",
+    hover: "/assets/model2/m2_8182.webp",
   },
 ];
 
 const RECOMMENDED = [
   { id: "r4", name: "Étoile Band", spec: "18K Gold", price: 42000,
-    img: "/assets/model1/m1_8255_final.jpg",
-    hover: "/assets/model1/m1_8256_final.jpg" },
+    img: "/assets/model1/m1_8255_final.webp",
+    hover: "/assets/model1/m1_8256_final.webp" },
   { id: "n1", name: "Lumen Pendant", spec: "18K · 0.25 ct", price: 54000,
-    img: "/assets/model2/cg_jewellers8471.jpg",
-    hover: "/assets/model2/cg_jewellers8620.jpg" },
+    img: "/assets/model2/cg_jewellers8471.webp",
+    hover: "/assets/model2/cg_jewellers8620.webp" },
   { id: "e1", name: "Drop Lumière", spec: "18K · 0.30 ct", price: 76000,
-    img: "/assets/model1/m1_8440_final.jpg",
-    hover: "/assets/model1/m1_8441_final.jpg" },
+    img: "/assets/model1/m1_8440_final.webp",
+    hover: "/assets/model1/m1_8441_final.webp" },
   { id: "r3", name: "Grace Solitaire", spec: "18K · 0.60 ct", price: 98000,
-    img: "/assets/model2/m2_8124.jpg",
-    hover: "/assets/model2/m2_8101.jpg" },
+    img: "/assets/model2/m2_8124.webp",
+    hover: "/assets/model2/m2_8101.webp" },
 ];
 
 const SORTS = [
@@ -237,8 +237,8 @@ function MiniCard({ p, onEnquire }) {
   return (
     <div className="wl-card" onClick={() => onEnquire?.(p)} style={{ cursor: "pointer" }}>
       <div className="wl-card__media">
-        <img className="wl-card__img--main" src={p.img} alt={p.name} loading="lazy" />
-        <img className="wl-card__img--hover" src={p.hover} alt="" aria-hidden="true" loading="lazy" />
+        <img className="wl-card__img--main" src={p.img} alt={p.name} loading="lazy" decoding="async" />
+        <img className="wl-card__img--hover" src={p.hover} alt="" aria-hidden="true" loading="lazy" decoding="async" />
       </div>
       <div className="wl-card__body">
         <h4 className="wl-card__name">{p.name}</h4>
@@ -260,9 +260,9 @@ function WishlistCard({ item, onRemove, onEnquire }) {
         {item.lowStock && <span className="wl-card__badge wl-card__badge--low">Low stock</span>}
         {!item.inStock && <span className="wl-card__badge">Sold out</span>}
         <img className="wl-card__img--main" src={item.img}
-          alt={item.name} loading="lazy" />
+          alt={item.name} loading="lazy" decoding="async" />
         <img className="wl-card__img--hover" src={item.hover}
-          alt="" aria-hidden="true" loading="lazy" />
+          alt="" aria-hidden="true" loading="lazy" decoding="async" />
       </div>
       <button className="wl-card__remove" aria-label={`Remove ${item.name} from wishlist`}
         onClick={() => onRemove(item)}>

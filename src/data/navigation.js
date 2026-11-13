@@ -27,7 +27,7 @@ export const navLinks = [
       { label: '₹75,000 – ₹1,50,000', slug: 'rings?minPrice=75000&maxPrice=150000' },
       { label: 'Above ₹1,50,000',      slug: 'rings?minPrice=150000' },
     ],
-    editorialImage: { src: '/assets/categories/cat_rings.jpg', alt: 'Curated rings editorial' },
+    editorialImage: { src: '/assets/categories/cat_rings.webp', alt: 'Curated rings editorial' },
   },
   {
     label: 'Earrings',
@@ -52,7 +52,7 @@ export const navLinks = [
       { label: '₹50,000 – ₹1,00,000', slug: 'earrings?minPrice=50000&maxPrice=100000' },
       { label: 'Above ₹1,00,000',      slug: 'earrings?minPrice=100000' },
     ],
-    editorialImage: { src: '/assets/categories/cat_earrings.jpg', alt: 'Curated earrings editorial' },
+    editorialImage: { src: '/assets/categories/cat_earrings.webp', alt: 'Curated earrings editorial' },
   },
   {
     label: 'Necklaces',
@@ -77,7 +77,7 @@ export const navLinks = [
       { label: '₹1,00,000 – ₹2,00,000', slug: 'necklaces?minPrice=100000&maxPrice=200000' },
       { label: 'Above ₹2,00,000',        slug: 'necklaces?minPrice=200000' },
     ],
-    editorialImage: { src: '/assets/categories/cat_necklaces.jpg', alt: 'Curated necklaces editorial' },
+    editorialImage: { src: '/assets/categories/cat_necklaces.webp', alt: 'Curated necklaces editorial' },
   },
   {
     label: 'Bracelets',
@@ -102,7 +102,7 @@ export const navLinks = [
       { label: '₹75,000 – ₹1,50,000', slug: 'bracelets?minPrice=75000&maxPrice=150000' },
       { label: 'Above ₹1,50,000',      slug: 'bracelets?minPrice=150000' },
     ],
-    editorialImage: { src: '/assets/categories/cat_bracelets.jpg', alt: 'Curated bracelets editorial' },
+    editorialImage: { src: '/assets/categories/cat_bracelets.webp', alt: 'Curated bracelets editorial' },
   },
   {
     label: 'Bridal',
@@ -126,7 +126,7 @@ export const navLinks = [
       { label: '₹1,00,000 – ₹2,50,000',  slug: 'bridal?minPrice=100000&maxPrice=250000' },
       { label: 'Above ₹2,50,000',         slug: 'bridal?minPrice=250000' },
     ],
-    editorialImage: { src: '/assets/model2/m2_8463.jpg', alt: 'Bridal jewellery editorial' },
+    editorialImage: { src: '/assets/model2/m2_8463.webp', alt: 'Bridal jewellery editorial' },
   },
   {
     label: 'Gifting',
@@ -150,7 +150,7 @@ export const navLinks = [
       { label: '₹30,000 – ₹75,000', slug: 'gifting?minPrice=30000&maxPrice=75000' },
       { label: 'Above ₹75,000',      slug: 'gifting?minPrice=75000' },
     ],
-    editorialImage: { src: '/assets/categories/cat_pendants.jpg', alt: 'Gifting jewellery editorial' },
+    editorialImage: { src: '/assets/categories/cat_pendants.webp', alt: 'Gifting jewellery editorial' },
   },
   {
     label: 'High Jewellery',
@@ -171,6 +171,6 @@ export const navLinks = [
       { label: '₹1,00,000 – ₹2,50,000', slug: 'high-jewellery?maxPrice=250000' },
       { label: 'Above ₹2,50,000',        slug: 'high-jewellery?minPrice=250000' },
     ],
-    editorialImage: { src: '/assets/model1/m1_8306_final.jpg', alt: 'High jewellery editorial' },
+    editorialImage: { src: '/assets/model1/m1_8306_final.webp', alt: 'High jewellery editorial' },
   },
 ];

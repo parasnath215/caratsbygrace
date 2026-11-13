@@ -183,7 +183,7 @@ export default function Header() {
               onClick={() => setMegaOpen(false)}
             >
               <img
-                src="/assets/model1/m1_8247_final.jpg"
+                src="/assets/model1/m1_8247_final.webp"
                 alt="New collection preview"
                 loading="lazy"
               />

@@ -836,7 +836,7 @@ function Header({ cartCount, onOpenCart }) {
           </div>
           <Link className="cg-mega__img" to="/collections/rings" onClick={() => setMegaOpen(false)}>
             <img src={EDITORIAL_ASSETS.headerMegaMenu}
-              alt="Editorial: model wearing Carats by Grace rings" loading="lazy" />
+              alt="Editorial: model wearing Carats by Grace rings" loading="lazy" decoding="async" />
           </Link>
         </div>
       </div>
@@ -934,6 +934,7 @@ function Hero({ scrolled }) {
   }, []);
 
   const currentVideo = isMobile ? HERO_ASSETS.videoMobile : HERO_ASSETS.videoDesktop;
+  const currentPoster = isMobile ? HERO_ASSETS.posterMobile : HERO_ASSETS.posterDesktop;
 
   useEffect(() => {
     const v = videoRef.current;
@@ -991,6 +992,7 @@ function Hero({ scrolled }) {
           key={isMobile ? "hero-vid-mobile" : "hero-vid-desktop"}
           ref={videoRef}
           src={currentVideo}
+          poster={currentPoster}
           autoPlay
           loop
           muted
@@ -1074,7 +1076,7 @@ function Categories() {
             className="cg-tile reveal"
             style={{ transitionDelay: `${i * 50}ms` }}>
             <div className="cg-tile__media">
-              <img src={c.img} alt={`${c.name} — Carats by Grace`} loading="lazy" />
+              <img src={c.img} alt={`${c.name} — Carats by Grace`} loading="lazy" decoding="async" />
             </div>
             <div className="cg-tile__info">
               <div className="cg-tile__top">
@@ -1099,7 +1101,7 @@ function CampaignSplit() {
         <div className="cg-split__img">
           <img src={EDITORIAL_ASSETS.campaignSplit}
             alt="Editorial: close-up of a ruby and diamond suite"
-            loading="lazy" />
+            loading="lazy" decoding="async" />
         </div>
         <div className="cg-split__copy">
           <span className="cg-eyebrow">Featured · The Ruby Hours</span>
@@ -1175,9 +1177,9 @@ function BestSellers() {
               style={{ transitionDelay: `${i * 40}ms` }}>
               <div className="cg-card__media">
                 <img className="cg-card__img--main" src={p.img}
-                  alt={`${p.name} — Carats by Grace`} loading="lazy" />
+                  alt={`${p.name} — Carats by Grace`} loading="lazy" decoding="async" />
                 <img className="cg-card__img--hover" src={p.hover}
-                  alt="" aria-hidden="true" loading="lazy" />
+                  alt="" aria-hidden="true" loading="lazy" decoding="async" />
                 <button
                   className={`cg-card__wish ${isSaved ? "is-saved" : ""}`}
                   aria-label={isSaved ? `Remove ${p.name} from wishlist` : `Add ${p.name} to wishlist`}
@@ -1239,7 +1241,7 @@ function Limited() {
           <Link className="cg-limited__card reveal" key={c.name} to={`/collections/${c.name.toLowerCase().replace(/\s+/g, '-')}`}
             style={{ transitionDelay: `${i * 50}ms` }}>
             <div className="cg-limited__media">
-              <img src={c.img} alt={`${c.name} — limited edition`} loading="lazy" />
+              <img src={c.img} alt={`${c.name} — limited edition`} loading="lazy" decoding="async" />
             </div>
             <div className="cg-limited__info">
               <span className="cg-limited__tag">Limited Edition</span>
@@ -1275,11 +1277,11 @@ function Story() {
         <div className="cg-story__imgs reveal">
           <figure>
             <img src={EDITORIAL_ASSETS.story1}
-              alt="Editorial: model wearing Carats by Grace diamond choker and ring" loading="lazy" />
+              alt="Editorial: model wearing Carats by Grace diamond choker and ring" loading="lazy" decoding="async" />
           </figure>
           <figure>
             <img src={EDITORIAL_ASSETS.story2}
-              alt="Editorial: model wearing Carats by Grace diamond earrings and ring" loading="lazy" />
+              alt="Editorial: model wearing Carats by Grace diamond earrings and ring" loading="lazy" decoding="async" />
           </figure>
         </div>
       </div>
@@ -1299,7 +1301,7 @@ function Craft() {
       <div className="cg-craft__grid">
         <div className="cg-craft__media reveal">
           <img src={EDITORIAL_ASSETS.craft}
-            alt="Craft: precision setting and hallmarking of fine jewellery" loading="lazy" />
+            alt="Craft: precision setting and hallmarking of fine jewellery" loading="lazy" decoding="async" />
           <button className="cg-craft__play" aria-label="Play craftsmanship film">
             <span><Icon name="play" size={20} /></span>
           </button>
@@ -1338,15 +1340,15 @@ function Bridal() {
         <div className="cg-bridal__grid reveal">
           <figure className="cg-bridal__a">
             <img src={EDITORIAL_ASSETS.bridalA}
-              alt="Bridal: model in haute joaillerie emerald and diamond suite" loading="lazy" />
+              alt="Bridal: model in haute joaillerie emerald and diamond suite" loading="lazy" decoding="async" />
           </figure>
           <figure className="cg-bridal__b">
             <img src={EDITORIAL_ASSETS.bridalB}
-              alt="Bridal: close-up of diamond chandelier earrings and pendant" loading="lazy" />
+              alt="Bridal: close-up of diamond chandelier earrings and pendant" loading="lazy" decoding="async" />
           </figure>
           <figure className="cg-bridal__c">
             <img src={EDITORIAL_ASSETS.bridalC}
-              alt="Bridal: diamond cocktail ring on hand" loading="lazy" />
+              alt="Bridal: diamond cocktail ring on hand" loading="lazy" decoding="async" />
           </figure>
           <div className="cg-bridal__copy">
             <span className="cg-eyebrow">The Bridal Edit</span>
@@ -1514,7 +1516,7 @@ function Instagram() {
         {INSTAGRAM_GALLERY.map((it, i) => (
           <a className="cg-insta__cell reveal" key={i} href="#"
             style={{ transitionDelay: `${i * 40}ms` }}>
-            <img src={it.src} alt={it.alt} loading="lazy" />
+            <img src={it.src} alt={it.alt} loading="lazy" decoding="async" />
           </a>
         ))}
       </div>
@@ -1535,7 +1537,7 @@ function Visit() {
       <div className="cg-visit__grid reveal">
         <div className="cg-visit__img">
           <img src={EDITORIAL_ASSETS.visitAtelier}
-            alt="The Carats by Grace atelier — interior" loading="lazy" />
+            alt="The Carats by Grace atelier — interior" loading="lazy" decoding="async" />
         </div>
         <div className="cg-visit__form">
           <span className="cg-eyebrow">Visit</span>

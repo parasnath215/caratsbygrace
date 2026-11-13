@@ -229,72 +229,72 @@ const PRICE_BANDS = [
 ];
 
 const HERO_IMAGES = {
-  rings: "/assets/categories/cat_rings.jpg",
-  earrings: "/assets/categories/cat_earrings.jpg",
-  necklaces: "/assets/categories/cat_necklaces.jpg",
-  bracelets: "/assets/categories/cat_bracelets.jpg",
-  bangles: "/assets/categories/cat_bangles.jpg",
-  pendants: "/assets/categories/cat_pendants.jpg",
-  bridal: "/assets/model2/m2_8463.jpg",
-  bestsellers: "/assets/model1/m1_8252_final.jpg",
-  all: "/assets/model1/m1_8424_final.jpg",
+  rings: "/assets/categories/cat_rings.webp",
+  earrings: "/assets/categories/cat_earrings.webp",
+  necklaces: "/assets/categories/cat_necklaces.webp",
+  bracelets: "/assets/categories/cat_bracelets.webp",
+  bangles: "/assets/categories/cat_bangles.webp",
+  pendants: "/assets/categories/cat_pendants.webp",
+  bridal: "/assets/model2/m2_8463.webp",
+  bestsellers: "/assets/model1/m1_8252_final.webp",
+  all: "/assets/model1/m1_8424_final.webp",
 };
 
 const BASE_PRODUCTS = [
   { id: "r1", name: "The Aurelia Ring", cat: "Rings", metal: "Yellow Gold", occ: ["Everyday", "Gifting"], price: 64000, spec: "18K Gold · 0.42 ct",
-    img: "/assets/model1/m1_8252_final.jpg",
-    hover: "/assets/model1/m1_8253_final.jpg" },
+    img: "/assets/model1/m1_8252_final.webp",
+    hover: "/assets/model1/m1_8253_final.webp" },
   { id: "r2", name: "Ruby Halo", cat: "Rings", metal: "Rose Gold", occ: ["Festive", "Anniversary"], price: 132000, spec: "Rose Gold · Ruby",
-    img: "/assets/model1/m1_8403_final.jpg",
-    hover: "/assets/model1/m1_8425_final.jpg" },
+    img: "/assets/model1/m1_8403_final.webp",
+    hover: "/assets/model1/m1_8425_final.webp" },
   { id: "r3", name: "Grace Solitaire", cat: "Rings", metal: "White Gold", occ: ["Bridal", "Anniversary"], price: 98000, spec: "18K · 0.60 ct",
-    img: "/assets/model2/m2_8124.jpg",
-    hover: "/assets/model2/m2_8101.jpg" },
+    img: "/assets/model2/m2_8124.webp",
+    hover: "/assets/model2/m2_8101.webp" },
   { id: "r4", name: "Étoile Band", cat: "Rings", metal: "Yellow Gold", occ: ["Everyday"], price: 42000, spec: "18K Gold",
-    img: "/assets/model1/m1_8255_final.jpg",
-    hover: "/assets/model1/m1_8256_final.jpg" },
+    img: "/assets/model1/m1_8255_final.webp",
+    hover: "/assets/model1/m1_8256_final.webp" },
   { id: "e1", name: "Drop Lumière", cat: "Earrings", metal: "Yellow Gold", occ: ["Festive"], price: 76000, spec: "18K · 0.30 ct",
-    img: "/assets/model1/m1_8440_final.jpg",
-    hover: "/assets/model1/m1_8441_final.jpg" },
+    img: "/assets/model1/m1_8440_final.webp",
+    hover: "/assets/model1/m1_8441_final.webp" },
   { id: "e2", name: "Petal Studs", cat: "Earrings", metal: "Rose Gold", occ: ["Everyday", "Gifting"], price: 32000, spec: "Rose Gold",
-    img: "/assets/model2/m2_8126.jpg",
-    hover: "/assets/model2/m2_8135.jpg" },
+    img: "/assets/model2/m2_8126.webp",
+    hover: "/assets/model2/m2_8135.webp" },
   { id: "e3", name: "Nightfall Hoops", cat: "Earrings", metal: "White Gold", occ: ["Festive", "Anniversary"], price: 118000, spec: "18K · Diamonds",
-    img: "/assets/model1/m1_8306_final.jpg",
-    hover: "/assets/model1/m1_8394_final.jpg" },
+    img: "/assets/model1/m1_8306_final.webp",
+    hover: "/assets/model1/m1_8394_final.webp" },
   { id: "e4", name: "Dewdrop Mini", cat: "Earrings", metal: "Yellow Gold", occ: ["Everyday"], price: 28000, spec: "18K Gold",
-    img: "/assets/model2/cg_jewellers8612.jpg",
-    hover: "/assets/model2/cg_jewellers8619.jpg" },
+    img: "/assets/model2/cg_jewellers8612.webp",
+    hover: "/assets/model2/cg_jewellers8619.webp" },
   { id: "n1", name: "Lumen Pendant", cat: "Necklaces", metal: "Yellow Gold", occ: ["Everyday", "Gifting"], price: 54000, spec: "18K · 0.25 ct",
-    img: "/assets/model2/cg_jewellers8471.jpg",
-    hover: "/assets/model2/cg_jewellers8620.jpg" },
+    img: "/assets/model2/cg_jewellers8471.webp",
+    hover: "/assets/model2/cg_jewellers8620.webp" },
   { id: "n2", name: "Sculpt Chain", cat: "Necklaces", metal: "Rose Gold", occ: ["Everyday"], price: 47000, spec: "Rose Gold",
-    img: "/assets/model2/m2_8090.jpg",
-    hover: "/assets/model2/m2_8095.jpg" },
+    img: "/assets/model2/m2_8090.webp",
+    hover: "/assets/model2/m2_8095.webp" },
   { id: "n3", name: "Étoile Necklace", cat: "Necklaces", metal: "White Gold", occ: ["Bridal", "Anniversary"], price: 156000, spec: "18K · Diamonds",
-    img: "/assets/model1/m1_8247_final.jpg",
-    hover: "/assets/model1/m1_8201_final.jpg" },
+    img: "/assets/model1/m1_8247_final.webp",
+    hover: "/assets/model1/m1_8201_final.webp" },
   { id: "n4", name: "Grace Lariat", cat: "Necklaces", metal: "Yellow Gold", occ: ["Festive"], price: 88000, spec: "18K Gold",
-    img: "/assets/model1/m1_8444_final.jpg",
-    hover: "/assets/model1/m1_8448_final.jpg" },
+    img: "/assets/model1/m1_8444_final.webp",
+    hover: "/assets/model1/m1_8448_final.webp" },
   { id: "b1", name: "Slip Bracelet", cat: "Bracelets", metal: "Yellow Gold", occ: ["Everyday"], price: 58000, spec: "18K Gold",
-    img: "/assets/model2/m2_8124.jpg",
-    hover: "/assets/model2/m2_8182.jpg" },
+    img: "/assets/model2/m2_8124.webp",
+    hover: "/assets/model2/m2_8182.webp" },
   { id: "b2", name: "Halo Bangle", cat: "Bangles", metal: "Rose Gold", occ: ["Bridal", "Festive"], price: 122000, spec: "Rose Gold · Diamonds",
-    img: "/assets/model1/m1_8247_final.jpg",
-    hover: "/assets/model1/m1_8201_final.jpg" },
+    img: "/assets/model1/m1_8247_final.webp",
+    hover: "/assets/model1/m1_8201_final.webp" },
   { id: "p1", name: "Sol Pendant", cat: "Pendants", metal: "Yellow Gold", occ: ["Everyday", "Gifting"], price: 44000, spec: "18K · 0.18 ct",
-    img: "/assets/categories/cat_pendants.jpg",
-    hover: "/assets/model1/m1_8440_final.jpg" },
+    img: "/assets/categories/cat_pendants.webp",
+    hover: "/assets/model1/m1_8440_final.webp" },
   { id: "p2", name: "Teardrop Pendant", cat: "Pendants", metal: "White Gold", occ: ["Bridal"], price: 96000, spec: "18K · 0.4 ct",
-    img: "/assets/model2/cg_jewellers8619.jpg",
-    hover: "/assets/model2/cg_jewellers8625.jpg" },
+    img: "/assets/model2/cg_jewellers8619.webp",
+    hover: "/assets/model2/cg_jewellers8625.webp" },
   { id: "r5", name: "Vow Ring", cat: "Rings", metal: "Platinum", occ: ["Bridal"], price: 168000, spec: "Platinum · 0.7 ct",
-    img: "/assets/model1/m1_8245_final.jpg",
-    hover: "/assets/model1/m1_8244_final.jpg" },
+    img: "/assets/model1/m1_8245_final.webp",
+    hover: "/assets/model1/m1_8244_final.webp" },
   { id: "e5", name: "Cascade Drops", cat: "Earrings", metal: "Yellow Gold", occ: ["Festive", "Anniversary"], price: 104000, spec: "18K · 0.5 ct",
-    img: "/assets/model1/m1_8443_final.jpg",
-    hover: "/assets/model1/m1_8448_final.jpg" },
+    img: "/assets/model1/m1_8443_final.webp",
+    hover: "/assets/model1/m1_8448_final.webp" },
 ];
 
 const SORT_OPTIONS = [
@@ -352,9 +352,9 @@ function ProductCard({ p, index, saved, onToggleSave, onEnquire }) {
     <article className="cp-card" style={{ animationDelay: `${(index % 8) * 40}ms` }}>
       <div className="cp-card__media">
         <img className="cp-card__img--main" src={p.img}
-          alt={`${p.name} — Carats by Grace`} loading="lazy" />
+          alt={`${p.name} — Carats by Grace`} loading="lazy" decoding="async" />
         <img className="cp-card__img--hover" src={p.hover}
-          alt="" aria-hidden="true" loading="lazy" />
+          alt="" aria-hidden="true" loading="lazy" decoding="async" />
         {/* Whole-image click target so tapping the photo opens the piece */}
         <button
           className="cp-card__cover"
@@ -544,7 +544,7 @@ export default function CollectionPage() {
       <section className="cp-hero" aria-label="Collection banner">
         <div className="cp-hero__img">
           <img
-            src={HERO_IMAGES[slug] || "/assets/model1/m1_8424_final.jpg"}
+            src={HERO_IMAGES[slug] || "/assets/model1/m1_8424_final.webp"}
             alt={`${collectionTitle} — Carats by Grace`}
             fetchpriority="high"
           />

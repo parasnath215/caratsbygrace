@@ -291,7 +291,7 @@ export default function AccountPage() {
                     </div>
                     <div style={{ display: 'flex', gap: 18, alignItems: 'center' }}>
                       <img
-                        src="/assets/model1/m1_8252_final.jpg"
+                        src="/assets/model1/m1_8252_final.webp"
                         alt="The Aurelia Ring"
                         style={{ width: 68, height: 80, objectFit: 'cover', borderRadius: 2 }}
                       />

@@ -251,11 +251,11 @@ const DEFAULT_PRODUCT = {
   sizeOptions: ["10", "11", "12", "13", "14", "15", "16"],
   outOfStockSizes: ["16"],
   images: [
-    { src: "/assets/model1/m1_8252_final.jpg", alt: "The Aurelia Ring — front view on hand" },
-    { src: "/assets/model1/m1_8253_final.jpg", alt: "The Aurelia Ring — hand close-up" },
-    { src: "/assets/model1/m1_8255_final.jpg", alt: "The Aurelia Ring — side detail" },
-    { src: "/assets/categories/cat_rings.jpg", alt: "The Aurelia Ring — setting macro detail" },
-    { src: "/assets/model1/m1_8247_final.jpg", alt: "The Aurelia Ring — styled with diamond suite" },
+    { src: "/assets/model1/m1_8252_final.webp", alt: "The Aurelia Ring — front view on hand" },
+    { src: "/assets/model1/m1_8253_final.webp", alt: "The Aurelia Ring — hand close-up" },
+    { src: "/assets/model1/m1_8255_final.webp", alt: "The Aurelia Ring — side detail" },
+    { src: "/assets/categories/cat_rings.webp", alt: "The Aurelia Ring — setting macro detail" },
+    { src: "/assets/model1/m1_8247_final.webp", alt: "The Aurelia Ring — styled with diamond suite" },
   ],
   details: {
     "Product details": [
@@ -282,32 +282,32 @@ const DEFAULT_PRODUCT = {
 
 const COMPLETE_LOOK = [
   { id: "e2", name: "Petal Studs", spec: "Rose Gold", price: 32000,
-    img: "/assets/model2/m2_8126.jpg",
-    hover: "/assets/model2/m2_8135.jpg" },
+    img: "/assets/model2/m2_8126.webp",
+    hover: "/assets/model2/m2_8135.webp" },
   { id: "n1", name: "Lumen Pendant", spec: "18K · 0.25 ct", price: 54000,
-    img: "/assets/model2/cg_jewellers8471.jpg",
-    hover: "/assets/model2/cg_jewellers8620.jpg" },
+    img: "/assets/model2/cg_jewellers8471.webp",
+    hover: "/assets/model2/cg_jewellers8620.webp" },
   { id: "b1", name: "Slip Bracelet", spec: "18K Gold", price: 58000,
-    img: "/assets/model2/m2_8124.jpg",
-    hover: "/assets/model2/m2_8182.jpg" },
+    img: "/assets/model2/m2_8124.webp",
+    hover: "/assets/model2/m2_8182.webp" },
   { id: "r4", name: "Étoile Band", spec: "18K Gold", price: 42000,
-    img: "/assets/model1/m1_8255_final.jpg",
-    hover: "/assets/model1/m1_8256_final.jpg" },
+    img: "/assets/model1/m1_8255_final.webp",
+    hover: "/assets/model1/m1_8256_final.webp" },
 ];
 
 const RECENTLY_VIEWED = [
   { id: "r3", name: "Grace Solitaire", spec: "18K · 0.60 ct", price: 98000,
-    img: "/assets/model2/m2_8124.jpg",
-    hover: "/assets/model2/m2_8101.jpg" },
+    img: "/assets/model2/m2_8124.webp",
+    hover: "/assets/model2/m2_8101.webp" },
   { id: "r2", name: "Ruby Halo", spec: "Rose Gold · Ruby", price: 132000,
-    img: "/assets/model1/m1_8403_final.jpg",
-    hover: "/assets/model1/m1_8425_final.jpg" },
+    img: "/assets/model1/m1_8403_final.webp",
+    hover: "/assets/model1/m1_8425_final.webp" },
   { id: "e1", name: "Drop Lumière", spec: "18K · 0.30 ct", price: 76000,
-    img: "/assets/model1/m1_8440_final.jpg",
-    hover: "/assets/model1/m1_8441_final.jpg" },
+    img: "/assets/model1/m1_8440_final.webp",
+    hover: "/assets/model1/m1_8441_final.webp" },
   { id: "n2", name: "Sculpt Chain", spec: "Rose Gold", price: 47000,
-    img: "/assets/model2/m2_8090.jpg",
-    hover: "/assets/model2/m2_8095.jpg" },
+    img: "/assets/model2/m2_8090.webp",
+    hover: "/assets/model2/m2_8095.webp" },
 ];
 
 /* ===========================================================================
@@ -348,7 +348,7 @@ function Gallery({ images }) {
           <button key={i} className={`pd-thumb ${i === active ? "is-active" : ""}`}
             role="tab" aria-selected={i === active} aria-label={`Image ${i + 1}`}
             onClick={() => setActive(i)}>
-            <img src={img.src} alt="" loading="lazy" />
+            <img src={img.src} alt="" loading="lazy" decoding="async" />
           </button>
         ))}
       </div>
@@ -421,8 +421,8 @@ function MiniCard({ p, onEnquire }) {
   return (
     <div className="pd-card" onClick={() => onEnquire?.(p)} style={{ cursor: "pointer" }}>
       <div className="pd-card__media">
-        <img className="pd-card__img--main" src={p.img} alt={p.name} loading="lazy" />
-        <img className="pd-card__img--hover" src={p.hover} alt="" aria-hidden="true" loading="lazy" />
+        <img className="pd-card__img--main" src={p.img} alt={p.name} loading="lazy" decoding="async" />
+        <img className="pd-card__img--hover" src={p.hover} alt="" aria-hidden="true" loading="lazy" decoding="async" />
       </div>
       <div className="pd-card__body">
         <h4 className="pd-card__name">{p.name}</h4>
