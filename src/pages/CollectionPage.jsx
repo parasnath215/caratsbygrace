@@ -6,7 +6,7 @@
 //           → Sort dropdown → 4-col grid (3 tablet, 2 mobile) → Load more.
 
 import React, { useMemo, useRef, useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useSearchParams } from "react-router-dom";
 import { useUI } from "../context/UIContext";
 import { useWishlist } from "../context/WishlistContext";
 import { useDocumentTitle } from "../hooks/useDocumentTitle";
@@ -128,6 +128,8 @@ const PAGE_CSS = `
   background:var(--blush)}
 .cp-card__media img{position:absolute;inset:0;width:100%;height:100%;
   object-fit:cover;transition:opacity .55s var(--ease),transform .8s var(--ease)}
+.cp-card__cover{position:absolute;inset:0;z-index:1;padding:0;
+  background:transparent;border:0;cursor:pointer}
 .cp-card__img--hover{opacity:0}
 .cp-card:hover .cp-card__img--hover{opacity:1}
 .cp-card:hover .cp-card__img--main{opacity:0}
@@ -196,11 +198,11 @@ const PAGE_CSS = `
 /* ===========================================================================
    2. ICONS
 =========================================================================== */
-function Icon({ name, size = 18 }) {
+function Icon({ name, size = 18, className }) {
   const common = {
     width: size, height: size, viewBox: "0 0 24 24", fill: "none",
     stroke: "currentColor", strokeWidth: 1.4, strokeLinecap: "round",
-    strokeLinejoin: "round", "aria-hidden": true,
+    strokeLinejoin: "round", "aria-hidden": true, className,
   };
   const paths = {
     heart: <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8Z" />,
@@ -226,61 +228,73 @@ const PRICE_BANDS = [
   { key: "gt100", label: "Above ₹1L", min: 100000, max: Infinity },
 ];
 
+const HERO_IMAGES = {
+  rings: "/assets/categories/cat_rings.jpg",
+  earrings: "/assets/categories/cat_earrings.jpg",
+  necklaces: "/assets/categories/cat_necklaces.jpg",
+  bracelets: "/assets/categories/cat_bracelets.jpg",
+  bangles: "/assets/categories/cat_bangles.jpg",
+  pendants: "/assets/categories/cat_pendants.jpg",
+  bridal: "/assets/model2/m2_8463.jpg",
+  bestsellers: "/assets/model1/m1_8252_final.jpg",
+  all: "/assets/model1/m1_8424_final.jpg",
+};
+
 const BASE_PRODUCTS = [
   { id: "r1", name: "The Aurelia Ring", cat: "Rings", metal: "Yellow Gold", occ: ["Everyday", "Gifting"], price: 64000, spec: "18K Gold · 0.42 ct",
-    img: "https://images.unsplash.com/photo-1603561596112-0a132b757442?auto=format&fit=crop&w=700&q=80",
-    hover: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=700&q=80" },
+    img: "/assets/model1/m1_8252_final.jpg",
+    hover: "/assets/model1/m1_8253_final.jpg" },
   { id: "r2", name: "Ruby Halo", cat: "Rings", metal: "Rose Gold", occ: ["Festive", "Anniversary"], price: 132000, spec: "Rose Gold · Ruby",
-    img: "https://images.unsplash.com/photo-1602752250015-52934bc45613?auto=format&fit=crop&w=700&q=80",
-    hover: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=700&q=80" },
+    img: "/assets/model1/m1_8403_final.jpg",
+    hover: "/assets/model1/m1_8425_final.jpg" },
   { id: "r3", name: "Grace Solitaire", cat: "Rings", metal: "White Gold", occ: ["Bridal", "Anniversary"], price: 98000, spec: "18K · 0.60 ct",
-    img: "https://images.unsplash.com/photo-1588444837495-c6cfeb53f32d?auto=format&fit=crop&w=700&q=80",
-    hover: "https://images.unsplash.com/photo-1602173574767-37ac01994b2a?auto=format&fit=crop&w=700&q=80" },
+    img: "/assets/model2/m2_8124.jpg",
+    hover: "/assets/model2/m2_8101.jpg" },
   { id: "r4", name: "Étoile Band", cat: "Rings", metal: "Yellow Gold", occ: ["Everyday"], price: 42000, spec: "18K Gold",
-    img: "https://images.unsplash.com/photo-1598560917505-59a3ad559071?auto=format&fit=crop&w=700&q=80",
-    hover: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=700&q=80" },
+    img: "/assets/model1/m1_8255_final.jpg",
+    hover: "/assets/model1/m1_8256_final.jpg" },
   { id: "e1", name: "Drop Lumière", cat: "Earrings", metal: "Yellow Gold", occ: ["Festive"], price: 76000, spec: "18K · 0.30 ct",
-    img: "https://images.unsplash.com/photo-1630019852942-f89202989a59?auto=format&fit=crop&w=700&q=80",
-    hover: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=700&q=80" },
+    img: "/assets/model1/m1_8440_final.jpg",
+    hover: "/assets/model1/m1_8441_final.jpg" },
   { id: "e2", name: "Petal Studs", cat: "Earrings", metal: "Rose Gold", occ: ["Everyday", "Gifting"], price: 32000, spec: "Rose Gold",
-    img: "https://images.unsplash.com/photo-1629224316810-9d8805b95e76?auto=format&fit=crop&w=700&q=80",
-    hover: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=700&q=80" },
+    img: "/assets/model2/m2_8126.jpg",
+    hover: "/assets/model2/m2_8135.jpg" },
   { id: "e3", name: "Nightfall Hoops", cat: "Earrings", metal: "White Gold", occ: ["Festive", "Anniversary"], price: 118000, spec: "18K · Diamonds",
-    img: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=700&q=80",
-    hover: "https://images.unsplash.com/photo-1602173574767-37ac01994b2a?auto=format&fit=crop&w=700&q=80" },
+    img: "/assets/model1/m1_8306_final.jpg",
+    hover: "/assets/model1/m1_8394_final.jpg" },
   { id: "e4", name: "Dewdrop Mini", cat: "Earrings", metal: "Yellow Gold", occ: ["Everyday"], price: 28000, spec: "18K Gold",
-    img: "https://images.unsplash.com/photo-1617038220319-276d3cfab638?auto=format&fit=crop&w=700&q=80",
-    hover: "https://images.unsplash.com/photo-1588444837495-c6cfeb53f32d?auto=format&fit=crop&w=700&q=80" },
+    img: "/assets/model2/cg_jewellers8612.jpg",
+    hover: "/assets/model2/cg_jewellers8619.jpg" },
   { id: "n1", name: "Lumen Pendant", cat: "Necklaces", metal: "Yellow Gold", occ: ["Everyday", "Gifting"], price: 54000, spec: "18K · 0.25 ct",
-    img: "https://images.unsplash.com/photo-1599643477877-530eb83abc8e?auto=format&fit=crop&w=700&q=80",
-    hover: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=700&q=80" },
+    img: "/assets/model2/cg_jewellers8471.jpg",
+    hover: "/assets/model2/cg_jewellers8620.jpg" },
   { id: "n2", name: "Sculpt Chain", cat: "Necklaces", metal: "Rose Gold", occ: ["Everyday"], price: 47000, spec: "Rose Gold",
-    img: "https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=700&q=80",
-    hover: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=700&q=80" },
+    img: "/assets/model2/m2_8090.jpg",
+    hover: "/assets/model2/m2_8095.jpg" },
   { id: "n3", name: "Étoile Necklace", cat: "Necklaces", metal: "White Gold", occ: ["Bridal", "Anniversary"], price: 156000, spec: "18K · Diamonds",
-    img: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=700&q=80",
-    hover: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=700&q=80" },
+    img: "/assets/model1/m1_8247_final.jpg",
+    hover: "/assets/model1/m1_8201_final.jpg" },
   { id: "n4", name: "Grace Lariat", cat: "Necklaces", metal: "Yellow Gold", occ: ["Festive"], price: 88000, spec: "18K Gold",
-    img: "https://images.unsplash.com/photo-1602173574767-37ac01994b2a?auto=format&fit=crop&w=700&q=80",
-    hover: "https://images.unsplash.com/photo-1588444837495-c6cfeb53f32d?auto=format&fit=crop&w=700&q=80" },
+    img: "/assets/model1/m1_8444_final.jpg",
+    hover: "/assets/model1/m1_8448_final.jpg" },
   { id: "b1", name: "Slip Bracelet", cat: "Bracelets", metal: "Yellow Gold", occ: ["Everyday"], price: 58000, spec: "18K Gold",
-    img: "https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=700&q=80",
-    hover: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=700&q=80" },
+    img: "/assets/model2/m2_8124.jpg",
+    hover: "/assets/model2/m2_8182.jpg" },
   { id: "b2", name: "Halo Bangle", cat: "Bangles", metal: "Rose Gold", occ: ["Bridal", "Festive"], price: 122000, spec: "Rose Gold · Diamonds",
-    img: "https://images.unsplash.com/photo-1602173574767-37ac01994b2a?auto=format&fit=crop&w=700&q=80",
-    hover: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=700&q=80" },
+    img: "/assets/model1/m1_8247_final.jpg",
+    hover: "/assets/model1/m1_8201_final.jpg" },
   { id: "p1", name: "Sol Pendant", cat: "Pendants", metal: "Yellow Gold", occ: ["Everyday", "Gifting"], price: 44000, spec: "18K · 0.18 ct",
-    img: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=700&q=80",
-    hover: "https://images.unsplash.com/photo-1599643477877-530eb83abc8e?auto=format&fit=crop&w=700&q=80" },
+    img: "/assets/categories/cat_pendants.jpg",
+    hover: "/assets/model1/m1_8440_final.jpg" },
   { id: "p2", name: "Teardrop Pendant", cat: "Pendants", metal: "White Gold", occ: ["Bridal"], price: 96000, spec: "18K · 0.4 ct",
-    img: "https://images.unsplash.com/photo-1588444837495-c6cfeb53f32d?auto=format&fit=crop&w=700&q=80",
-    hover: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=700&q=80" },
+    img: "/assets/model2/cg_jewellers8619.jpg",
+    hover: "/assets/model2/cg_jewellers8625.jpg" },
   { id: "r5", name: "Vow Ring", cat: "Rings", metal: "Platinum", occ: ["Bridal"], price: 168000, spec: "Platinum · 0.7 ct",
-    img: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=700&q=80",
-    hover: "https://images.unsplash.com/photo-1598560917505-59a3ad559071?auto=format&fit=crop&w=700&q=80" },
+    img: "/assets/model1/m1_8245_final.jpg",
+    hover: "/assets/model1/m1_8244_final.jpg" },
   { id: "e5", name: "Cascade Drops", cat: "Earrings", metal: "Yellow Gold", occ: ["Festive", "Anniversary"], price: 104000, spec: "18K · 0.5 ct",
-    img: "https://images.unsplash.com/photo-1617038220319-276d3cfab638?auto=format&fit=crop&w=700&q=80",
-    hover: "https://images.unsplash.com/photo-1630019852942-f89202989a59?auto=format&fit=crop&w=700&q=80" },
+    img: "/assets/model1/m1_8443_final.jpg",
+    hover: "/assets/model1/m1_8448_final.jpg" },
 ];
 
 const SORT_OPTIONS = [
@@ -321,7 +335,7 @@ function FilterDropdown({ label, open, onToggle, onClose, children, activeCount 
         onClick={onToggle}>
         {label}
         {activeCount > 0 && <span aria-hidden="true">({activeCount})</span>}
-        <Icon name="chevron" size={14} style={{ transform: open ? "rotate(180deg)" : "none", transition: "transform .25s" }} />
+        <Icon name="chevron" size={14} className="cp-caret" />
       </button>
       <div className={`cp-filter__panel ${open ? "is-open" : ""}`} role="menu">
         {children}
@@ -341,6 +355,13 @@ function ProductCard({ p, index, saved, onToggleSave, onEnquire }) {
           alt={`${p.name} — Carats by Grace`} loading="lazy" />
         <img className="cp-card__img--hover" src={p.hover}
           alt="" aria-hidden="true" loading="lazy" />
+        {/* Whole-image click target so tapping the photo opens the piece */}
+        <button
+          className="cp-card__cover"
+          type="button"
+          aria-label={`Enquire about ${p.name}`}
+          onClick={() => onEnquire(p)}
+        />
         <button
           className={`cp-card__wish ${saved ? "is-saved" : ""}`}
           aria-pressed={saved}
@@ -372,6 +393,8 @@ function ProductCard({ p, index, saved, onToggleSave, onEnquire }) {
 =========================================================================== */
 export default function CollectionPage() {
   const { slug } = useParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const searchQuery = (searchParams.get("q") || "").trim();
 
   const slugTitleMap = {
     rings: "Rings",
@@ -392,7 +415,11 @@ export default function CollectionPage() {
     "above-1l": "Above ₹1,00,000",
   };
 
-  const collectionTitle = slug ? (slugTitleMap[slug.toLowerCase()] || slug.charAt(0).toUpperCase() + slug.slice(1)) : "All Jewellery";
+  const collectionTitle = searchQuery
+    ? `Search · ${searchQuery}`
+    : slug
+      ? slugTitleMap[slug.toLowerCase()] || slug.charAt(0).toUpperCase() + slug.slice(1)
+      : "All Jewellery";
 
   useDocumentTitle(collectionTitle);
 
@@ -453,6 +480,10 @@ export default function CollectionPage() {
       if (metals.length && !metals.includes(p.metal)) return false;
       if (occasions.length && !occasions.some((o) => p.occ.includes(o))) return false;
       if (band && (p.price < band.min || p.price >= band.max)) return false;
+      if (searchQuery) {
+        const haystack = `${p.name} ${p.cat} ${p.metal} ${p.spec} ${p.occ.join(" ")}`.toLowerCase();
+        if (!haystack.includes(searchQuery.toLowerCase())) return false;
+      }
       return true;
     });
     switch (sort) {
@@ -463,7 +494,7 @@ export default function CollectionPage() {
       default: break; // featured
     }
     return list;
-  }, [categories, metals, occasions, priceBand, sort]);
+  }, [categories, metals, occasions, priceBand, sort, searchQuery]);
 
   const total = filtered.length;
   const shown = filtered.slice(0, visible);
@@ -480,14 +511,27 @@ export default function CollectionPage() {
     ...metals.map((m) => ({ key: `metal:${m}`, label: m, clear: () => setMetals((a) => a.filter((x) => x !== m)) })),
     ...occasions.map((o) => ({ key: `occ:${o}`, label: o, clear: () => setOccasions((a) => a.filter((x) => x !== o)) })),
     ...(priceBand ? [{ key: "price", label: PRICE_BANDS.find((b) => b.key === priceBand).label, clear: () => setPriceBand(null) }] : []),
+    ...(searchQuery ? [{
+      key: "q",
+      label: `“${searchQuery}”`,
+      clear: () => {
+        const next = new URLSearchParams(searchParams);
+        next.delete("q");
+        setSearchParams(next, { replace: true });
+      },
+    }] : []),
   ];
 
   const clearAll = () => {
     setCategories([]); setMetals([]); setOccasions([]); setPriceBand(null);
+    if (searchQuery) {
+      const next = new URLSearchParams(searchParams);
+      next.delete("q");
+      setSearchParams(next, { replace: true });
+    }
   };
 
   const { openQuickView } = useUI();
-  const onToggleSave = (id) => setSaved((s) => ({ ...s, [id]: !s[id] }));
 
   // close any open dropdown when another opens
   const toggleMenu = (key) => setOpenMenu(openMenu === key ? null : key);
@@ -500,8 +544,8 @@ export default function CollectionPage() {
       <section className="cp-hero" aria-label="Collection banner">
         <div className="cp-hero__img">
           <img
-            src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=1800&q=80"
-            alt="Editorial: model wearing Carats by Grace rings"
+            src={HERO_IMAGES[slug] || "/assets/model1/m1_8424_final.jpg"}
+            alt={`${collectionTitle} — Carats by Grace`}
             fetchpriority="high"
           />
         </div>
@@ -509,10 +553,13 @@ export default function CollectionPage() {
           <span className="cp-hero__crumb">
             <Link to="/" style={{ color: "inherit" }}>Home</Link> · <Link to="/collections" style={{ color: "inherit" }}>Collections</Link> · {collectionTitle}
           </span>
-          <h1 className="cp-hero__title">{collectionTitle}, considered.</h1>
+          <h1 className="cp-hero__title">
+            {searchQuery ? `Results for “${searchQuery}”` : `${collectionTitle}, considered.`}
+          </h1>
           <p className="cp-hero__lede">
-            Everyday fine and once-in-a-lifetime. Quietly luminous pieces,
-            made to be worn.
+            {searchQuery
+              ? `Pieces matching your search — ${total} found.`
+              : "Everyday fine and once-in-a-lifetime. Quietly luminous pieces, made to be worn."}
           </p>
         </div>
       </section>
@@ -627,7 +674,7 @@ export default function CollectionPage() {
       <div className="cp-wrap cp-body">
         {shown.length === 0 ? (
           <div className="cp-empty">
-            <h3>Nothing here, yet.</h3>
+            <h3>{searchQuery ? `Nothing matched “${searchQuery}”.` : "Nothing here, yet."}</h3>
             <p>Try adjusting or clearing your filters.</p>
             <button className="cp-btn cp-btn--ghost" style={{ marginTop: 16 }}
               onClick={clearAll}>Clear filters</button>

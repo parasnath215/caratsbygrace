@@ -6,12 +6,19 @@
 
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import heroVideo from "../components/video/1794410894431085.mp4";
 import { useCart } from "../context/CartContext";
 import { useWishlist } from "../context/WishlistContext";
 import { useUI } from "../context/UIContext";
 import BrandLogo from "../components/ui/BrandLogo";
 import { useDocumentTitle } from "../hooks/useDocumentTitle";
+import {
+  HERO_ASSETS,
+  CATEGORIES_LIST,
+  EDITORIAL_ASSETS,
+  LIMITED_EDITIONS,
+  INSTAGRAM_GALLERY,
+  PRODUCT_ASSETS,
+} from "../data/assets";
 
 /* ===========================================================================
    DESIGN TOKENS + GLOBAL STYLES
@@ -149,22 +156,17 @@ button{font-family:inherit;cursor:pointer;background:none;border:0}
 .cg-hero__media{position:absolute;inset:0;overflow:hidden;background:var(--ink);
   pointer-events:none;user-select:none}
 .cg-hero__media video{width:100%;height:100%;object-fit:cover;
-  object-position:62% 40%;display:block;pointer-events:none;user-select:none}
-.cg-hero__media::after{content:"";position:absolute;inset:0;pointer-events:none;
-  background:linear-gradient(180deg,
-    rgba(23,18,15,.55) 0%,
-    rgba(23,18,15,.20) 22%,
-    rgba(23,18,15,0) 42%,
-    rgba(23,18,15,0) 58%,
-    rgba(23,18,15,.60) 100%)}
+  object-position:center 35%;display:block;pointer-events:none;user-select:none}
+.cg-hero__media::after{display:none!important;content:none!important}
 .cg-hero__copy{position:relative;align-self:end;z-index:2;color:var(--ivory);
-  padding:0 var(--pad-x) clamp(48px,8vh,96px);max-width:820px}
-.cg-hero__copy .cg-eyebrow{color:rgba(250,246,241,.82)}
+  padding:0 var(--pad-x) clamp(48px,8vh,96px);max-width:820px;
+  text-shadow:0 2px 14px rgba(0,0,0,.65)}
+.cg-hero__copy .cg-eyebrow{color:rgba(250,246,241,.95);text-shadow:0 1px 8px rgba(0,0,0,.6)}
 .cg-hero__title{font-family:var(--serif);font-weight:300;
   font-size:clamp(2.6rem,7vw,5.6rem);line-height:1.02;margin:14px 0 18px;
-  letter-spacing:-.015em;max-width:14ch}
+  letter-spacing:-.015em;max-width:14ch;text-shadow:0 3px 20px rgba(0,0,0,.7)}
 .cg-hero__lede{font-size:clamp(.95rem,1.6vw,1.1rem);max-width:44ch;
-  color:rgba(250,246,241,.92);margin:0 0 28px;font-weight:300}
+  color:rgba(250,246,241,.98);margin:0 0 28px;font-weight:300;text-shadow:0 2px 12px rgba(0,0,0,.65)}
 .cg-hero__ctas{display:flex;gap:14px;flex-wrap:wrap}
 .cg-scrollcue{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);
   z-index:3;color:rgba(250,246,241,.8);font-size:.62rem;letter-spacing:.3em;
@@ -182,25 +184,34 @@ button{font-family:inherit;cursor:pointer;background:none;border:0}
   font-size:.74rem;letter-spacing:.06em;color:var(--ink);text-align:left}
 .cg-trust__item svg{color:var(--gold);flex:none}
 
-/* Category grid */
+/* Category grid — Find your everyday signature (No overlays, clean image alignment) */
 .cg-cat__head{display:flex;justify-content:space-between;align-items:end;
-  gap:24px;margin-bottom:40px;flex-wrap:wrap}
-.cg-cat__grid{display:grid;gap:16px;
-  grid-template-columns:repeat(4,1fr);grid-auto-rows:minmax(140px,auto)}
-.cg-tile{position:relative;overflow:hidden;background:var(--blush);display:block}
-.cg-tile img{width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease)}
-.cg-tile:hover img{transform:scale(1.06)}
-.cg-tile__label{position:absolute;left:16px;bottom:14px;color:var(--ivory);
-  font-family:var(--serif);font-size:1.2rem;letter-spacing:.02em;
-  text-shadow:0 1px 12px rgba(23,18,15,.4);z-index:2}
-.cg-tile::after{content:"";position:absolute;inset:0;
-  background:linear-gradient(180deg,transparent 55%,rgba(23,18,15,.42));z-index:1}
-.cg-tile__shop{position:absolute;right:14px;bottom:14px;z-index:3;
-  font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ivory);
-  opacity:0;transform:translateY(6px);transition:all .35s var(--ease)}
-.cg-tile:hover .cg-tile__shop{opacity:1;transform:none}
-.cg-tile--tall{grid-row:span 2}
-.cg-tile--wide{grid-column:span 2}
+  gap:24px;margin-bottom:36px;flex-wrap:wrap}
+.cg-cat__grid{display:grid;gap:24px;
+  grid-template-columns:repeat(3,1fr)}
+.cg-tile{display:flex;flex-direction:column;background:var(--white);
+  border:1px solid var(--line);border-radius:1px;overflow:hidden;
+  transition:all .35s var(--ease);text-decoration:none}
+.cg-tile:hover{transform:translateY(-4px);border-color:var(--gold);
+  box-shadow:0 18px 36px -18px rgba(23,18,15,.12)}
+.cg-tile__media{position:relative;width:100%;aspect-ratio:4/5;overflow:hidden;
+  background:var(--blush)}
+.cg-tile__media img{width:100%;height:100%;object-fit:cover;object-position:center center;
+  transition:transform .7s var(--ease);display:block}
+.cg-tile:hover .cg-tile__media img{transform:scale(1.05)}
+.cg-tile::after{display:none!important;content:none!important}
+.cg-tile__info{padding:16px 18px 18px;display:flex;flex-direction:column;
+  background:var(--white);border-top:1px solid var(--line);flex:1}
+.cg-tile__top{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.cg-tile__label{color:var(--ink);font-family:var(--serif);font-size:1.35rem;
+  letter-spacing:-.01em;font-weight:400;margin:0}
+.cg-tile__count{font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted)}
+.cg-tile__tagline{font-size:.82rem;color:var(--muted);margin:4px 0 10px;font-weight:300}
+.cg-tile__shop{font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--burgundy);font-weight:500;display:inline-flex;align-items:center;
+  gap:4px;transition:gap .25s var(--ease);margin-top:auto}
+.cg-tile:hover .cg-tile__shop{gap:8px;color:var(--wine)}
 
 /* Campaign split */
 .cg-split{display:grid;grid-template-columns:1fr 1fr;min-height:560px}
@@ -265,18 +276,20 @@ button{font-family:inherit;cursor:pointer;background:none;border:0}
   scroll-snap-type:x mandatory;padding-bottom:8px;
   scrollbar-width:none;-ms-overflow-style:none}
 .cg-limited__grid::-webkit-scrollbar{display:none}
-.cg-limited__card{position:relative;aspect-ratio:3/4;overflow:hidden;
-  scroll-snap-align:start;background:var(--wine-deep)}
+.cg-limited__card{position:relative;display:flex;flex-direction:column;border:1px solid var(--line);
+  background:var(--white);scroll-snap-align:start;overflow:hidden;text-decoration:none;
+  transition:all .35s var(--ease)}
+.cg-limited__card:hover{transform:translateY(-4px);border-color:var(--gold);box-shadow:0 18px 36px -18px rgba(23,18,15,.12)}
+.cg-limited__media{position:relative;aspect-ratio:3/4;overflow:hidden;background:var(--blush)}
 .cg-limited__card img{width:100%;height:100%;object-fit:cover;
   transition:transform .9s var(--ease)}
 .cg-limited__card:hover img{transform:scale(1.05)}
-.cg-limited__card::after{content:"";position:absolute;inset:0;
-  background:linear-gradient(180deg,transparent 45%,rgba(23,18,15,.62))}
-.cg-limited__tag{position:absolute;top:14px;left:14px;z-index:3;
-  background:var(--ivory);color:var(--ink);font-size:.6rem;letter-spacing:.2em;
-  text-transform:uppercase;padding:6px 10px}
-.cg-limited__name{position:absolute;left:16px;bottom:16px;z-index:3;
-  color:var(--ivory);font-family:var(--serif);font-size:1.35rem;line-height:1.15}
+.cg-limited__card::after{display:none!important}
+.cg-limited__info{padding:14px 16px 16px;background:var(--white);border-top:1px solid var(--line);
+  display:flex;flex-direction:column;gap:4px}
+.cg-limited__tag{font-size:.62rem;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--burgundy);font-weight:600}
+.cg-limited__name{color:var(--ink);font-family:var(--serif);font-size:1.18rem;line-height:1.2;font-weight:400;margin:0}
 
 /* Burgundy story */
 .cg-story{background:var(--burgundy);color:var(--ivory);position:relative;
@@ -496,17 +509,18 @@ button{font-family:inherit;cursor:pointer;background:none;border:0}
 }
 @media (max-width:768px){
   .cg-hero{min-height:92svh}
-  .cg-hero__media video{object-position:60% 30%}
-  .cg-hero__copy{max-width:none;padding:0 var(--pad-x) 40px}
-  .cg-hero__ctas{flex-direction:column;align-items:stretch}
+  .cg-hero__media video{object-position:center center}
+  .cg-hero__copy{max-width:none;padding:0 var(--pad-x) 36px}
+  .cg-hero__ctas{flex-direction:column;align-items:stretch;gap:10px}
   .cg-hero__ctas .cg-btn{width:100%}
-  .cg-cat__grid{grid-template-columns:1fr;grid-auto-rows:auto;
-    grid-auto-flow:column;grid-auto-columns:78%;overflow-x:auto;
-    scroll-snap-type:x mandatory;padding-bottom:8px;
-    scrollbar-width:none;-ms-overflow-style:none}
-  .cg-cat__grid::-webkit-scrollbar{display:none}
-  .cg-tile{scroll-snap-align:start;aspect-ratio:3/4;min-height:240px}
-  .cg-tile--tall,.cg-tile--wide{grid-row:auto;grid-column:auto;aspect-ratio:3/4;min-height:240px}
+  .cg-cat__grid{grid-template-columns:repeat(2,1fr);gap:14px;grid-auto-flow:row;overflow-x:visible;padding-bottom:0}
+  .cg-tile{min-height:auto}
+  .cg-tile__media{aspect-ratio:1/1.18}
+  .cg-tile__info{padding:12px 10px 14px}
+  .cg-tile__label{font-size:1.05rem}
+  .cg-tile__count{display:none}
+  .cg-tile__tagline{font-size:.76rem;line-height:1.25;margin:2px 0 6px}
+  .cg-tile__shop{font-size:.65rem;letter-spacing:.14em}
   .cg-story__imgs{gap:12px}
   .cg-story__imgs figure:nth-child(2){margin-top:20px}
   .cg-why__grid{grid-template-columns:1fr;gap:22px}
@@ -525,60 +539,33 @@ button{font-family:inherit;cursor:pointer;background:none;border:0}
 @media (max-width:480px){
   .cg-wrap{padding-inline:16px}
   .cg-header__bar{min-height:64px;gap:8px}
+  .cg-logo{min-width:0}
+  .cg-logo img{max-width:118px}
   .cg-rail{grid-auto-columns:82%}
   .cg-limited__grid{grid-auto-columns:86%}
   .cg-testi__card{flex:0 0 90%}
   .cg-header__util{gap:2px}
   .cg-header__util button,.cg-header__util a{width:38px;height:38px}
+  .cg-cat__grid{grid-template-columns:repeat(2,1fr);gap:10px}
+  .cg-tile__info{padding:10px 8px 12px}
+  .cg-tile__label{font-size:.95rem}
+  .cg-tile__tagline{display:none}
+  .cg-tile__shop{font-size:.62rem;letter-spacing:.12em}
 }
 `;
 
 /* ===========================================================================
-   PLACEHOLDER DATA
+   BRAND ASSETS & PRODUCT DATA (100% sourced from official brand assest)
 =========================================================================== */
 const IMG = {
-  heroVideoMp4:  heroVideo,
-  heroVideoWebm: "",
+  heroVideoDesktop: HERO_ASSETS.videoDesktop,
+  heroVideoMobile: HERO_ASSETS.videoMobile,
   logo: "/logo-white-transparent.png",
 };
 
-const CATEGORIES = [
-  { name: "Rings", img: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=800&q=80", cls: "cg-tile--tall" },
-  { name: "Earrings", img: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=800&q=80", cls: "" },
-  { name: "Necklaces", img: "https://images.unsplash.com/photo-1599643477877-530eb83abc8e?auto=format&fit=crop&w=800&q=80", cls: "cg-tile--wide" },
-  { name: "Bracelets", img: "https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=800&q=80", cls: "" },
-  { name: "Bangles", img: "https://images.unsplash.com/photo-1602173574767-37ac01994b2a?auto=format&fit=crop&w=800&q=80", cls: "" },
-  { name: "Pendants", img: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=800&q=80", cls: "" },
-];
-
-const PRODUCTS = {
-  Rings: [
-    { name: "The Aurelia Ring", spec: "18K Gold · 0.42 ct", price: 64000, img: "https://images.unsplash.com/photo-1603561596112-0a132b757442?auto=format&fit=crop&w=700&q=80", hover: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=700&q=80" },
-    { name: "Ruby Halo", spec: "Rose Gold · Ruby", price: 132000, img: "https://images.unsplash.com/photo-1602752250015-52934bc45613?auto=format&fit=crop&w=700&q=80", hover: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=700&q=80" },
-    { name: "Grace Solitaire", spec: "18K · 0.60 ct", price: 98000, img: "https://images.unsplash.com/photo-1588444837495-c6cfeb53f32d?auto=format&fit=crop&w=700&q=80", hover: "https://images.unsplash.com/photo-1602173574767-37ac01994b2a?auto=format&fit=crop&w=700&q=80" },
-    { name: "Étoile Band", spec: "18K Gold", price: 42000, img: "https://images.unsplash.com/photo-1598560917505-59a3ad559071?auto=format&fit=crop&w=700&q=80", hover: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=700&q=80" },
-  ],
-  Earrings: [
-    { name: "Drop Lumière", spec: "18K · 0.30 ct", price: 76000, img: "https://images.unsplash.com/photo-1630019852942-f89202989a59?auto=format&fit=crop&w=700&q=80", hover: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=700&q=80" },
-    { name: "Petal Studs", spec: "Rose Gold", price: 32000, img: "https://images.unsplash.com/photo-1629224316810-9d8805b95e76?auto=format&fit=crop&w=700&q=80", hover: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=700&q=80" },
-    { name: "Nightfall Hoops", spec: "18K · Diamonds", price: 118000, img: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=700&q=80", hover: "https://images.unsplash.com/photo-1602173574767-37ac01994b2a?auto=format&fit=crop&w=700&q=80" },
-    { name: "Dewdrop Mini", spec: "18K Gold", price: 28000, img: "https://images.unsplash.com/photo-1617038220319-276d3cfab638?auto=format&fit=crop&w=700&q=80", hover: "https://images.unsplash.com/photo-1588444837495-c6cfeb53f32d?auto=format&fit=crop&w=700&q=80" },
-  ],
-  Necklaces: [
-    { name: "Lumen Pendant", spec: "18K · 0.25 ct", price: 54000, img: "https://images.unsplash.com/photo-1599643477877-530eb83abc8e?auto=format&fit=crop&w=700&q=80", hover: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=700&q=80" },
-    { name: "Sculpt Chain", spec: "Rose Gold", price: 47000, img: "https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=700&q=80", hover: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=700&q=80" },
-    { name: "Étoile Necklace", spec: "18K · Diamonds", price: 156000, img: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=700&q=80", hover: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=700&q=80" },
-    { name: "Grace Lariat", spec: "18K Gold", price: 88000, img: "https://images.unsplash.com/photo-1602173574767-37ac01994b2a?auto=format&fit=crop&w=700&q=80", hover: "https://images.unsplash.com/photo-1588444837495-c6cfeb53f32d?auto=format&fit=crop&w=700&q=80" },
-  ],
-};
-
-const LIMITED = [
-  { name: "The Nocturne Edit", img: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=700&q=80" },
-  { name: "Ruby Hours", img: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=700&q=80" },
-  { name: "Gilded Veil", img: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=700&q=80" },
-  { name: "The Ivory Suite", img: "https://images.unsplash.com/photo-1599643477877-530eb83abc8e?auto=format&fit=crop&w=700&q=80" },
-  { name: "Midnight Bloom", img: "https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=700&q=80" },
-];
+const CATEGORIES = CATEGORIES_LIST;
+const PRODUCTS = PRODUCT_ASSETS;
+const LIMITED = LIMITED_EDITIONS;
 
 const TESTIMONIALS = [
   { quote: "The kind of piece you never take off. It feels made for me.", who: "Ananya S. · Mumbai", piece: "Aurelia Solitaire" },
@@ -627,7 +614,7 @@ function useReveal() {
   useEffect(() => {
     const els = document.querySelectorAll(".reveal");
     if (!("IntersectionObserver" in window) ||
-        window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       els.forEach((el) => el.classList.add("is-in"));
       return;
     }
@@ -848,7 +835,7 @@ function Header({ cartCount, onOpenCart }) {
             <a href="#visit" onClick={() => setMegaOpen(false)}>Book a Consultation</a>
           </div>
           <Link className="cg-mega__img" to="/collections/rings" onClick={() => setMegaOpen(false)}>
-            <img src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=600&q=80"
+            <img src={EDITORIAL_ASSETS.headerMegaMenu}
               alt="Editorial: model wearing Carats by Grace rings" loading="lazy" />
           </Link>
         </div>
@@ -919,9 +906,34 @@ function Header({ cartCount, onOpenCart }) {
   );
 }
 
-/* Hero — video only, continuous loop */
+/* Hero — video only, continuous loop (Desktop & Mobile optimized, NO overlays) */
 function Hero({ scrolled }) {
   const videoRef = useRef(null);
+  const [isMobile, setIsMobile] = useState(() => {
+    if (typeof window !== "undefined") {
+      return window.innerWidth <= 768;
+    }
+    return false;
+  });
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 768px)");
+    const handleMQ = (e) => setIsMobile(e.matches);
+    if (mq.addEventListener) {
+      mq.addEventListener("change", handleMQ);
+    } else {
+      mq.addListener(handleMQ);
+    }
+    return () => {
+      if (mq.removeEventListener) {
+        mq.removeEventListener("change", handleMQ);
+      } else {
+        mq.removeListener(handleMQ);
+      }
+    };
+  }, []);
+
+  const currentVideo = isMobile ? HERO_ASSETS.videoMobile : HERO_ASSETS.videoDesktop;
 
   useEffect(() => {
     const v = videoRef.current;
@@ -936,7 +948,7 @@ function Hero({ scrolled }) {
       if (p && typeof p.catch === "function") {
         p.catch(() => {
           const onUserGesture = () => {
-            v.play().catch(() => {});
+            v.play().catch(() => { });
             window.removeEventListener("pointerdown", onUserGesture);
             window.removeEventListener("touchstart", onUserGesture);
             window.removeEventListener("keydown", onUserGesture);
@@ -957,7 +969,7 @@ function Hero({ scrolled }) {
 
     const keepPlaying = () => {
       if (!v.ended && document.visibilityState !== "hidden") {
-        v.play().catch(() => {});
+        v.play().catch(() => { });
       }
     };
 
@@ -970,14 +982,15 @@ function Hero({ scrolled }) {
       v.removeEventListener("pause", keepPlaying);
       v.removeEventListener("waiting", keepPlaying);
     };
-  }, []);
+  }, [isMobile, currentVideo]);
 
   return (
     <section className="cg-hero" aria-label="Campaign">
       <div className="cg-hero__media">
         <video
+          key={isMobile ? "hero-vid-mobile" : "hero-vid-desktop"}
           ref={videoRef}
-          src={heroVideo}
+          src={currentVideo}
           autoPlay
           loop
           muted
@@ -986,7 +999,9 @@ function Hero({ scrolled }) {
           disablePictureInPicture
           disableRemotePlayback
           aria-label="Campaign film — model wearing Carats by Grace jewellery"
-        />
+        >
+          <source src={currentVideo} type="video/mp4" />
+        </video>
       </div>
       <div className="cg-hero__copy">
         <span className="cg-eyebrow">The Nocturne Edit · 2024</span>
@@ -1039,7 +1054,7 @@ function Trust() {
   );
 }
 
-/* Categories */
+/* Categories — Find your everyday signature (No overlays, clean image alignment) */
 function Categories() {
   return (
     <section className="cg-section cg-wrap" aria-labelledby="cat-h">
@@ -1051,17 +1066,25 @@ function Categories() {
             Find your everyday signature.
           </h2>
         </div>
-        <a className="cg-btn cg-btn--ghost" href="#">View all</a>
+        <Link className="cg-btn cg-btn--ghost" to="/collections/all">View all</Link>
       </div>
       <div className="cg-cat__grid">
         {CATEGORIES.map((c, i) => (
-          <a key={c.name} href="#"
-            className={`cg-tile ${c.cls} reveal`}
-            style={{ transitionDelay: `${i * 60}ms` }}>
-            <img src={c.img} alt={`${c.name} — Carats by Grace`} loading="lazy" />
-            <span className="cg-tile__label">{c.name}</span>
-            <span className="cg-tile__shop">Shop Now →</span>
-          </a>
+          <Link key={c.name} to={`/collections/${c.slug || c.name.toLowerCase()}`}
+            className="cg-tile reveal"
+            style={{ transitionDelay: `${i * 50}ms` }}>
+            <div className="cg-tile__media">
+              <img src={c.img} alt={`${c.name} — Carats by Grace`} loading="lazy" />
+            </div>
+            <div className="cg-tile__info">
+              <div className="cg-tile__top">
+                <h3 className="cg-tile__label">{c.name}</h3>
+                <span className="cg-tile__count">{c.count}</span>
+              </div>
+              <p className="cg-tile__tagline">{c.tagline}</p>
+              <span className="cg-tile__shop">Explore {c.name} →</span>
+            </div>
+          </Link>
         ))}
       </div>
     </section>
@@ -1074,8 +1097,8 @@ function CampaignSplit() {
     <section className="cg-section" style={{ paddingTop: 0 }}>
       <div className="cg-split reveal">
         <div className="cg-split__img">
-          <img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=1200&q=80"
-            alt="Editorial: close-up of a ruby cocktail ring on a hand"
+          <img src={EDITORIAL_ASSETS.campaignSplit}
+            alt="Editorial: close-up of a ruby and diamond suite"
             loading="lazy" />
         </div>
         <div className="cg-split__copy">
@@ -1085,10 +1108,10 @@ function CampaignSplit() {
             Our festive edit pairs a single ruby with warm gold — designed
             for evenings that ask for nothing more.
           </p>
-          <a className="cg-btn cg-btn--solid" href="#"
+          <Link className="cg-btn cg-btn--solid" to="/collections/rings"
             style={{ alignSelf: "flex-start" }}>
             Explore the Edit
-          </a>
+          </Link>
         </div>
       </div>
     </section>
@@ -1115,9 +1138,11 @@ function BestSellers() {
 
   return (
     <section className="cg-section cg-wrap" aria-labelledby="bs-h">
-      <div className="reveal" style={{ display: "flex",
+      <div className="reveal" style={{
+        display: "flex",
         justifyContent: "space-between", alignItems: "end",
-        gap: 24, flexWrap: "wrap", marginBottom: 8 }}>
+        gap: 24, flexWrap: "wrap", marginBottom: 8
+      }}>
         <div>
           <span className="cg-eyebrow">Bestsellers</span>
           <h2 id="bs-h" className="cg-display"
@@ -1211,12 +1236,16 @@ function Limited() {
       </div>
       <div className="cg-limited__grid">
         {LIMITED.map((c, i) => (
-          <a className="cg-limited__card reveal" key={c.name} href="#"
+          <Link className="cg-limited__card reveal" key={c.name} to={`/collections/${c.name.toLowerCase().replace(/\s+/g, '-')}`}
             style={{ transitionDelay: `${i * 50}ms` }}>
-            <img src={c.img} alt={`${c.name} — limited edition`} loading="lazy" />
-            <span className="cg-limited__tag">Limited Edition</span>
-            <span className="cg-limited__name">{c.name}</span>
-          </a>
+            <div className="cg-limited__media">
+              <img src={c.img} alt={`${c.name} — limited edition`} loading="lazy" />
+            </div>
+            <div className="cg-limited__info">
+              <span className="cg-limited__tag">Limited Edition</span>
+              <h3 className="cg-limited__name">{c.name}</h3>
+            </div>
+          </Link>
         ))}
       </div>
     </section>
@@ -1245,12 +1274,12 @@ function Story() {
         </div>
         <div className="cg-story__imgs reveal">
           <figure>
-            <img src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=600&q=80"
-              alt="Editorial: hand resting near the jawline, wearing rings" loading="lazy" />
+            <img src={EDITORIAL_ASSETS.story1}
+              alt="Editorial: model wearing Carats by Grace diamond choker and ring" loading="lazy" />
           </figure>
           <figure>
-            <img src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=600&q=80"
-              alt="Editorial: ear and gold earring close-up" loading="lazy" />
+            <img src={EDITORIAL_ASSETS.story2}
+              alt="Editorial: model wearing Carats by Grace diamond earrings and ring" loading="lazy" />
           </figure>
         </div>
       </div>
@@ -1269,8 +1298,8 @@ function Craft() {
     <section className="cg-section cg-wrap" aria-labelledby="craft-h">
       <div className="cg-craft__grid">
         <div className="cg-craft__media reveal">
-          <img src="https://images.unsplash.com/photo-1617038220319-276d3cfab638?auto=format&fit=crop&w=1200&q=80"
-            alt="Craft: close-up of goldsmith working on a ring" loading="lazy" />
+          <img src={EDITORIAL_ASSETS.craft}
+            alt="Craft: precision setting and hallmarking of fine jewellery" loading="lazy" />
           <button className="cg-craft__play" aria-label="Play craftsmanship film">
             <span><Icon name="play" size={20} /></span>
           </button>
@@ -1308,16 +1337,16 @@ function Bridal() {
       <div className="cg-wrap">
         <div className="cg-bridal__grid reveal">
           <figure className="cg-bridal__a">
-            <img src="https://images.unsplash.com/photo-1602173574767-37ac01994b2a?auto=format&fit=crop&w=900&q=80"
-              alt="Bridal: portrait of model in wedding jewellery" loading="lazy" />
+            <img src={EDITORIAL_ASSETS.bridalA}
+              alt="Bridal: model in haute joaillerie emerald and diamond suite" loading="lazy" />
           </figure>
           <figure className="cg-bridal__b">
-            <img src="https://images.unsplash.com/photo-1599643477877-530eb83abc8e?auto=format&fit=crop&w=700&q=80"
-              alt="Bridal: close-up of necklace" loading="lazy" />
+            <img src={EDITORIAL_ASSETS.bridalB}
+              alt="Bridal: close-up of diamond chandelier earrings and pendant" loading="lazy" />
           </figure>
           <figure className="cg-bridal__c">
-            <img src="https://images.unsplash.com/photo-1588444837495-c6cfeb53f32d?auto=format&fit=crop&w=700&q=80"
-              alt="Bridal: stacked rings on hand" loading="lazy" />
+            <img src={EDITORIAL_ASSETS.bridalC}
+              alt="Bridal: diamond cocktail ring on hand" loading="lazy" />
           </figure>
           <div className="cg-bridal__copy">
             <span className="cg-eyebrow">The Bridal Edit</span>
@@ -1466,18 +1495,12 @@ function Testimonials() {
 
 /* Instagram */
 function Instagram() {
-  const cells = [
-    "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=600&q=80",
-    "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=600&q=80",
-    "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=600&q=80",
-    "https://images.unsplash.com/photo-1599643477877-530eb83abc8e?auto=format&fit=crop&w=600&q=80",
-    "https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=600&q=80",
-    "https://images.unsplash.com/photo-1588444837495-c6cfeb53f32d?auto=format&fit=crop&w=600&q=80",
-  ];
   return (
     <section className="cg-section cg-wrap" aria-labelledby="ig-h">
-      <div className="reveal" style={{ display: "flex", justifyContent: "space-between",
-        alignItems: "end", gap: 24, flexWrap: "wrap", marginBottom: 28 }}>
+      <div className="reveal" style={{
+        display: "flex", justifyContent: "space-between",
+        alignItems: "end", gap: 24, flexWrap: "wrap", marginBottom: 28
+      }}>
         <div>
           <span className="cg-eyebrow">@carats_by_grace</span>
           <h2 id="ig-h" className="cg-display"
@@ -1488,10 +1511,10 @@ function Instagram() {
         <a className="cg-btn cg-btn--ghost" href="#">Follow @carats_by_grace</a>
       </div>
       <div className="cg-insta__grid">
-        {cells.map((src, i) => (
+        {INSTAGRAM_GALLERY.map((it, i) => (
           <a className="cg-insta__cell reveal" key={i} href="#"
             style={{ transitionDelay: `${i * 40}ms` }}>
-            <img src={src} alt={`Instagram post ${i + 1}`} loading="lazy" />
+            <img src={it.src} alt={it.alt} loading="lazy" />
           </a>
         ))}
       </div>
@@ -1511,7 +1534,7 @@ function Visit() {
     <section className="cg-section cg-wrap" aria-labelledby="visit-h">
       <div className="cg-visit__grid reveal">
         <div className="cg-visit__img">
-          <img src="https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=1200&q=80"
+          <img src={EDITORIAL_ASSETS.visitAtelier}
             alt="The Carats by Grace atelier — interior" loading="lazy" />
         </div>
         <div className="cg-visit__form">

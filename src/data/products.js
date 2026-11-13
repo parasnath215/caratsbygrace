@@ -1,9 +1,7 @@
 /* ============================================================
-   CARATS BY GRACE — Placeholder Product Data
+   CARATS BY GRACE — Product Catalog Data
+   All media sourced directly from the official brand assets.
    ============================================================ */
-
-const PH = (w, h, bg = 'FAF6F1', fg = '7B1E3A') =>
-  `https://placehold.co/${w}x${h}/${bg}/${fg}`;
 
 // ── Products ─────────────────────────────────────────────────
 export const products = [
@@ -16,7 +14,7 @@ export const products = [
     price: 85000,
     specs: '18K Gold · 0.50 ct Round Diamond · SI1 Clarity · G Colour',
     metal: '18K Yellow Gold',
-    images: [PH(480, 600), PH(480, 600, 'E9E1D8', '4A1124')],
+    images: ['/assets/model1/m1_8252_final.jpg', '/assets/model1/m1_8253_final.jpg'],
     isNew: true,
     isBestseller: false,
   },
@@ -29,7 +27,7 @@ export const products = [
     price: 48000,
     specs: '22K Gold · Polki Diamond · Meenakari Detail',
     metal: '22K Yellow Gold',
-    images: [PH(480, 600), PH(480, 600, 'E9E1D8', '4A1124')],
+    images: ['/assets/model1/m1_8440_final.jpg', '/assets/model1/m1_8441_final.jpg'],
     isNew: false,
     isBestseller: true,
   },
@@ -42,7 +40,7 @@ export const products = [
     price: 125000,
     specs: '18K Rose Gold · Emerald Drops · Diamond Accents',
     metal: '18K Rose Gold',
-    images: [PH(480, 600), PH(480, 600, 'E9E1D8', '4A1124')],
+    images: ['/assets/model2/cg_jewellers8471.jpg', '/assets/model2/cg_jewellers8620.jpg'],
     isNew: true,
     isBestseller: true,
   },
@@ -55,7 +53,7 @@ export const products = [
     price: 65000,
     specs: '22K Gold · Hand-engraved Meenakari · 2.4 size',
     metal: '22K Yellow Gold',
-    images: [PH(480, 600), PH(480, 600, 'E9E1D8', '4A1124')],
+    images: ['/assets/model1/m1_8247_final.jpg', '/assets/model1/m1_8201_final.jpg'],
     isNew: false,
     isBestseller: true,
   },
@@ -68,7 +66,7 @@ export const products = [
     price: 115000,
     specs: '18K White Gold · 1.00 ct Total Diamond Weight · VS1',
     metal: '18K White Gold',
-    images: [PH(480, 600), PH(480, 600, 'E9E1D8', '4A1124')],
+    images: ['/assets/model1/m1_8255_final.jpg', '/assets/model1/m1_8256_final.jpg'],
     isNew: false,
     isBestseller: true,
   },
@@ -81,7 +79,7 @@ export const products = [
     price: 28000,
     specs: '22K Gold · Ruby Drops · Handcrafted Filigree',
     metal: '22K Yellow Gold',
-    images: [PH(480, 600), PH(480, 600, 'E9E1D8', '4A1124')],
+    images: ['/assets/model2/m2_8126.jpg', '/assets/model2/m2_8135.jpg'],
     isNew: false,
     isBestseller: false,
   },
@@ -94,7 +92,7 @@ export const products = [
     price: 42000,
     specs: '18K Yellow Gold · Hammered Finish · Adjustable',
     metal: '18K Yellow Gold',
-    images: [PH(480, 600), PH(480, 600, 'E9E1D8', '4A1124')],
+    images: ['/assets/model2/m2_8124.jpg', '/assets/model2/m2_8182.jpg'],
     isNew: true,
     isBestseller: false,
   },
@@ -107,7 +105,7 @@ export const products = [
     price: 215000,
     specs: '22K Gold · South Indian Temple Work · Rubies & Pearls',
     metal: '22K Yellow Gold',
-    images: [PH(480, 600), PH(480, 600, 'E9E1D8', '4A1124')],
+    images: ['/assets/model1/m1_8444_final.jpg', '/assets/model1/m1_8448_final.jpg'],
     isNew: false,
     isBestseller: false,
   },
@@ -120,7 +118,7 @@ export const products = [
     price: 250000,
     specs: '22K Gold · Polki Diamonds · Necklace + Earrings + Maang Tikka',
     metal: '22K Yellow Gold',
-    images: [PH(480, 600), PH(480, 600, 'E9E1D8', '4A1124')],
+    images: ['/assets/model2/m2_8463.jpg', '/assets/model2/m2_8467.jpg'],
     isNew: false,
     isBestseller: true,
   },
@@ -133,7 +131,7 @@ export const products = [
     price: 95000,
     specs: '18K Rose Gold · 2.5 ct Oval Ruby · Pavé Diamond Halo',
     metal: '18K Rose Gold',
-    images: [PH(480, 600), PH(480, 600, 'E9E1D8', '4A1124')],
+    images: ['/assets/model1/m1_8403_final.jpg', '/assets/model1/m1_8425_final.jpg'],
     isNew: true,
     isBestseller: false,
   },
@@ -146,7 +144,7 @@ export const products = [
     price: 38000,
     specs: '18K White Gold · 9mm South Sea Pearls · Diamond Caps',
     metal: '18K White Gold',
-    images: [PH(480, 600), PH(480, 600, 'E9E1D8', '4A1124')],
+    images: ['/assets/model2/cg_jewellers8612.jpg', '/assets/model2/cg_jewellers8619.jpg'],
     isNew: false,
     isBestseller: false,
   },
@@ -159,7 +157,7 @@ export const products = [
     price: 15000,
     specs: '22K Gold · 1gm Coin Pendant · Engraving Available',
     metal: '22K Yellow Gold',
-    images: [PH(480, 600), PH(480, 600, 'E9E1D8', '4A1124')],
+    images: ['/assets/categories/cat_pendants.jpg', '/assets/model1/m1_8424_final.jpg'],
     isNew: false,
     isBestseller: true,
   },
@@ -172,7 +170,7 @@ export const products = [
     price: 245000,
     specs: '18K White Gold · 5.00 ct Total Diamond Weight · VVS1 · D Colour',
     metal: '18K White Gold',
-    images: [PH(480, 600), PH(480, 600, 'E9E1D8', '4A1124')],
+    images: ['/assets/model2/m2_8090.jpg', '/assets/model2/m2_8095.jpg'],
     isNew: false,
     isBestseller: false,
   },
@@ -185,7 +183,7 @@ export const products = [
     price: 185000,
     specs: '18K White Gold · 3.00 ct · 7 inches · Box Clasp',
     metal: '18K White Gold',
-    images: [PH(480, 600), PH(480, 600, 'E9E1D8', '4A1124')],
+    images: ['/assets/model2/m2_8186.jpg', '/assets/model2/m2_8188.jpg'],
     isNew: true,
     isBestseller: false,
   },
@@ -198,7 +196,7 @@ export const products = [
     price: 22000,
     specs: '18K Yellow Gold · Diamond Centre · Petal Motif',
     metal: '18K Yellow Gold',
-    images: [PH(480, 600), PH(480, 600, 'E9E1D8', '4A1124')],
+    images: ['/assets/model1/m1_8443_final.jpg', '/assets/model1/m1_8446_final.jpg'],
     isNew: true,
     isBestseller: true,
   },
@@ -211,7 +209,7 @@ export const products = [
     price: 72000,
     specs: '18K Yellow + White Gold · 0.75 ct Diamonds · 18 inch',
     metal: '18K Yellow & White Gold',
-    images: [PH(480, 600), PH(480, 600, 'E9E1D8', '4A1124')],
+    images: ['/assets/model1/m1_8245_final.jpg', '/assets/model1/m1_8244_final.jpg'],
     isNew: false,
     isBestseller: true,
   },
@@ -219,13 +217,13 @@ export const products = [
 
 // ── Categories ───────────────────────────────────────────────
 export const categories = [
-  { name: 'Rings',          slug: 'rings',          label: 'Rings',          image: PH(600, 750) },
-  { name: 'Earrings',       slug: 'earrings',       label: 'Earrings',       image: PH(600, 750) },
-  { name: 'Necklaces',      slug: 'necklaces',      label: 'Necklaces',      image: PH(600, 750) },
-  { name: 'Bracelets',      slug: 'bracelets',      label: 'Bracelets',      image: PH(600, 750) },
-  { name: 'Bridal',         slug: 'bridal',         label: 'Bridal',         image: PH(600, 750) },
-  { name: 'Gifting',        slug: 'gifting',        label: 'Gifting',        image: PH(600, 750) },
-  { name: 'High Jewellery', slug: 'high-jewellery', label: 'High Jewellery', image: PH(600, 750) },
+  { name: 'Rings',          slug: 'rings',          label: 'Rings',          image: '/assets/categories/cat_rings.jpg' },
+  { name: 'Earrings',       slug: 'earrings',       label: 'Earrings',       image: '/assets/categories/cat_earrings.jpg' },
+  { name: 'Necklaces',      slug: 'necklaces',      label: 'Necklaces',      image: '/assets/categories/cat_necklaces.jpg' },
+  { name: 'Bracelets',      slug: 'bracelets',      label: 'Bracelets',      image: '/assets/categories/cat_bracelets.jpg' },
+  { name: 'Bridal',         slug: 'bridal',         label: 'Bridal',         image: '/assets/model2/m2_8463.jpg' },
+  { name: 'Gifting',        slug: 'gifting',        label: 'Gifting',        image: '/assets/categories/cat_pendants.jpg' },
+  { name: 'High Jewellery', slug: 'high-jewellery', label: 'High Jewellery', image: '/assets/model1/m1_8306_final.jpg' },
 ];
 
 // ── Collections ──────────────────────────────────────────────
@@ -235,7 +233,7 @@ export const collections = [
     slug: 'eternal-bloom',
     description:
       'Inspired by the perennial gardens of Rajasthan — florals in 18K gold that never wither.',
-    heroImage: PH(1440, 800, 'F1E3DC', '7B1E3A'),
+    heroImage: '/assets/model1/m1_8446_final.jpg',
     isLimited: false,
   },
   {
@@ -243,7 +241,7 @@ export const collections = [
     slug: 'royal-heritage',
     description:
       'Reviving the opulent jewellery traditions of the Mughal courts with hand-laid Polki and Meenakari.',
-    heroImage: PH(1440, 800, 'FAF6F1', '4A1124'),
+    heroImage: '/assets/model2/m2_8153.jpg',
     isLimited: false,
   },
   {
@@ -251,7 +249,7 @@ export const collections = [
     slug: 'forever-mine',
     description:
       'Bridal and engagement jewellery crafted for life\'s most significant moments.',
-    heroImage: PH(1440, 800, 'E9E1D8', '7B1E3A'),
+    heroImage: '/assets/model2/m2_8463.jpg',
     isLimited: false,
   },
   {
@@ -259,7 +257,7 @@ export const collections = [
     slug: 'modern-muse',
     description:
       'Minimal, architectural pieces that move seamlessly from boardroom to celebration.',
-    heroImage: PH(1440, 800, '1C1517', 'C6A15B'),
+    heroImage: '/assets/model1/m1_8256_final.jpg',
     isLimited: false,
   },
   {
@@ -267,7 +265,7 @@ export const collections = [
     slug: 'high-jewellery',
     description:
       'An exclusive atelier edit — one-of-a-kind pieces in certified diamonds and vivid gemstones.',
-    heroImage: PH(1440, 800, '17120F', 'C6A15B'),
+    heroImage: '/assets/model2/m2_8090.jpg',
     isLimited: true,
   },
 ];

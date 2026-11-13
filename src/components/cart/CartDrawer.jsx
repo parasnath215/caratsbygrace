@@ -5,6 +5,7 @@
 // progress toward free shipping, checkout CTA, empty state.
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 
 /* ===========================================================================
    1. STYLES (scoped-ish; prefixed cd- to avoid clashes)
@@ -382,10 +383,10 @@ export default function CartDrawer({
                 <ul className="cd-list">
                   {items.map((item) => (
                     <li key={item._cartKey || item.id} className="cd-item">
-                      <a href={`/product/${item.id}`} className="cd-item__media"
+                      <Link to={`/product/${item.id}`} className="cd-item__media"
                          onClick={onClose}>
                         <img src={item.image || item.img} alt={item.name} loading="lazy" />
-                      </a>
+                      </Link>
                       <div className="cd-item__info">
                         <h3 className="cd-item__name">{item.name}</h3>
                         {item.spec && <p className="cd-item__spec">{item.spec}</p>}

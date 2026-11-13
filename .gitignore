@@ -31,3 +31,8 @@ coverage/
 
 # TypeScript
 *.tsbuildinfo
+
+# Raw uncompressed camera source files
+assest/
+raw/
+

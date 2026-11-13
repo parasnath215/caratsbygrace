@@ -157,7 +157,7 @@ const ACCOUNT_CSS = `
     grid-template-columns: 1fr;
     gap: 20px;
   }
-  .ac-tab-nav {
+  .ac-nav {
     flex-direction: row;
     overflow-x: auto;
     scrollbar-width: none;
@@ -165,7 +165,7 @@ const ACCOUNT_CSS = `
     padding: 6px;
     gap: 6px;
   }
-  .ac-tab-nav::-webkit-scrollbar {
+  .ac-nav::-webkit-scrollbar {
     display: none;
   }
   .ac-tab-btn {
@@ -291,7 +291,7 @@ export default function AccountPage() {
                     </div>
                     <div style={{ display: 'flex', gap: 18, alignItems: 'center' }}>
                       <img
-                        src="https://images.unsplash.com/photo-1603561596112-0a132b757442?auto=format&fit=crop&w=160&q=80"
+                        src="/assets/model1/m1_8252_final.jpg"
                         alt="The Aurelia Ring"
                         style={{ width: 68, height: 80, objectFit: 'cover', borderRadius: 2 }}
                       />

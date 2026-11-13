@@ -10,8 +10,8 @@ const INITIAL_WISHLIST = [
     spec: "18K Gold · 0.42 ct",
     price: 64000,
     inStock: true,
-    img: "https://images.unsplash.com/photo-1603561596112-0a132b757442?auto=format&fit=crop&w=700&q=80",
-    hover: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=700&q=80",
+    img: "/assets/model1/m1_8252_final.jpg",
+    hover: "/assets/model1/m1_8253_final.jpg",
   },
   {
     id: "r2",
@@ -21,8 +21,8 @@ const INITIAL_WISHLIST = [
     price: 132000,
     inStock: true,
     lowStock: true,
-    img: "https://images.unsplash.com/photo-1602752250015-52934bc45613?auto=format&fit=crop&w=700&q=80",
-    hover: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=700&q=80",
+    img: "/assets/model1/m1_8403_final.jpg",
+    hover: "/assets/model1/m1_8425_final.jpg",
   },
   {
     id: "e2",
@@ -31,8 +31,8 @@ const INITIAL_WISHLIST = [
     spec: "Rose Gold",
     price: 32000,
     inStock: true,
-    img: "https://images.unsplash.com/photo-1629224316810-9d8805b95e76?auto=format&fit=crop&w=700&q=80",
-    hover: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=700&q=80",
+    img: "/assets/model2/m2_8126.jpg",
+    hover: "/assets/model2/m2_8135.jpg",
   },
 ];
 

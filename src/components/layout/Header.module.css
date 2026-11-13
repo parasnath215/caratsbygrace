@@ -346,4 +346,12 @@
     width: 38px;
     height: 38px;
   }
+  /* Keep the centred wordmark from colliding with the utility icons on
+     narrow phones (burger + 4 icons leave ~120px for the logo). */
+  .logoWrap {
+    min-width: 0;
+  }
+  .logoWrap img {
+    max-width: 118px;
+  }
 }

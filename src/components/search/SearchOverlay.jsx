@@ -192,30 +192,30 @@ const TRENDING = [
 ];
 
 const COLLECTIONS = [
-  { id: "c1", label: "The Nocturne Edit", meta: "Collection" },
-  { id: "c2", label: "The Ruby Hours", meta: "Collection" },
-  { id: "c3", label: "The Bridal Edit", meta: "Collection" },
+  { id: "bridal", label: "The Bridal Edit", meta: "Collection" },
+  { id: "gifting", label: "The Gifting Edit", meta: "Collection" },
+  { id: "high-jewellery", label: "High Jewellery", meta: "Collection" },
 ];
 
 const PRODUCTS = [
   { id: "r1", name: "The Aurelia Ring", spec: "18K Gold · 0.42 ct", price: 64000, cat: "Rings", keywords: "ring gold solitaire aurelia",
-    img: "https://images.unsplash.com/photo-1603561596112-0a132b757442?auto=format&fit=crop&w=300&q=80" },
+    img: "/assets/model1/m1_8252_final.jpg" },
   { id: "r2", name: "Ruby Halo", spec: "Rose Gold · Ruby", price: 132000, cat: "Rings", keywords: "ring ruby rose gold cocktail",
-    img: "https://images.unsplash.com/photo-1602752250015-52934bc45613?auto=format&fit=crop&w=300&q=80" },
+    img: "/assets/model1/m1_8403_final.jpg" },
   { id: "r3", name: "Grace Solitaire", spec: "18K · 0.60 ct", price: 98000, cat: "Rings", keywords: "ring solitaire white gold bridal",
-    img: "https://images.unsplash.com/photo-1588444837495-c6cfeb53f32d?auto=format&fit=crop&w=300&q=80" },
+    img: "/assets/model2/m2_8124.jpg" },
   { id: "e1", name: "Drop Lumière", spec: "18K · 0.30 ct", price: 76000, cat: "Earrings", keywords: "earrings drops gold diamonds",
-    img: "https://images.unsplash.com/photo-1630019852942-f89202989a59?auto=format&fit=crop&w=300&q=80" },
+    img: "/assets/model1/m1_8440_final.jpg" },
   { id: "e2", name: "Petal Studs", spec: "Rose Gold", price: 32000, cat: "Earrings", keywords: "earrings studs rose gold everyday",
-    img: "https://images.unsplash.com/photo-1629224316810-9d8805b95e76?auto=format&fit=crop&w=300&q=80" },
+    img: "/assets/model2/m2_8126.jpg" },
   { id: "e3", name: "Nightfall Hoops", spec: "18K · Diamonds", price: 118000, cat: "Earrings", keywords: "earrings hoops diamonds",
-    img: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=300&q=80" },
+    img: "/assets/model1/m1_8306_final.jpg" },
   { id: "n1", name: "Lumen Pendant", spec: "18K · 0.25 ct", price: 54000, cat: "Necklaces", keywords: "necklace pendant gold",
-    img: "https://images.unsplash.com/photo-1599643477877-530eb83abc8e?auto=format&fit=crop&w=300&q=80" },
+    img: "/assets/model2/cg_jewellers8471.jpg" },
   { id: "n3", name: "Étoile Necklace", spec: "18K · Diamonds", price: 156000, cat: "Necklaces", keywords: "necklace diamonds bridal",
-    img: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=300&q=80" },
+    img: "/assets/model1/m1_8247_final.jpg" },
   { id: "b1", name: "Slip Bracelet", spec: "18K Gold", price: 58000, cat: "Bracelets", keywords: "bracelet gold everyday",
-    img: "https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=300&q=80" },
+    img: "/assets/model2/m2_8124.jpg" },
 ];
 
 const RECENT_KEY = "cbg_recent_searches_v1";
@@ -367,7 +367,7 @@ export default function SearchOverlay({
       list.push({ kind: "collection", label: c.label, href: `/collections/${c.id}` })
     );
     results.products.forEach((p) =>
-      list.push({ kind: "product", label: p.name, href: `/product/${p.id}`, id: p.id })
+      list.push({ kind: "product", label: p.name, href: `/products/${p.id}`, id: p.id })
     );
     return list;
   }, [results, hasQuery]);
@@ -400,7 +400,7 @@ export default function SearchOverlay({
     const clean = (term ?? query).trim();
     if (!clean) return;
     pushRecent(clean);
-    goTo(`/search?q=${encodeURIComponent(clean)}`);
+    goTo(`/collections?q=${encodeURIComponent(clean)}`);
   };
 
   const pickSuggestion = (term) => {
@@ -598,7 +598,7 @@ export default function SearchOverlay({
                               id={`so-item-${flatIndex}`}
                               role="listitem"
                               className={`so-result ${isActive ? "is-active" : ""}`}
-                              onClick={() => pickResult({ href: `/product/${p.id}` }, p.name)}
+                              onClick={() => pickResult({ href: `/products/${p.id}` }, p.name)}
                             >
                               <img className="so-result__img" src={p.img} alt="" loading="lazy" />
                               <div className="so-result__body">

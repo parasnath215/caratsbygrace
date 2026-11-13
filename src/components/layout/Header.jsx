@@ -3,7 +3,7 @@
 // Matches the exact alignment, layout, and luxury aesthetic of the Home Page header.
 
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Search, Heart, User, ShoppingBag, Menu, X, ChevronDown } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
 import { useWishlist } from '../../context/WishlistContext';
@@ -16,6 +16,7 @@ export default function Header() {
   const { items: wishlistItems } = useWishlist();
   const { toggleSearch } = useUI();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [megaOpen, setMegaOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -29,6 +30,12 @@ export default function Header() {
       document.body.style.overflow = '';
     };
   }, [mobileOpen]);
+
+  // Close any open menu when the route changes
+  useEffect(() => {
+    setMegaOpen(false);
+    setMobileOpen(false);
+  }, [location.pathname]);
 
   const nav = [
     { label: 'Rings', href: '/collections/rings', mega: true },
@@ -82,7 +89,10 @@ export default function Header() {
             <Link
               key={item.label}
               to={item.href}
-              className={styles.navLink}
+              className={`${styles.navLink} ${
+                location.pathname === item.href ? styles.navLinkActive : ''
+              }`}
+              aria-current={location.pathname === item.href ? 'page' : undefined}
               onMouseEnter={() => setMegaOpen(Boolean(item.mega))}
               onFocus={() => setMegaOpen(Boolean(item.mega))}
             >
@@ -173,7 +183,7 @@ export default function Header() {
               onClick={() => setMegaOpen(false)}
             >
               <img
-                src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=600&q=80"
+                src="/assets/model1/m1_8247_final.jpg"
                 alt="New collection preview"
                 loading="lazy"
               />

@@ -140,9 +140,8 @@ export default function Footer() {
             </button>
           </div>
 
-          {/* Legal — [PLACEHOLDER: update year] */}
           <p className={styles.legal}>
-            © 2024 Carats by Grace. All rights reserved.
+            © {new Date().getFullYear()} Carats by Grace. All rights reserved.
           </p>
         </div>
       </div>

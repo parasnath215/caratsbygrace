@@ -1,0 +1,506 @@
+{
+  "model1": [
+    {
+      "original_name": "Untitled Capture8201 Final.jpg",
+      "web_name": "m1_8201_final.jpg",
+      "web_path": "/assets/model1/m1_8201_final.jpg",
+      "width": 5464,
+      "height": 8192,
+      "aspect": 0.67,
+      "orientation": "portrait",
+      "optimized_size_kb": 255.7
+    },
+    {
+      "original_name": "Untitled Capture8225 Final.jpg",
+      "web_name": "m1_8225_final.jpg",
+      "web_path": "/assets/model1/m1_8225_final.jpg",
+      "width": 5464,
+      "height": 8192,
+      "aspect": 0.67,
+      "orientation": "portrait",
+      "optimized_size_kb": 233.2
+    },
+    {
+      "original_name": "Untitled Capture8235 Final.jpg",
+      "web_name": "m1_8235_final.jpg",
+      "web_path": "/assets/model1/m1_8235_final.jpg",
+      "width": 5464,
+      "height": 8192,
+      "aspect": 0.67,
+      "orientation": "portrait",
+      "optimized_size_kb": 242.0
+    },
+    {
+      "original_name": "Untitled Capture8244 Final.jpg",
+      "web_name": "m1_8244_final.jpg",
+      "web_path": "/assets/model1/m1_8244_final.jpg",
+      "width": 5464,
+      "height": 8192,
+      "aspect": 0.67,
+      "orientation": "portrait",
+      "optimized_size_kb": 199.5
+    },
+    {
+      "original_name": "Untitled Capture8245 Final.jpg",
+      "web_name": "m1_8245_final.jpg",
+      "web_path": "/assets/model1/m1_8245_final.jpg",
+      "width": 5464,
+      "height": 8192,
+      "aspect": 0.67,
+      "orientation": "portrait",
+      "optimized_size_kb": 197.8
+    },
+    {
+      "original_name": "Untitled Capture8247 Final.jpg",
+      "web_name": "m1_8247_final.jpg",
+      "web_path": "/assets/model1/m1_8247_final.jpg",
+      "width": 5464,
+      "height": 8192,
+      "aspect": 0.67,
+      "orientation": "portrait",
+      "optimized_size_kb": 208.9
+    },
+    {
+      "original_name": "Untitled Capture8252 final.jpg",
+      "web_name": "m1_8252_final.jpg",
+      "web_path": "/assets/model1/m1_8252_final.jpg",
+      "width": 5464,
+      "height": 8192,
+      "aspect": 0.67,
+      "orientation": "portrait",
+      "optimized_size_kb": 311.8
+    },
+    {
+      "original_name": "Untitled Capture8253 Final.jpg",
+      "web_name": "m1_8253_final.jpg",
+      "web_path": "/assets/model1/m1_8253_final.jpg",
+      "width": 5464,
+      "height": 8192,
+      "aspect": 0.67,
+      "orientation": "portrait",
+      "optimized_size_kb": 318.6
+    },
+    {
+      "original_name": "Untitled Capture8255 Final.jpg",
+      "web_name": "m1_8255_final.jpg",
+      "web_path": "/assets/model1/m1_8255_final.jpg",
+      "width": 5464,
+      "height": 8192,
+      "aspect": 0.67,
+      "orientation": "portrait",
+      "optimized_size_kb": 279.7
+    },
+    {
+      "original_name": "Untitled Capture8256 Final.jpg",
+      "web_name": "m1_8256_final.jpg",
+      "web_path": "/assets/model1/m1_8256_final.jpg",
+      "width": 5464,
+      "height": 8192,
+      "aspect": 0.67,
+      "orientation": "portrait",
+      "optimized_size_kb": 329.3
+    },
+    {
+      "original_name": "Untitled Capture8275 Final.jpg",
+      "web_name": "m1_8275_final.jpg",
+      "web_path": "/assets/model1/m1_8275_final.jpg",
+      "width": 5464,
+      "height": 8192,
+      "aspect": 0.67,
+      "orientation": "portrait",
+      "optimized_size_kb": 264.3
+    },
+    {
+      "original_name": "Untitled Capture8306 Final.jpg",
+      "web_name": "m1_8306_final.jpg",
+      "web_path": "/assets/model1/m1_8306_final.jpg",
+      "width": 5464,
+      "height": 8192,
+      "aspect": 0.67,
+      "orientation": "portrait",
+      "optimized_size_kb": 186.8
+    },
+    {
+      "original_name": "Untitled Capture8394 Final.jpg",
+      "web_name": "m1_8394_final.jpg",
+      "web_path": "/assets/model1/m1_8394_final.jpg",
+      "width": 5464,
+      "height": 8192,
+      "aspect": 0.67,
+      "orientation": "portrait",
+      "optimized_size_kb": 129.0
+    },
+    {
+      "original_name": "Untitled Capture8396 Final.jpg",
+      "web_name": "m1_8396_final.jpg",
+      "web_path": "/assets/model1/m1_8396_final.jpg",
+      "width": 5464,
+      "height": 8192,
+      "aspect": 0.67,
+      "orientation": "portrait",
+      "optimized_size_kb": 145.5
+    },
+    {
+      "original_name": "Untitled Capture8403 Final.jpg",
+      "web_name": "m1_8403_final.jpg",
+      "web_path": "/assets/model1/m1_8403_final.jpg",
+      "width": 8192,
+      "height": 5464,
+      "aspect": 1.5,
+      "orientation": "landscape",
+      "optimized_size_kb": 119.0
+    },
+    {
+      "original_name": "Untitled Capture8404 Final.jpg",
+      "web_name": "m1_8404_final.jpg",
+      "web_path": "/assets/model1/m1_8404_final.jpg",
+      "width": 8192,
+      "height": 5464,
+      "aspect": 1.5,
+      "orientation": "landscape",
+      "optimized_size_kb": 125.1
+    },
+    {
+      "original_name": "Untitled Capture8424 Final.jpg",
+      "web_name": "m1_8424_final.jpg",
+      "web_path": "/assets/model1/m1_8424_final.jpg",
+      "width": 5088,
+      "height": 3392,
+      "aspect": 1.5,
+      "orientation": "landscape",
+      "optimized_size_kb": 156.6
+    },
+    {
+      "original_name": "Untitled Capture8425 Final.jpg",
+      "web_name": "m1_8425_final.jpg",
+      "web_path": "/assets/model1/m1_8425_final.jpg",
+      "width": 5088,
+      "height": 3392,
+      "aspect": 1.5,
+      "orientation": "landscape",
+      "optimized_size_kb": 165.6
+    },
+    {
+      "original_name": "Untitled Capture8440 Final.jpg",
+      "web_name": "m1_8440_final.jpg",
+      "web_path": "/assets/model1/m1_8440_final.jpg",
+      "width": 3392,
+      "height": 5088,
+      "aspect": 0.67,
+      "orientation": "portrait",
+      "optimized_size_kb": 334.8
+    },
+    {
+      "original_name": "Untitled Capture8441 Final.jpg",
+      "web_name": "m1_8441_final.jpg",
+      "web_path": "/assets/model1/m1_8441_final.jpg",
+      "width": 3392,
+      "height": 5088,
+      "aspect": 0.67,
+      "orientation": "portrait",
+      "optimized_size_kb": 327.3
+    },
+    {
+      "original_name": "Untitled Capture8443 Final.jpg",
+      "web_name": "m1_8443_final.jpg",
+      "web_path": "/assets/model1/m1_8443_final.jpg",
+      "width": 3392,
+      "height": 5088,
+      "aspect": 0.67,
+      "orientation": "portrait",
+      "optimized_size_kb": 370.6
+    },
+    {
+      "original_name": "Untitled Capture8444 Final.jpg",
+      "web_name": "m1_8444_final.jpg",
+      "web_path": "/assets/model1/m1_8444_final.jpg",
+      "width": 3392,
+      "height": 5088,
+      "aspect": 0.67,
+      "orientation": "portrait",
+      "optimized_size_kb": 288.1
+    },
+    {
+      "original_name": "Untitled Capture8446 Final.jpg",
+      "web_name": "m1_8446_final.jpg",
+      "web_path": "/assets/model1/m1_8446_final.jpg",
+      "width": 3392,
+      "height": 5088,
+      "aspect": 0.67,
+      "orientation": "portrait",
+      "optimized_size_kb": 364.1
+    },
+    {
+      "original_name": "Untitled Capture8448 Final.jpg",
+      "web_name": "m1_8448_final.jpg",
+      "web_path": "/assets/model1/m1_8448_final.jpg",
+      "width": 3392,
+      "height": 5088,
+      "aspect": 0.67,
+      "orientation": "portrait",
+      "optimized_size_kb": 354.4
+    }
+  ],
+  "model2": [
+    {
+      "original_name": "Untitled Capture8090.CR3",
+      "web_name": "m2_8090.jpg",
+      "web_path": "/assets/model2/m2_8090.jpg",
+      "width": 8192,
+      "height": 5464,
+      "aspect": 1.5,
+      "orientation": "landscape",
+      "optimized_size_kb": 191.4
+    },
+    {
+      "original_name": "Untitled Capture8095.CR3",
+      "web_name": "m2_8095.jpg",
+      "web_path": "/assets/model2/m2_8095.jpg",
+      "width": 8192,
+      "height": 5464,
+      "aspect": 1.5,
+      "orientation": "landscape",
+      "optimized_size_kb": 190.0
+    },
+    {
+      "original_name": "Untitled Capture8101.CR3",
+      "web_name": "m2_8101.jpg",
+      "web_path": "/assets/model2/m2_8101.jpg",
+      "width": 8192,
+      "height": 5464,
+      "aspect": 1.5,
+      "orientation": "landscape",
+      "optimized_size_kb": 183.3
+    },
+    {
+      "original_name": "Untitled Capture8124.CR3",
+      "web_name": "m2_8124.jpg",
+      "web_path": "/assets/model2/m2_8124.jpg",
+      "width": 8192,
+      "height": 5464,
+      "aspect": 1.5,
+      "orientation": "landscape",
+      "optimized_size_kb": 246.0
+    },
+    {
+      "original_name": "Untitled Capture8126.CR3",
+      "web_name": "m2_8126.jpg",
+      "web_path": "/assets/model2/m2_8126.jpg",
+      "width": 8192,
+      "height": 5464,
+      "aspect": 1.5,
+      "orientation": "landscape",
+      "optimized_size_kb": 236.1
+    },
+    {
+      "original_name": "Untitled Capture8135.CR3",
+      "web_name": "m2_8135.jpg",
+      "web_path": "/assets/model2/m2_8135.jpg",
+      "width": 8192,
+      "height": 5464,
+      "aspect": 1.5,
+      "orientation": "landscape",
+      "optimized_size_kb": 204.8
+    },
+    {
+      "original_name": "Untitled Capture8153.CR3",
+      "web_name": "m2_8153.jpg",
+      "web_path": "/assets/model2/m2_8153.jpg",
+      "width": 8192,
+      "height": 5464,
+      "aspect": 1.5,
+      "orientation": "landscape",
+      "optimized_size_kb": 243.1
+    },
+    {
+      "original_name": "Untitled Capture8154.CR3",
+      "web_name": "m2_8154.jpg",
+      "web_path": "/assets/model2/m2_8154.jpg",
+      "width": 8192,
+      "height": 5464,
+      "aspect": 1.5,
+      "orientation": "landscape",
+      "optimized_size_kb": 240.3
+    },
+    {
+      "original_name": "Untitled Capture8157.CR3",
+      "web_name": "m2_8157.jpg",
+      "web_path": "/assets/model2/m2_8157.jpg",
+      "width": 8192,
+      "height": 5464,
+      "aspect": 1.5,
+      "orientation": "landscape",
+      "optimized_size_kb": 188.7
+    },
+    {
+      "original_name": "Untitled Capture8182.CR3",
+      "web_name": "m2_8182.jpg",
+      "web_path": "/assets/model2/m2_8182.jpg",
+      "width": 8192,
+      "height": 5464,
+      "aspect": 1.5,
+      "orientation": "landscape",
+      "optimized_size_kb": 199.5
+    },
+    {
+      "original_name": "Untitled Capture8186.CR3",
+      "web_name": "m2_8186.jpg",
+      "web_path": "/assets/model2/m2_8186.jpg",
+      "width": 8192,
+      "height": 5464,
+      "aspect": 1.5,
+      "orientation": "landscape",
+      "optimized_size_kb": 256.4
+    },
+    {
+      "original_name": "Untitled Capture8188.CR3",
+      "web_name": "m2_8188.jpg",
+      "web_path": "/assets/model2/m2_8188.jpg",
+      "width": 8192,
+      "height": 5464,
+      "aspect": 1.5,
+      "orientation": "landscape",
+      "optimized_size_kb": 231.2
+    },
+    {
+      "original_name": "Untitled Capture8339.CR3",
+      "web_name": "m2_8339.jpg",
+      "web_path": "/assets/model2/m2_8339.jpg",
+      "width": 8192,
+      "height": 5464,
+      "aspect": 1.5,
+      "orientation": "landscape",
+      "optimized_size_kb": 147.8
+    },
+    {
+      "original_name": "Untitled Capture8353.CR3",
+      "web_name": "m2_8353.jpg",
+      "web_path": "/assets/model2/m2_8353.jpg",
+      "width": 8192,
+      "height": 5464,
+      "aspect": 1.5,
+      "orientation": "landscape",
+      "optimized_size_kb": 296.4
+    },
+    {
+      "original_name": "Untitled Capture8365.CR3",
+      "web_name": "m2_8365.jpg",
+      "web_path": "/assets/model2/m2_8365.jpg",
+      "width": 8192,
+      "height": 5464,
+      "aspect": 1.5,
+      "orientation": "landscape",
+      "optimized_size_kb": 297.8
+    },
+    {
+      "original_name": "Untitled Capture8371.CR3",
+      "web_name": "m2_8371.jpg",
+      "web_path": "/assets/model2/m2_8371.jpg",
+      "width": 8192,
+      "height": 5464,
+      "aspect": 1.5,
+      "orientation": "landscape",
+      "optimized_size_kb": 220.0
+    },
+    {
+      "original_name": "Untitled Capture8463.CR3",
+      "web_name": "m2_8463.jpg",
+      "web_path": "/assets/model2/m2_8463.jpg",
+      "width": 8192,
+      "height": 5464,
+      "aspect": 1.5,
+      "orientation": "landscape",
+      "optimized_size_kb": 173.7
+    },
+    {
+      "original_name": "Untitled Capture8467.CR3",
+      "web_name": "m2_8467.jpg",
+      "web_path": "/assets/model2/m2_8467.jpg",
+      "width": 8192,
+      "height": 5464,
+      "aspect": 1.5,
+      "orientation": "landscape",
+      "optimized_size_kb": 300.8
+    },
+    {
+      "original_name": "cg jewellers8471.CR3",
+      "web_name": "cg_jewellers8471.jpg",
+      "web_path": "/assets/model2/cg_jewellers8471.jpg",
+      "width": 8192,
+      "height": 5464,
+      "aspect": 1.5,
+      "orientation": "landscape",
+      "optimized_size_kb": 243.7
+    },
+    {
+      "original_name": "cg jewellers8593.CR3",
+      "web_name": "cg_jewellers8593.jpg",
+      "web_path": "/assets/model2/cg_jewellers8593.jpg",
+      "width": 8192,
+      "height": 5464,
+      "aspect": 1.5,
+      "orientation": "landscape",
+      "optimized_size_kb": 122.3
+    },
+    {
+      "original_name": "cg jewellers8599.CR3",
+      "web_name": "cg_jewellers8599.jpg",
+      "web_path": "/assets/model2/cg_jewellers8599.jpg",
+      "width": 8192,
+      "height": 5464,
+      "aspect": 1.5,
+      "orientation": "landscape",
+      "optimized_size_kb": 127.8
+    },
+    {
+      "original_name": "cg jewellers8612.CR3",
+      "web_name": "cg_jewellers8612.jpg",
+      "web_path": "/assets/model2/cg_jewellers8612.jpg",
+      "width": 5088,
+      "height": 3392,
+      "aspect": 1.5,
+      "orientation": "landscape",
+      "optimized_size_kb": 206.7
+    },
+    {
+      "original_name": "cg jewellers8619.CR3",
+      "web_name": "cg_jewellers8619.jpg",
+      "web_path": "/assets/model2/cg_jewellers8619.jpg",
+      "width": 8192,
+      "height": 5464,
+      "aspect": 1.5,
+      "orientation": "landscape",
+      "optimized_size_kb": 310.2
+    },
+    {
+      "original_name": "cg jewellers8620.CR3",
+      "web_name": "cg_jewellers8620.jpg",
+      "web_path": "/assets/model2/cg_jewellers8620.jpg",
+      "width": 8192,
+      "height": 5464,
+      "aspect": 1.5,
+      "orientation": "landscape",
+      "optimized_size_kb": 300.6
+    },
+    {
+      "original_name": "cg jewellers8625.CR3",
+      "web_name": "cg_jewellers8625.jpg",
+      "web_path": "/assets/model2/cg_jewellers8625.jpg",
+      "width": 8192,
+      "height": 5464,
+      "aspect": 1.5,
+      "orientation": "landscape",
+      "optimized_size_kb": 294.4
+    }
+  ],
+  "videos": [
+    {
+      "filename": "hero banner desktop.mp4",
+      "size_mb": 80.51
+    },
+    {
+      "filename": "hero banner mobile.mp4",
+      "size_mb": 74.31
+    }
+  ]
+}

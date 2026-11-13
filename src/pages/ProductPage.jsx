@@ -6,10 +6,11 @@
 // → Recently viewed.
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useUI } from "../context/UIContext";
 import { useWishlist } from "../context/WishlistContext";
 import { useDocumentTitle } from "../hooks/useDocumentTitle";
+import { PRODUCT_ASSETS } from "../data/assets";
 
 /* ===========================================================================
    1. PAGE CSS (subset of brand tokens — safe to remove if global)
@@ -233,7 +234,7 @@ const INR = (n) => "₹" + n.toLocaleString("en-IN");
    3. PLACEHOLDER DATA
    Replace with fetch('/api/products/:id') from your Node API.
 =========================================================================== */
-const PRODUCT = {
+const DEFAULT_PRODUCT = {
   id: "r1",
   name: "The Aurelia Ring",
   cat: "Rings",
@@ -250,11 +251,11 @@ const PRODUCT = {
   sizeOptions: ["10", "11", "12", "13", "14", "15", "16"],
   outOfStockSizes: ["16"],
   images: [
-    { src: "https://images.unsplash.com/photo-1603561596112-0a132b757442?auto=format&fit=crop&w=1200&q=85", alt: "The Aurelia Ring — front view" },
-    { src: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=1200&q=85", alt: "The Aurelia Ring — on hand" },
-    { src: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=1200&q=85", alt: "The Aurelia Ring — side detail" },
-    { src: "https://images.unsplash.com/photo-1588444837495-c6cfeb53f32d?auto=format&fit=crop&w=1200&q=85", alt: "The Aurelia Ring — pairing with other rings" },
-    { src: "https://images.unsplash.com/photo-1598560917505-59a3ad559071?auto=format&fit=crop&w=1200&q=85", alt: "The Aurelia Ring — studio on ivory" },
+    { src: "/assets/model1/m1_8252_final.jpg", alt: "The Aurelia Ring — front view on hand" },
+    { src: "/assets/model1/m1_8253_final.jpg", alt: "The Aurelia Ring — hand close-up" },
+    { src: "/assets/model1/m1_8255_final.jpg", alt: "The Aurelia Ring — side detail" },
+    { src: "/assets/categories/cat_rings.jpg", alt: "The Aurelia Ring — setting macro detail" },
+    { src: "/assets/model1/m1_8247_final.jpg", alt: "The Aurelia Ring — styled with diamond suite" },
   ],
   details: {
     "Product details": [
@@ -281,32 +282,32 @@ const PRODUCT = {
 
 const COMPLETE_LOOK = [
   { id: "e2", name: "Petal Studs", spec: "Rose Gold", price: 32000,
-    img: "https://images.unsplash.com/photo-1629224316810-9d8805b95e76?auto=format&fit=crop&w=700&q=80",
-    hover: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=700&q=80" },
+    img: "/assets/model2/m2_8126.jpg",
+    hover: "/assets/model2/m2_8135.jpg" },
   { id: "n1", name: "Lumen Pendant", spec: "18K · 0.25 ct", price: 54000,
-    img: "https://images.unsplash.com/photo-1599643477877-530eb83abc8e?auto=format&fit=crop&w=700&q=80",
-    hover: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=700&q=80" },
+    img: "/assets/model2/cg_jewellers8471.jpg",
+    hover: "/assets/model2/cg_jewellers8620.jpg" },
   { id: "b1", name: "Slip Bracelet", spec: "18K Gold", price: 58000,
-    img: "https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=700&q=80",
-    hover: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=700&q=80" },
+    img: "/assets/model2/m2_8124.jpg",
+    hover: "/assets/model2/m2_8182.jpg" },
   { id: "r4", name: "Étoile Band", spec: "18K Gold", price: 42000,
-    img: "https://images.unsplash.com/photo-1598560917505-59a3ad559071?auto=format&fit=crop&w=700&q=80",
-    hover: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=700&q=80" },
+    img: "/assets/model1/m1_8255_final.jpg",
+    hover: "/assets/model1/m1_8256_final.jpg" },
 ];
 
 const RECENTLY_VIEWED = [
   { id: "r3", name: "Grace Solitaire", spec: "18K · 0.60 ct", price: 98000,
-    img: "https://images.unsplash.com/photo-1588444837495-c6cfeb53f32d?auto=format&fit=crop&w=700&q=80",
-    hover: "https://images.unsplash.com/photo-1602173574767-37ac01994b2a?auto=format&fit=crop&w=700&q=80" },
+    img: "/assets/model2/m2_8124.jpg",
+    hover: "/assets/model2/m2_8101.jpg" },
   { id: "r2", name: "Ruby Halo", spec: "Rose Gold · Ruby", price: 132000,
-    img: "https://images.unsplash.com/photo-1602752250015-52934bc45613?auto=format&fit=crop&w=700&q=80",
-    hover: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=700&q=80" },
+    img: "/assets/model1/m1_8403_final.jpg",
+    hover: "/assets/model1/m1_8425_final.jpg" },
   { id: "e1", name: "Drop Lumière", spec: "18K · 0.30 ct", price: 76000,
-    img: "https://images.unsplash.com/photo-1630019852942-f89202989a59?auto=format&fit=crop&w=700&q=80",
-    hover: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=700&q=80" },
+    img: "/assets/model1/m1_8440_final.jpg",
+    hover: "/assets/model1/m1_8441_final.jpg" },
   { id: "n2", name: "Sculpt Chain", spec: "Rose Gold", price: 47000,
-    img: "https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=700&q=80",
-    hover: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=700&q=80" },
+    img: "/assets/model2/m2_8090.jpg",
+    hover: "/assets/model2/m2_8095.jpg" },
 ];
 
 /* ===========================================================================
@@ -433,9 +434,63 @@ function MiniCard({ p, onEnquire }) {
 }
 
 /* ===========================================================================
-   7. PAGE
+   7. PRODUCT RESOLUTION
+   Turns /product/:slug into the catalog piece it points at, so cards and
+   search results land on the right creation (previously every URL showed
+   the same Aurelia Ring).
 =========================================================================== */
-export default function ProductPage({ onAddToCart, onWishlist }) {
+const CATALOG = Object.entries(PRODUCT_ASSETS).flatMap(([cat, items]) =>
+  items.map((p) => ({ ...p, cat }))
+);
+
+const slugifyProduct = (value) =>
+  value.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+
+function resolveProduct(slug) {
+  if (!slug) return DEFAULT_PRODUCT;
+  const match = CATALOG.find(
+    (p) => p.id === slug || slugifyProduct(p.name) === slug
+  );
+  if (!match) return DEFAULT_PRODUCT;
+
+  const isSized = ["Rings", "Bracelets", "Bangles"].includes(match.cat);
+
+  return {
+    ...DEFAULT_PRODUCT,
+    id: match.id,
+    name: match.name,
+    cat: match.cat,
+    spec: match.spec,
+    price: match.price,
+    emi: Math.round(match.price / 12),
+    sizeOptions: isSized ? DEFAULT_PRODUCT.sizeOptions : [],
+    outOfStockSizes: isSized ? DEFAULT_PRODUCT.outOfStockSizes : [],
+    metalOptions: DEFAULT_PRODUCT.metalOptions.map((m) => ({
+      ...m,
+      available: m.label === match.metal,
+    })),
+    images: [
+      { src: match.img, alt: `${match.name} — on hand` },
+      { src: match.hover, alt: `${match.name} — detail` },
+    ],
+    details: {
+      ...DEFAULT_PRODUCT.details,
+      "Product details": [
+        `${match.spec}.`,
+        "Individually hand-finished in our atelier and BIS hallmarked.",
+        "Conflict-free certified stones with an individual grading report.",
+      ],
+    },
+  };
+}
+
+/* ===========================================================================
+   8. PAGE
+=========================================================================== */
+export default function ProductPage({ onAddToCart }) {
+  const { slug } = useParams();
+  const PRODUCT = useMemo(() => resolveProduct(slug), [slug]);
+
   useDocumentTitle(PRODUCT.name);
   const { openQuickView } = useUI();
   const { toggleWishlist, isWishlisted } = useWishlist();
@@ -444,7 +499,6 @@ export default function ProductPage({ onAddToCart, onWishlist }) {
     PRODUCT.metalOptions.find((m) => m.available)?.key || null
   );
   const [size, setSize] = useState(null);
-  const [saved, setSaved] = useState(false);
   const [pin, setPin] = useState("");
   const [pinResult, setPinResult] = useState(null);
   const [added, setAdded] = useState(false);
@@ -473,20 +527,24 @@ export default function ProductPage({ onAddToCart, onWishlist }) {
     setTimeout(() => setAdded(false), 1800);
   };
 
+  // Reset selections and scroll to the top when navigating between pieces.
   useEffect(() => {
+    setMetal(PRODUCT.metalOptions.find((m) => m.available)?.key || null);
+    setSize(null);
+    setPinResult(null);
     // PLACEHOLDER: track recently viewed in localStorage / server
     window.scrollTo({ top: 0, behavior: "instant" });
-  }, []);
+  }, [PRODUCT]);
 
   return (
     <main>
       <style>{PDP_CSS}</style>
 
       {/* Breadcrumb */}
-      <div className="pd-wrap pd-crumb">
+                <div className="pd-wrap pd-crumb">
         <Link to="/">Home</Link><span>/</span>
         <Link to="/collections">Collections</Link><span>/</span>
-        <Link to="/collections/rings">Rings</Link><span>/</span>
+        <Link to={`/collections/${PRODUCT.cat.toLowerCase()}`}>{PRODUCT.cat}</Link><span>/</span>
         <span style={{ color: "var(--ink)" }}>{PRODUCT.name}</span>
       </div>
 
@@ -576,15 +634,24 @@ export default function ProductPage({ onAddToCart, onWishlist }) {
               type="button"
               onClick={() => openQuickView({
                 ...PRODUCT,
-                metal: metalObj?.label || metal,
+                metal: PRODUCT.metalOptions.find((m) => m.key === metal)?.label || metal,
                 size: size ? `Size ${size}` : undefined,
               })}
             >
               Enquire Now ✦
             </button>
-            <button className={`pd-btn pd-btn--icon ${saved ? "is-saved" : ""}`}
-              aria-pressed={saved} aria-label={saved ? "Remove from wishlist" : "Add to wishlist"}
-              onClick={() => { setSaved((v) => !v); onWishlist?.(PRODUCT); }}>
+            <button className={`pd-btn pd-btn--icon ${isSaved ? "is-saved" : ""}`}
+              aria-pressed={isSaved} aria-label={isSaved ? "Remove from wishlist" : "Add to wishlist"}
+              onClick={() => toggleWishlist({
+                id: PRODUCT.id,
+                name: PRODUCT.name,
+                cat: PRODUCT.cat,
+                spec: PRODUCT.spec,
+                price: PRODUCT.price,
+                img: PRODUCT.images[0]?.src,
+                hover: PRODUCT.images[1]?.src,
+                inStock: true,
+              })}>
               <Icon name="heart" />
             </button>
           </div>
@@ -616,9 +683,9 @@ export default function ProductPage({ onAddToCart, onWishlist }) {
               <span className="pd-eyebrow">Styled together</span>
               <h2 id="pdp-look" className="pd-related__title">Complete the look</h2>
             </div>
-            <a href="/collections" className="pd-btn pd-btn--ghost" style={{ minHeight: 44 }}>
+            <Link to="/collections" className="pd-btn pd-btn--ghost" style={{ minHeight: 44 }}>
               Explore All
-            </a>
+            </Link>
           </div>
           <div className="pd-rail">
             {COMPLETE_LOOK.map((p) => <MiniCard key={p.id} p={p} onEnquire={openQuickView} />)}
