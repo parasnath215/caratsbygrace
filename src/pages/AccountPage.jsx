@@ -302,12 +302,12 @@ export default function AccountPage() {
                         <p style={{ color: 'var(--muted)', fontSize: '0.8rem', margin: '0 0 6px' }}>
                           18K Yellow Gold · 0.42 ct VVS Diamond · Size 12
                         </p>
-                        <strong style={{ fontSize: '0.95rem' }}>₹64,000</strong>
+                        <span style={{ fontSize: '0.85rem', color: '#9E7B35', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase' }}>Atelier Commission</span>
                       </div>
                     </div>
                     <div style={{ borderTop: '1px solid var(--line)', paddingTop: 14, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                       <span style={{ fontSize: '0.78rem', color: 'var(--muted)' }}>
-                        Insured Pan-India Express Delivery included
+                        Private Atelier Salon Consultation & Bespoke Handover
                       </span>
                       <a
                         href="https://wa.me/919820123456?text=Hello%20Carats%20by%20Grace%2C%20inquiring%20about%20Order%20%23CG-9842"
@@ -351,10 +351,10 @@ export default function AccountPage() {
             {activeTab === 'addresses' && (
               <div>
                 <h2 style={{ fontFamily: 'var(--serif)', fontSize: '1.6rem', marginTop: 0, marginBottom: 8 }}>
-                  Saved Delivery Addresses
+                  Salon & Client Liaison Preferences
                 </h2>
                 <p style={{ color: 'var(--muted)', fontSize: '0.88rem', marginBottom: 24 }}>
-                  Insured shipments are delivered in tamper-evident sealed packaging directly to your registered destination.
+                  Your preferred appointment locations and personal concierge liaison contact details for private viewings.
                 </p>
                 <div style={{ padding: '24px', border: '1px solid var(--line)', background: 'var(--ivory)', borderRadius: 2 }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>

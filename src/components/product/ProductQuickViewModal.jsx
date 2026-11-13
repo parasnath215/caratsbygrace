@@ -322,12 +322,10 @@ export default function ProductQuickViewModal({ product, isOpen, onClose }) {
     product.hover,
   ].filter(Boolean);
 
-  const priceVal = product.price ? INR(product.price) : "Price on Request";
-
   // Pre-filled WhatsApp enquiry link
   const waPhone = import.meta.env.VITE_WHATSAPP_NUMBER || "919820123456";
   const waText = encodeURIComponent(
-    `Hello Carats by Grace, I would like to enquire about "${product.name}" (${selectedMetal}, ${product.spec || ""}, ${priceVal}). Could you please share more details?`
+    `Hello Carats by Grace, I would like to enquire about viewing "${product.name}" (${selectedMetal}, ${product.spec || ""}). Could you please share more details?`
   );
   const waUrl = `https://wa.me/${waPhone}?text=${waText}`;
 
@@ -405,7 +403,7 @@ export default function ProductQuickViewModal({ product, isOpen, onClose }) {
                       <span>✦</span> Certified VVS-EF Diamond & BIS Hallmarked
                     </div>
                     <div className="pq-trust-item">
-                      <span>✦</span> Fully Insured Pan-India & Global Delivery
+                      <span>✦</span> Private Salon & Virtual Atelier Viewing Available
                     </div>
                     <div className="pq-trust-item">
                       <span>✦</span> Bespoke Carat & Custom Sizing Consultation
@@ -424,9 +422,8 @@ export default function ProductQuickViewModal({ product, isOpen, onClose }) {
                   <p className="pq-spec">{product.spec || "Bespoke Fine Jewellery Craft"}</p>
 
                   <div className="pq-price-row">
-                    <span className="pq-price">{priceVal}</span>
                     <span className="pq-price-note">
-                      (Inclusive of all taxes & insurance)
+                      Atelier Piece · Available for Private Viewing & Bespoke Consultation
                     </span>
                   </div>
 
@@ -526,8 +523,7 @@ export default function ProductQuickViewModal({ product, isOpen, onClose }) {
                     Enquire About {product.name}
                   </h3>
                   <p style={{ color: "var(--pq-muted)", fontSize: ".84rem", margin: 0 }}>
-                    Selected metal: <strong>{selectedMetal}</strong> · {selectedSize} ·{" "}
-                    <strong>{priceVal}</strong>
+                    Selected metal: <strong>{selectedMetal}</strong> · {selectedSize}
                   </p>
                 </div>
 

@@ -4,9 +4,9 @@ import styles from './AnnouncementBar.module.css';
 
 // [PLACEHOLDER: confirm messages with client]
 const MESSAGES = [
-  'Complimentary shipping on orders above ₹10,000',
-  '✦ Festive gifting edit — now live',
-  'Book a personal jewellery consultation →',
+  '✦ Private Salon Viewings & Bespoke Consultations Available',
+  '✦ Certified BIS 750 Hallmarked Gold & Natural Diamonds',
+  'Book a personal atelier consultation →',
 ];
 
 export default function AnnouncementBar() {

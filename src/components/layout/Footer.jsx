@@ -39,10 +39,10 @@ const footerLinks = {
     { label: 'Press', href: '/press' },
     { label: 'Careers', href: '/careers' },
   ],
-  Policies: [
-    { label: 'Shipping', href: '/policies/shipping' },
-    { label: 'Returns', href: '/policies/returns' },
-    { label: 'Care Guide', href: '/policies/care' },
+  Atelier: [
+    { label: 'Private Salon Viewing', href: '/#visit' },
+    { label: 'Bespoke Commissions', href: '/bespoke' },
+    { label: 'Jewelry Care Guide', href: '/policies/care' },
     { label: 'Privacy Policy', href: '/policies/privacy' },
     { label: 'Terms of Service', href: '/policies/terms' },
   ],
@@ -129,9 +129,9 @@ export default function Footer() {
               ))}
             </div>
 
-            {/* Payment methods — [PLACEHOLDER: add real icons] */}
-            <p className={styles.payments} aria-label="Accepted payment methods">
-              UPI · Cards · Net Banking · EMI · COD
+            {/* Atelier credentials */}
+            <p className={styles.payments} aria-label="Atelier Credentials">
+              Private Salon Viewing by Appointment · BIS 750 Gold & Certified Diamonds
             </p>
 
             {/* Back to top */}

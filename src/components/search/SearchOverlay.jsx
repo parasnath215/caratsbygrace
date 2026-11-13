@@ -605,7 +605,6 @@ export default function SearchOverlay({
                                 <div className="so-result__name">{p.name}</div>
                                 <div className="so-result__spec">{p.spec}</div>
                               </div>
-                              <span className="so-result__price">{INR(p.price)}</span>
                             </button>
                           );
                         })}

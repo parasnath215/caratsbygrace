@@ -300,8 +300,6 @@ const BASE_PRODUCTS = [
 const SORT_OPTIONS = [
   { key: "featured", label: "Featured" },
   { key: "newest", label: "Newest" },
-  { key: "price-asc", label: "Price · Low to High" },
-  { key: "price-desc", label: "Price · High to Low" },
   { key: "az", label: "A–Z" },
 ];
 
@@ -380,7 +378,6 @@ function ProductCard({ p, index, saved, onToggleSave, onEnquire }) {
         <h3 className="cp-card__name">{p.name}</h3>
         <span className="cp-card__spec">{p.spec}</span>
         <div className="cp-card__row">
-          <span className="cp-card__price">{INR(p.price)}</span>
           <span className="cp-eyebrow" style={{ fontSize: ".6rem" }}>{p.metal}</span>
         </div>
       </div>
@@ -487,8 +484,6 @@ export default function CollectionPage() {
       return true;
     });
     switch (sort) {
-      case "price-asc": list = [...list].sort((a, b) => a.price - b.price); break;
-      case "price-desc": list = [...list].sort((a, b) => b.price - a.price); break;
       case "az": list = [...list].sort((a, b) => a.name.localeCompare(b.name)); break;
       case "newest": list = [...list].reverse(); break;
       default: break; // featured
@@ -510,7 +505,6 @@ export default function CollectionPage() {
     ...categories.map((c) => ({ key: `cat:${c}`, label: c, clear: () => setCategories((a) => a.filter((x) => x !== c)) })),
     ...metals.map((m) => ({ key: `metal:${m}`, label: m, clear: () => setMetals((a) => a.filter((x) => x !== m)) })),
     ...occasions.map((o) => ({ key: `occ:${o}`, label: o, clear: () => setOccasions((a) => a.filter((x) => x !== o)) })),
-    ...(priceBand ? [{ key: "price", label: PRICE_BANDS.find((b) => b.key === priceBand).label, clear: () => setPriceBand(null) }] : []),
     ...(searchQuery ? [{
       key: "q",
       label: `“${searchQuery}”`,
@@ -523,7 +517,7 @@ export default function CollectionPage() {
   ];
 
   const clearAll = () => {
-    setCategories([]); setMetals([]); setOccasions([]); setPriceBand(null);
+    setCategories([]); setMetals([]); setOccasions([]);
     if (searchQuery) {
       const next = new URLSearchParams(searchParams);
       next.delete("q");
@@ -581,24 +575,6 @@ export default function CollectionPage() {
                   checked={categories.includes(c)}
                   onChange={() => toggle(categories, c, setCategories)} />
                 {c}
-              </label>
-            ))}
-          </FilterDropdown>
-
-          {/* Price */}
-          <FilterDropdown
-            label="Price"
-            open={openMenu === "price"}
-            onToggle={() => toggleMenu("price")}
-            onClose={() => setOpenMenu(null)}
-            activeCount={priceBand ? 1 : 0}>
-            <h5>By price</h5>
-            {PRICE_BANDS.map((b) => (
-              <label className="cp-option" key={b.key}>
-                <input type="radio" name="price-band"
-                  checked={priceBand === b.key}
-                  onChange={() => setPriceBand(priceBand === b.key ? null : b.key)} />
-                {b.label}
               </label>
             ))}
           </FilterDropdown>

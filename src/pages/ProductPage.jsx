@@ -272,10 +272,10 @@ const DEFAULT_PRODUCT = {
       "Avoid contact with perfume, chlorine and harsh cleaners.",
       "Wipe gently with a soft dry cloth after wear.",
     ],
-    "Shipping & returns": [
-      "Complimentary insured express shipping across India.",
-      "15-day exchange and return policy for unworn pieces.",
-      "Dispatched in discreet, tamper-proof luxury packaging.",
+    "Atelier Viewing & Bespoke Consultation": [
+      "Private salon viewing available at our flagship Mumbai atelier.",
+      "Dedicated one-on-one consultation with our head gemologist.",
+      "Custom carat selection, metal options, and bespoke engravings.",
     ],
   },
 };
@@ -427,7 +427,6 @@ function MiniCard({ p, onEnquire }) {
       <div className="pd-card__body">
         <h4 className="pd-card__name">{p.name}</h4>
         <div className="pd-card__spec">{p.spec}</div>
-        <div className="pd-card__price">{INR(p.price)}</div>
       </div>
     </div>
   );
@@ -499,39 +498,11 @@ export default function ProductPage({ onAddToCart }) {
     PRODUCT.metalOptions.find((m) => m.available)?.key || null
   );
   const [size, setSize] = useState(null);
-  const [pin, setPin] = useState("");
-  const [pinResult, setPinResult] = useState(null);
-  const [added, setAdded] = useState(false);
-
-  const canAdd = useMemo(
-    () =>
-      metal &&
-      (!PRODUCT.sizeOptions.length || (size && !PRODUCT.outOfStockSizes.includes(size))),
-    [metal, size]
-  );
-
-  const submitPin = (e) => {
-    e.preventDefault();
-    if (!/^\d{6}$/.test(pin)) {
-      setPinResult({ ok: false, msg: "Please enter a valid 6-digit pincode." });
-      return;
-    }
-    // PLACEHOLDER: replace with GET /api/pincode/:code
-    setPinResult({ ok: true, msg: "Delivers in 3–5 working days · Free insured shipping" });
-  };
-
-  const handleAdd = () => {
-    if (!canAdd) return;
-    setAdded(true);
-    onAddToCart?.({ ...PRODUCT, metal, size });
-    setTimeout(() => setAdded(false), 1800);
-  };
 
   // Reset selections and scroll to the top when navigating between pieces.
   useEffect(() => {
     setMetal(PRODUCT.metalOptions.find((m) => m.available)?.key || null);
     setSize(null);
-    setPinResult(null);
     // PLACEHOLDER: track recently viewed in localStorage / server
     window.scrollTo({ top: 0, behavior: "instant" });
   }, [PRODUCT]);
@@ -557,10 +528,6 @@ export default function ProductPage({ onAddToCart }) {
           <span className="pd-eyebrow">{PRODUCT.cat} · Signature</span>
           <h1 className="pd-title">{PRODUCT.name}</h1>
           <p className="pd-spec-line">{PRODUCT.spec}</p>
-          <div className="pd-price">{INR(PRODUCT.price)}</div>
-          <div className="pd-price__note">
-            <strong>or {INR(PRODUCT.emi)}/mo</strong> · Flexible zero-interest payment plans available
-          </div>
 
           {/* Metal */}
           <div className="pd-group">
@@ -613,24 +580,26 @@ export default function ProductPage({ onAddToCart }) {
 
           <div className="pd-stock">
             <span className="pd-stock__dot" aria-hidden="true" />
-            In stock · dispatched in 2–3 days
+            Atelier Showcase Piece · Available for Private Viewing
           </div>
 
-          {/* Pincode */}
-          <form className="pd-pin" onSubmit={submitPin}>
-            <label htmlFor="pd-pin" className="sr-only">Delivery pincode</label>
-            <input id="pd-pin" inputMode="numeric" maxLength={6} placeholder="Enter delivery pincode"
-              value={pin} onChange={(e) => { setPin(e.target.value.replace(/\D/g, "")); setPinResult(null); }} />
-            <button type="submit">Check</button>
-          </form>
-          {pinResult && (
-            <p className={`pd-pin__result ${pinResult.ok ? "is-ok" : ""}`}>{pinResult.msg}</p>
-          )}
-
-          {/* CTA: Replaced Buy now / Add to bag with Enquire Now */}
+          {/* CTA: Showcase Enquiries */}
           <div className="pd-cta">
             <button
               className="pd-btn pd-btn--solid"
+              type="button"
+              onClick={() => {
+                const waPhone = "919820123456";
+                const waText = encodeURIComponent(
+                  `Hello Carats by Grace, I would like to enquire about viewing "${PRODUCT.name}" (${metal ? PRODUCT.metalOptions.find((m) => m.key === metal)?.label : "18K Gold"}${size ? `, Size ${size}` : ""}).`
+                );
+                window.open(`https://wa.me/${waPhone}?text=${waText}`, "_blank");
+              }}
+            >
+              Enquire on WhatsApp ✦
+            </button>
+            <button
+              className="pd-btn pd-btn--ghost"
               type="button"
               onClick={() => openQuickView({
                 ...PRODUCT,
@@ -638,7 +607,7 @@ export default function ProductPage({ onAddToCart }) {
                 size: size ? `Size ${size}` : undefined,
               })}
             >
-              Enquire Now ✦
+              Book Viewing
             </button>
             <button className={`pd-btn pd-btn--icon ${isSaved ? "is-saved" : ""}`}
               aria-pressed={isSaved} aria-label={isSaved ? "Remove from wishlist" : "Add to wishlist"}
@@ -657,9 +626,9 @@ export default function ProductPage({ onAddToCart }) {
           </div>
 
           <div className="pd-trust">
-            <div className="pd-trust__item"><Icon name="shield" size={20} />Certified quality</div>
-            <div className="pd-trust__item"><Icon name="truck" size={20} />Insured shipping</div>
-            <div className="pd-trust__item"><Icon name="returns" size={20} />Easy returns</div>
+            <div className="pd-trust__item"><Icon name="shield" size={20} />BIS 750 Hallmarked</div>
+            <div className="pd-trust__item"><Icon name="heart" size={20} />Bespoke Craft</div>
+            <div className="pd-trust__item"><Icon name="plus" size={20} />Salon Viewing</div>
           </div>
 
           {/* Accordion */}

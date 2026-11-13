@@ -227,19 +227,38 @@ button{font-family:inherit;cursor:pointer;background:none;border:0}
 .cg-split__lede{color:var(--muted);max-width:40ch;margin:0 0 28px;font-size:.98rem}
 
 /* Best sellers */
-.cg-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:32px}
-.cg-tab{padding:10px 18px;font-size:.72rem;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--muted);border:1px solid transparent;
-  border-radius:1px;transition:all .3s var(--ease)}
-.cg-tab.is-active{color:var(--ink);border-color:var(--line)}
-.cg-tab:hover{color:var(--ink)}
+.cg-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px}
+.cg-tab{padding:10px 20px;font-size:.72rem;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--muted);border:1px solid var(--line);
+  background:var(--ivory);border-radius:1px;transition:all .3s var(--ease);cursor:pointer}
+.cg-tab.is-active{color:var(--ivory);background:var(--burgundy);border-color:var(--burgundy)}
+.cg-tab:hover{color:var(--ink);border-color:var(--ink)}
+.cg-tab.is-active:hover{color:var(--ivory);border-color:var(--burgundy)}
+
+.cg-bs-arrows{display:flex;gap:8px}
+.cg-bs-arrow{width:40px;height:40px;display:grid;place-items:center;border-radius:50%;
+  border:1px solid var(--line);background:var(--ivory);color:var(--ink);cursor:pointer;
+  transition:all .25s var(--ease)}
+.cg-bs-arrow:hover{background:var(--burgundy);color:var(--ivory);border-color:var(--burgundy)}
+
+.cg-rail-wrap{position:relative}
 .cg-rail{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(240px,1fr);
   gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px;
   scrollbar-width:none;-ms-overflow-style:none}
 .cg-rail::-webkit-scrollbar{display:none}
 .cg-rail > *{scroll-snap-align:start}
 
-.cg-card{position:relative;background:var(--ivory)}
+.cg-rail-arrow{position:absolute;top:42%;transform:translateY(-50%);z-index:8;
+  width:40px;height:40px;border-radius:50%;background:rgba(250,246,241,.94);
+  backdrop-filter:blur(6px);border:1px solid var(--line);color:var(--ink);
+  display:grid;place-items:center;box-shadow:0 4px 14px rgba(23,18,15,.12);
+  cursor:pointer;transition:all .25s var(--ease)}
+.cg-rail-arrow:hover{background:var(--burgundy);color:var(--ivory);border-color:var(--burgundy)}
+.cg-rail-arrow--prev{left:-14px}
+.cg-rail-arrow--next{right:-14px}
+
+.cg-card{position:relative;background:var(--ivory);animation:cgFadeIn .35s ease-out}
+@keyframes cgFadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 .cg-card__media{position:relative;aspect-ratio:4/5;overflow:hidden;background:var(--blush)}
 .cg-card__media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
   transition:opacity .6s var(--ease),transform .8s var(--ease)}
@@ -264,11 +283,12 @@ button{font-family:inherit;cursor:pointer;background:none;border:0}
 .cg-card__body{padding:16px 14px 18px}
 .cg-card__name{font-family:var(--serif);font-size:1.08rem;margin:0 0 4px;
   font-weight:500}
-.cg-card__spec{font-size:.74rem;color:var(--muted);margin:0 0 8px;
-  display:inline-block;padding-bottom:2px;border-bottom:1px solid transparent;
-  transition:border-color .3s var(--ease)}
-.cg-card:hover .cg-card__spec{border-color:var(--gold)}
-.cg-card__price{font-size:.9rem;font-weight:500}
+.cg-card__spec{font-size:.74rem;color:var(--muted);margin:0 0 4px;
+  display:block;border-bottom:none}
+.cg-card__enquire-link{display:inline-block;font-size:.72rem;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--burgundy);font-weight:600;margin-top:6px;
+  transition:color .25s var(--ease)}
+.cg-card:hover .cg-card__enquire-link{color:var(--gold)}
 
 /* Limited edition */
 .cg-limited__grid{display:grid;grid-auto-flow:column;
@@ -433,15 +453,9 @@ button{font-family:inherit;cursor:pointer;background:none;border:0}
 
 /* Footer */
 .cg-footer{background:var(--wine-deep);color:var(--ivory);position:relative}
-.cg-footer__top{display:grid;grid-template-columns:1.5fr repeat(3,1fr);gap:40px;
+.cg-footer__top{display:flex;justify-content:space-between;gap:48px;
   padding-block:clamp(42px,5.5vw,68px)}
-.cg-footer h4{font-size:.7rem;letter-spacing:.24em;text-transform:uppercase;
-  color:rgba(250,246,241,.6);margin:0 0 18px;font-weight:500}
-.cg-footer ul{list-style:none;margin:0;padding:0}
-.cg-footer li{padding:6px 0}
-.cg-footer li a{font-size:.86rem;color:rgba(250,246,241,.82);
-  transition:color .25s var(--ease)}
-.cg-footer li a:hover{color:var(--ivory)}
+.cg-footer__brand{max-width:320px}
 .cg-footer__brand img{height:52px;margin-bottom:18px}
 .cg-footer__brand p{color:rgba(250,246,241,.7);font-size:.86rem;max-width:30ch}
 .cg-footer__social{display:flex;gap:10px;margin-top:22px}
@@ -449,13 +463,20 @@ button{font-family:inherit;cursor:pointer;background:none;border:0}
   display:grid;place-items:center;border-radius:999px;color:var(--ivory);
   transition:all .3s var(--ease)}
 .cg-footer__social a:hover{background:var(--ivory);color:var(--wine-deep)}
+.cg-footer__links-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:36px;flex:1}
+.cg-footer h4{font-size:.7rem;letter-spacing:.24em;text-transform:uppercase;
+  color:rgba(250,246,241,.6);margin:0 0 18px;font-weight:500}
+.cg-footer ul{list-style:none;margin:0;padding:0}
+.cg-footer li{padding:6px 0}
+.cg-footer li a{font-size:.86rem;color:rgba(250,246,241,.82);
+  transition:color .25s var(--ease);text-decoration:none}
+.cg-footer li a:hover{color:var(--ivory)}
 .cg-footer__bottom{border-top:1px solid rgba(250,246,241,.16);
   display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
   align-items:center;padding-block:22px;font-size:.72rem;
   color:rgba(250,246,241,.65)}
-.cg-footer__pays{display:flex;gap:8px;flex-wrap:wrap}
-.cg-footer__pays span{border:1px solid rgba(250,246,241,.25);
-  padding:4px 8px;font-size:.6rem;letter-spacing:.12em}
+.cg-footer__credential{color:var(--gold);font-size:.72rem;letter-spacing:.08em;
+  text-transform:uppercase}
 .cg-backtop{display:inline-flex;align-items:center;gap:6px;
   color:rgba(250,246,241,.8);font-size:.7rem;letter-spacing:.14em;
   text-transform:uppercase}
@@ -501,7 +522,8 @@ button{font-family:inherit;cursor:pointer;background:none;border:0}
   .cg-insta__grid{grid-template-columns:repeat(3,1fr)}
   .cg-visit__grid{grid-template-columns:1fr}
   .cg-visit__img{min-height:320px}
-  .cg-footer__top{grid-template-columns:repeat(2, 1fr);gap:32px}
+  .cg-footer__top{flex-direction:column;gap:36px}
+  .cg-footer__links-grid{grid-template-columns:repeat(2,1fr);gap:32px 24px}
   .cg-trust__grid{grid-template-columns:repeat(2,1fr)}
   .cg-card__wish{opacity:1;transform:none}
   .cg-card__add{opacity:1;transform:none}
@@ -513,6 +535,9 @@ button{font-family:inherit;cursor:pointer;background:none;border:0}
   .cg-hero__copy{max-width:none;padding:0 var(--pad-x) 36px}
   .cg-hero__ctas{flex-direction:column;align-items:stretch;gap:10px}
   .cg-hero__ctas .cg-btn{width:100%}
+  .cg-bs-arrows{display:none}
+  .cg-rail-arrow--prev{left:2px}
+  .cg-rail-arrow--next{right:2px}
   .cg-cat__grid{grid-template-columns:repeat(2,1fr);gap:14px;grid-auto-flow:row;overflow-x:visible;padding-bottom:0}
   .cg-tile{min-height:auto}
   .cg-tile__media{aspect-ratio:1/1.18}
@@ -530,7 +555,12 @@ button{font-family:inherit;cursor:pointer;background:none;border:0}
   .cg-testi__card{flex:0 0 86%;padding:24px 20px}
   .cg-testi__rail{gap:16px}
   .cg-insta__grid{grid-template-columns:repeat(2,1fr);gap:8px}
-  .cg-footer__top{grid-template-columns:1fr;gap:28px}
+  .cg-footer__top{flex-direction:column;gap:32px;padding-block:36px}
+  .cg-footer__brand{max-width:none;text-align:center;display:flex;flex-direction:column;align-items:center;padding-bottom:24px;border-bottom:1px solid rgba(250,246,241,.12)}
+  .cg-footer__brand p{text-align:center;max-width:32ch;margin:0 auto}
+  .cg-footer__links-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:28px 16px;width:100%}
+  .cg-footer__bottom{flex-direction:column;text-align:center;gap:14px;padding-block:22px}
+  .cg-footer__credential{color:var(--gold);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase}
   .cg-trust__grid{grid-template-columns:1fr 1fr;gap:16px}
   .cg-trust__item{justify-content:flex-start}
   .cg-limited__grid{grid-auto-columns:80%}
@@ -652,11 +682,12 @@ const Sparkle = ({ style }) => (
   <span className="cg-sparkle" aria-hidden="true" style={style}>✦</span>
 );
 
-function Icon({ name, size = 20 }) {
+function Icon({ name, size = 20, className, style, ...rest }) {
   const common = {
     width: size, height: size, viewBox: "0 0 24 24", fill: "none",
     stroke: "currentColor", strokeWidth: 1.4,
     strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": true,
+    className, style, ...rest,
   };
   const paths = {
     search: <><circle cx="11" cy="11" r="7" /><path d="m20 20-3.5-3.5" /></>,
@@ -666,6 +697,7 @@ function Icon({ name, size = 20 }) {
     menu: <><path d="M4 7h16M4 12h16M4 17h16" /></>,
     close: <><path d="M6 6l12 12M18 6L6 18" /></>,
     arrowRight: <><path d="M5 12h14M13 6l6 6-6 6" /></>,
+    arrowLeft: <><path d="M19 12H5M11 18l-6-6 6-6" /></>,
     arrowUp: <><path d="M12 19V5M6 11l6-6 6 6" /></>,
     plus: <><path d="M12 5v14M5 12h14" /></>,
     chevron: <path d="m6 9 6 6 6-6" />,
@@ -677,6 +709,7 @@ function Icon({ name, size = 20 }) {
     instagram: <><rect x="4" y="4" width="16" height="16" rx="4" /><circle cx="12" cy="12" r="3.5" /><circle cx="17" cy="7" r=".6" fill="currentColor" /></>,
     whatsapp: <><path d="M4 20l1.5-4A8 8 0 1 1 9 19.4L4 20Z" /><path d="M9 10c.5 2 2 3.5 4 4" /></>,
     pinterest: <><circle cx="12" cy="12" r="8" /><path d="M10 20c1-3 2-6 3-9" /><path d="M9 12a3 3 0 1 1 5 2" /></>,
+    chat: <><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" /></>,
   };
   return <svg {...common}>{paths[name] || null}</svg>;
 }
@@ -690,9 +723,9 @@ const INR = (n) => "₹" + n.toLocaleString("en-IN");
 /* Announcement */
 function Announcement({ onDismiss }) {
   const messages = [
-    "Complimentary insured shipping across India",
-    "The Festive Edit — now previewing",
-    "Book a private consultation with our atelier",
+    "✦ Private Salon Viewings & Bespoke Commissions Available",
+    "✦ Certified BIS 750 Hallmarked Gold & Natural Diamonds",
+    "Book a private consultation with our atelier →",
   ];
   const [idx, setIdx] = useState(0);
   useEffect(() => {
@@ -757,10 +790,11 @@ function Header({ cartCount, onOpenCart }) {
       { name: "Festive", href: "/collections/festive" },
       { name: "Anniversary", href: "/collections/anniversary" },
     ],
-    "By Price": [
-      { name: "Under ₹50K", href: "/collections/under-50k" },
-      { name: "₹50K – ₹1L", href: "/collections/50k-1l" },
-      { name: "Above ₹1L", href: "/collections/above-1l" },
+    "By Metal": [
+      { name: "18K Yellow Gold", href: "/collections/rings" },
+      { name: "18K Rose Gold", href: "/collections/earrings" },
+      { name: "18K White Gold", href: "/collections/necklaces" },
+      { name: "950 Platinum", href: "/collections/bridal" },
     ],
   };
 
@@ -805,10 +839,16 @@ function Header({ cartCount, onOpenCart }) {
           <button aria-label="Account" type="button" onClick={() => navigate('/account')}>
             <Icon name="user" />
           </button>
-          <button aria-label={`Cart, ${cartCount} items`} type="button" onClick={onOpenCart}>
-            <Icon name="bag" />
-            {cartCount > 0 && <span className="cg-cart-count">{cartCount}</span>}
-          </button>
+          <a
+            href="https://wa.me/919820123456?text=Hello%20Carats%20by%20Grace%2C%20I%20would%20like%20to%20enquire%20about%20your%20fine%20jewelry%20collections."
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Atelier WhatsApp Concierge"
+            title="Chat with Atelier Concierge"
+            className="cg-header__wa"
+          >
+            <Icon name="whatsapp" />
+          </a>
         </div>
       </div>
 
@@ -1035,10 +1075,10 @@ function Hero({ scrolled }) {
 /* Trust */
 function Trust() {
   const items = [
-    { icon: "shield", label: "Certified Quality" },
-    { icon: "refresh", label: "Lifetime Exchange" },
-    { icon: "truck", label: "Free Insured Shipping" },
-    { icon: "returns", label: "Easy Returns" },
+    { icon: "shield", label: "BIS 750 Hallmarked" },
+    { icon: "refresh", label: "Certified Natural Diamonds" },
+    { icon: "heart", label: "Bespoke Atelier Craft" },
+    { icon: "user", label: "Private Salon Viewings" },
   ];
   return (
     <div className="cg-trust">
@@ -1129,8 +1169,8 @@ function BestSellers() {
   const { openQuickView } = useUI();
 
   const list = tab === "All"
-    ? [...PRODUCTS.Rings, ...PRODUCTS.Earrings, ...PRODUCTS.Necklaces]
-    : PRODUCTS[tab];
+    ? [...(PRODUCTS.Rings || []), ...(PRODUCTS.Earrings || []), ...(PRODUCTS.Necklaces || [])]
+    : (PRODUCTS[tab] || []);
 
   const scroll = (dir) => {
     const el = railRef.current;
@@ -1138,12 +1178,19 @@ function BestSellers() {
     el.scrollBy({ left: dir * (el.clientWidth * 0.7), behavior: "smooth" });
   };
 
+  const handleTabChange = (t) => {
+    setTab(t);
+    if (railRef.current) {
+      railRef.current.scrollTo({ left: 0, behavior: "smooth" });
+    }
+  };
+
   return (
     <section className="cg-section cg-wrap" aria-labelledby="bs-h">
       <div className="reveal" style={{
         display: "flex",
         justifyContent: "space-between", alignItems: "end",
-        gap: 24, flexWrap: "wrap", marginBottom: 8
+        gap: 20, flexWrap: "wrap", marginBottom: 8
       }}>
         <div>
           <span className="cg-eyebrow">Bestsellers</span>
@@ -1152,70 +1199,86 @@ function BestSellers() {
             The pieces she reaches for.
           </h2>
         </div>
-        <div style={{ display: "flex", gap: 8 }}>
-          <button className="cg-tab" aria-label="Scroll left"
-            onClick={() => scroll(-1)}><Icon name="arrowRight" size={16}
-              style={{ transform: "rotate(180deg)" }} /></button>
-          <button className="cg-tab" aria-label="Scroll right"
-            onClick={() => scroll(1)}><Icon name="arrowRight" size={16} /></button>
+        <div className="cg-bs-arrows">
+          <button className="cg-bs-arrow" aria-label="Scroll left"
+            onClick={() => scroll(-1)}>
+            <Icon name="arrowLeft" size={16} />
+          </button>
+          <button className="cg-bs-arrow" aria-label="Scroll right"
+            onClick={() => scroll(1)}>
+            <Icon name="arrowRight" size={16} />
+          </button>
         </div>
       </div>
 
-      <div className="cg-tabs reveal" role="tablist" aria-label="Product category">
+      <div className="cg-tabs" role="tablist" aria-label="Product category">
         {tabs.map((t) => (
           <button key={t} role="tab" aria-selected={tab === t}
             className={`cg-tab ${tab === t ? "is-active" : ""}`}
-            onClick={() => setTab(t)}>{t}</button>
+            onClick={() => handleTabChange(t)}>{t}</button>
         ))}
       </div>
 
-      <div className="cg-rail" ref={railRef} role="tabpanel" aria-label={tab}>
-        {list.map((p, i) => {
-          const isSaved = isWishlisted(p.name);
-          return (
-            <article className="cg-card reveal" key={p.name + i}
-              style={{ transitionDelay: `${i * 40}ms` }}>
-              <div className="cg-card__media">
-                <img className="cg-card__img--main" src={p.img}
-                  alt={`${p.name} — Carats by Grace`} loading="lazy" decoding="async" />
-                <img className="cg-card__img--hover" src={p.hover}
-                  alt="" aria-hidden="true" loading="lazy" decoding="async" />
-                <button
-                  className={`cg-card__wish ${isSaved ? "is-saved" : ""}`}
-                  aria-label={isSaved ? `Remove ${p.name} from wishlist` : `Add ${p.name} to wishlist`}
-                  aria-pressed={isSaved}
-                  type="button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    toggleWishlist({
-                      id: p.name.toLowerCase().replace(/\s+/g, '-'),
-                      name: p.name,
-                      spec: p.spec,
-                      price: p.price,
-                      img: p.img,
-                      hover: p.hover,
-                      inStock: true,
-                      cat: tab === "All" ? "Jewellery" : tab,
-                    });
-                  }}>
-                  <Icon name="heart" size={18} />
-                </button>
-                <button className="cg-card__add"
-                  type="button"
-                  onClick={() => openQuickView({ ...p, cat: tab === "All" ? "Jewellery" : tab })}>
-                  Enquire <span aria-hidden="true">✦</span>
-                </button>
-              </div>
-              <div className="cg-card__body"
-                onClick={() => openQuickView({ ...p, cat: tab === "All" ? "Jewellery" : tab })}
-                style={{ cursor: "pointer" }}>
-                <h3 className="cg-card__name">{p.name}</h3>
-                <span className="cg-card__spec">{p.spec}</span>
-                <div className="cg-card__price">{INR(p.price)}</div>
-              </div>
-            </article>
-          );
-        })}
+      <div className="cg-rail-wrap">
+        <button className="cg-rail-arrow cg-rail-arrow--prev"
+          aria-label="Previous pieces"
+          onClick={() => scroll(-1)}>
+          <Icon name="arrowLeft" size={16} />
+        </button>
+
+        <div className="cg-rail" ref={railRef} role="tabpanel" aria-label={tab}>
+          {list.map((p, i) => {
+            const isSaved = isWishlisted(p.name);
+            return (
+              <article className="cg-card" key={p.name + "-" + tab + "-" + i}>
+                <div className="cg-card__media">
+                  <img className="cg-card__img--main" src={p.img}
+                    alt={`${p.name} — Carats by Grace`} loading="lazy" decoding="async" />
+                  <img className="cg-card__img--hover" src={p.hover}
+                    alt="" aria-hidden="true" loading="lazy" decoding="async" />
+                  <button
+                    className={`cg-card__wish ${isSaved ? "is-saved" : ""}`}
+                    aria-label={isSaved ? `Remove ${p.name} from wishlist` : `Add ${p.name} to wishlist`}
+                    aria-pressed={isSaved}
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      toggleWishlist({
+                        id: p.name.toLowerCase().replace(/\s+/g, '-'),
+                        name: p.name,
+                        spec: p.spec,
+                        price: p.price,
+                        img: p.img,
+                        hover: p.hover,
+                        inStock: true,
+                        cat: tab === "All" ? "Jewellery" : tab,
+                      });
+                    }}>
+                    <Icon name="heart" size={18} />
+                  </button>
+                  <button className="cg-card__add"
+                    type="button"
+                    onClick={() => openQuickView({ ...p, cat: tab === "All" ? "Jewellery" : tab })}>
+                    Enquire <span aria-hidden="true">✦</span>
+                  </button>
+                </div>
+                <div className="cg-card__body"
+                  onClick={() => openQuickView({ ...p, cat: tab === "All" ? "Jewellery" : tab })}
+                  style={{ cursor: "pointer" }}>
+                  <h3 className="cg-card__name">{p.name}</h3>
+                  <span className="cg-card__spec">{p.spec}</span>
+                  <span className="cg-card__enquire-link">Enquire Piece →</span>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+
+        <button className="cg-rail-arrow cg-rail-arrow--next"
+          aria-label="Next pieces"
+          onClick={() => scroll(1)}>
+          <Icon name="arrowRight" size={16} />
+        </button>
       </div>
 
       <div style={{ textAlign: "center", marginTop: 36 }}>
@@ -1620,10 +1683,33 @@ function FAQ() {
 /* Footer */
 function Footer() {
   const cols = {
-    Jewellery: ["Rings", "Earrings", "Necklaces", "Bracelets", "Bangles", "Pendants", "High Jewellery"],
-    About: ["Our Story", "Craftsmanship", "Journal", "Stockists"],
-    Policies: ["Shipping", "Returns & Exchange", "Privacy", "Terms"],
-    Contact: ["WhatsApp", "hello@caratsbygrace.com", "Instagram"],
+    Jewellery: [
+      { label: "Rings", href: "/collections/rings" },
+      { label: "Earrings", href: "/collections/earrings" },
+      { label: "Necklaces", href: "/collections/necklaces" },
+      { label: "Bracelets", href: "/collections/bracelets" },
+      { label: "The Bridal Edit", href: "/collections/bridal" },
+      { label: "High Jewellery", href: "/collections/high-jewellery" },
+    ],
+    About: [
+      { label: "Our Story", href: "/about" },
+      { label: "Craftsmanship", href: "/craftsmanship" },
+      { label: "Private Atelier", href: "#visit" },
+      { label: "Stockists", href: "/stockists" },
+    ],
+    Atelier: [
+      { label: "Private Salon Viewing", href: "#visit" },
+      { label: "Bespoke Commissions", href: "/bespoke" },
+      { label: "Jewelry Care Guide", href: "/policies/care" },
+      { label: "Privacy Policy", href: "/policies/privacy" },
+      { label: "Terms of Service", href: "/policies/terms" },
+    ],
+    Concierge: [
+      { label: "WhatsApp Concierge", href: "https://wa.me/919820123456" },
+      { label: "hello@caratsbygrace.com", href: "mailto:hello@caratsbygrace.com" },
+      { label: "+91 98200 12345", href: "tel:+919820012345" },
+      { label: "Flagship Salon, Mumbai", href: "https://maps.google.com" },
+    ],
   };
   return (
     <footer className="cg-footer" aria-label="Footer">
@@ -1638,20 +1724,31 @@ function Footer() {
               <a href="https://wa.me/919820123456" target="_blank" rel="noreferrer" aria-label="WhatsApp"><Icon name="whatsapp" size={18} /></a>
             </div>
           </div>
-          {Object.entries(cols).map(([title, items]) => (
-            <div key={title}>
-              <h4>{title}</h4>
-              <ul>
-                {items.map((i) => <li key={i}><a href="#">{i}</a></li>)}
-              </ul>
-            </div>
-          ))}
+          <div className="cg-footer__links-grid">
+            {Object.entries(cols).map(([title, items]) => (
+              <div key={title} className="cg-footer__col">
+                <h4>{title}</h4>
+                <ul>
+                  {items.map((i) => (
+                    <li key={i.label}>
+                      {i.href.startsWith("http") || i.href.startsWith("mailto") || i.href.startsWith("tel") ? (
+                        <a href={i.href} target="_blank" rel="noreferrer">{i.label}</a>
+                      ) : i.href.startsWith("#") ? (
+                        <a href={i.href}>{i.label}</a>
+                      ) : (
+                        <Link to={i.href}>{i.label}</Link>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
         </div>
         <div className="cg-footer__bottom">
           <span>© {new Date().getFullYear()} Carats by Grace. All rights reserved.</span>
-          <div className="cg-footer__pays" aria-label="Payment methods">
-            <span>UPI</span><span>VISA</span><span>MASTERCARD</span>
-            <span>AMEX</span><span>NET BANKING</span>
+          <div className="cg-footer__credential" aria-label="Atelier Credentials">
+            Private Salon Viewing by Appointment · BIS 750 Gold & Certified Diamonds
           </div>
           <a className="cg-backtop" href="#top"
             onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}>

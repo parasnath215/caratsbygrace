@@ -225,8 +225,6 @@ const RECOMMENDED = [
 
 const SORTS = [
   { key: "recent", label: "Recently added" },
-  { key: "price-asc", label: "Price · Low to High" },
-  { key: "price-desc", label: "Price · High to Low" },
   { key: "az", label: "A–Z" },
 ];
 
@@ -243,7 +241,6 @@ function MiniCard({ p, onEnquire }) {
       <div className="wl-card__body">
         <h4 className="wl-card__name">{p.name}</h4>
         <div className="wl-card__spec">{p.spec}</div>
-        <div className="wl-card__price">{INR(p.price)}</div>
       </div>
     </div>
   );
@@ -272,7 +269,6 @@ function WishlistCard({ item, onRemove, onEnquire }) {
         <h3 className="wl-card__name" onClick={() => onEnquire?.(item)} style={{ cursor: "pointer" }}>{item.name}</h3>
         <div className="wl-card__spec">{item.spec}</div>
         <div className="wl-card__row">
-          <span className="wl-card__price">{INR(item.price)}</span>
           <span className="wl-eyebrow" style={{ fontSize: ".6rem" }}>{item.cat}</span>
         </div>
         <button className="wl-card__move"
@@ -309,8 +305,6 @@ export default function WishlistPage({ onAddToCart, onRemoveFromWishlist }) {
   const sorted = useMemo(() => {
     const list = [...items];
     switch (sort) {
-      case "price-asc": return list.sort((a, b) => a.price - b.price);
-      case "price-desc": return list.sort((a, b) => b.price - a.price);
       case "az": return list.sort((a, b) => a.name.localeCompare(b.name));
       case "recent":
       default: return list;

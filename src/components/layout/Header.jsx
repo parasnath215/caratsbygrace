@@ -4,7 +4,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { Search, Heart, User, ShoppingBag, Menu, X, ChevronDown } from 'lucide-react';
+import { Search, Heart, User, MessageCircle, Menu, X, ChevronDown } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
 import { useWishlist } from '../../context/WishlistContext';
 import { useUI } from '../../context/UIContext';
@@ -63,10 +63,11 @@ export default function Header() {
       { name: 'Festive', href: '/collections/festive' },
       { name: 'Anniversary', href: '/collections/anniversary' },
     ],
-    'By Price': [
-      { name: 'Under ₹50K', href: '/collections/under-50k' },
-      { name: '₹50K – ₹1L', href: '/collections/50k-1l' },
-      { name: 'Above ₹1L', href: '/collections/above-1l' },
+    'By Metal': [
+      { name: '18K Yellow Gold', href: '/collections/rings' },
+      { name: '18K Rose Gold', href: '/collections/earrings' },
+      { name: '18K White Gold', href: '/collections/necklaces' },
+      { name: '950 Platinum', href: '/collections/bridal' },
     ],
   };
 
@@ -139,17 +140,16 @@ export default function Header() {
             <User size={20} strokeWidth={1.5} />
           </button>
 
-          <button
+          <a
+            href="https://wa.me/919820123456?text=Hello%20Carats%20by%20Grace%2C%20I%20would%20like%20to%20enquire%20about%20your%20fine%20jewelry%20collection."
+            target="_blank"
+            rel="noopener noreferrer"
             className={styles.iconBtn}
-            onClick={toggleCart}
-            aria-label={`Bag (${totalItems} items)`}
-            type="button"
+            aria-label="Atelier WhatsApp Concierge"
+            title="Chat with Atelier Concierge"
           >
-            <ShoppingBag size={20} strokeWidth={1.5} />
-            {totalItems > 0 && (
-              <span className={styles.badge} aria-hidden="true">{totalItems}</span>
-            )}
-          </button>
+            <MessageCircle size={20} strokeWidth={1.5} />
+          </a>
         </div>
       </div>
 
