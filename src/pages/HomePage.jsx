@@ -703,6 +703,10 @@ function Icon({ name, size = 20, className, style, ...rest }) {
     chevron: <path d="m6 9 6 6 6-6" />,
     play: <path d="M8 5v14l11-7L8 5Z" />,
     shield: <><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3Z" /><path d="m9 12 2 2 4-4" /></>,
+    "shield-check": <><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3Z" /><path d="m9 12 2 2 4-4" /></>,
+    gem: <><path d="M6 3h12l4 6-10 12L2 9z" /><path d="M11 3 8 9l4 12 4-12-3-6" /><path d="M2 9h20" /></>,
+    pin: <><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" /><circle cx="12" cy="10" r="3" /></>,
+    calendar: <><rect width="18" height="18" x="3" y="4" rx="2" /><line x1="16" x2="16" y1="2" y2="6" /><line x1="8" x2="8" y1="2" y2="6" /><line x1="3" x2="21" y1="10" y2="10" /></>,
     refresh: <><path d="M3 12a9 9 0 0 1 15-6.7L21 8" /><path d="M21 3v5h-5" /><path d="M21 12a9 9 0 0 1-15 6.7L3 16" /><path d="M3 21v-5h5" /></>,
     truck: <><path d="M3 7h11v9H3z" /><path d="M14 10h4l3 3v3h-7z" /><circle cx="7" cy="18" r="1.6" /><circle cx="17" cy="18" r="1.6" /></>,
     returns: <><path d="M4 12a8 8 0 1 0 3-6.2" /><path d="M4 4v4h4" /></>,
@@ -723,9 +727,8 @@ const INR = (n) => "₹" + n.toLocaleString("en-IN");
 /* Announcement */
 function Announcement({ onDismiss }) {
   const messages = [
-    "✦ Private Salon Viewings & Bespoke Commissions Available",
-    "✦ Certified BIS 750 Hallmarked Gold & Natural Diamonds",
-    "Book a private consultation with our atelier →",
+    " 100% exchange on diamond value — with no deduction in making charges.",
+    " 85% buyback on diamond value — excluding GST and making charges.",
   ];
   const [idx, setIdx] = useState(0);
   useEffect(() => {
@@ -840,7 +843,7 @@ function Header({ cartCount, onOpenCart }) {
             <Icon name="user" />
           </button>
           <a
-            href="https://wa.me/919820123456?text=Hello%20Carats%20by%20Grace%2C%20I%20would%20like%20to%20enquire%20about%20your%20fine%20jewelry%20collections."
+            href="https://wa.me/919120530531?text=Hello%20Carats%20by%20Grace%2C%20I%20would%20like%20to%20enquire%20about%20your%20fine%20jewelry%20collections."
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Atelier WhatsApp Concierge"
@@ -1046,7 +1049,7 @@ function Hero({ scrolled }) {
         </video>
       </div>
       <div className="cg-hero__copy">
-        <span className="cg-eyebrow">The Nocturne Edit · 2024</span>
+        <span className="cg-eyebrow">The Nocturne Edit </span>
         <h1 className="cg-hero__title">Made to be worn, not kept away.</h1>
         <p className="cg-hero__lede">
           Fine jewellery for the everyday and the once-in-a-lifetime.
@@ -1075,10 +1078,10 @@ function Hero({ scrolled }) {
 /* Trust */
 function Trust() {
   const items = [
-    { icon: "shield", label: "BIS 750 Hallmarked" },
-    { icon: "refresh", label: "Certified Natural Diamonds" },
-    { icon: "heart", label: "Bespoke Atelier Craft" },
-    { icon: "user", label: "Private Salon Viewings" },
+    { icon: "shield-check", label: "IGI Certified Diamonds" },
+    { icon: "gem", label: "Exceptional Craftsmanship" },
+    { icon: "heart", label: "Made for Your Story" },
+    { icon: "calendar", label: "Personalised Consultations" },
   ];
   return (
     <div className="cg-trust">
@@ -1326,15 +1329,18 @@ function Story() {
           <span className="cg-eyebrow" style={{ color: "rgba(250,246,241,.7)" }}>
             <Sparkle /> The Carats by Grace Story
           </span>
+
           <h2 id="story-h" className="cg-story__title">
-            Every carat, a choice.
+            Luxury, chosen differently.
           </h2>
           <p className="cg-story__body">
-            We make jewellery for the woman who chooses her own. Pieces
-            considered in proportion, crafted with restraint, and made to be
-            lived in. No noise — only the quiet confidence of something
-            genuinely yours.
+            At Carats by Grace, we believe brilliance is more than what meets
+            the eye. Our lab-grown diamond jewellery brings together timeless
+            elegance, considered craftsmanship, and a modern perspective on
+            luxury. Each piece is an expression of individuality — designed
+            to be treasured, worn, and made entirely your own.
           </p>
+
           <a className="cg-btn cg-btn--ghost-light" href="#">Our Story</a>
         </div>
         <div className="cg-story__imgs reveal">
@@ -1354,11 +1360,25 @@ function Story() {
 
 /* Craft */
 function Craft() {
+
   const steps = [
-    { n: "01", t: "Stone selection", d: "Ethically sourced diamonds and precious gems, individually hand-selected for exceptional fire, clarity, and optical symmetry." },
-    { n: "02", t: "Setting & finish", d: "Precision bezel and claw settings executed by master bench artisans with generational fine jewellery heritage." },
-    { n: "03", t: "Final review", d: "Rigorous quality inspection, microscope prong testing, and official BIS Hallmark 750 laser stamping before dispatch." },
+    {
+      n: "01",
+      t: "Choosing your diamond",
+      d: "We select each diamond for its sparkle, cut, and clarity, so your jewellery shines beautifully from every angle."
+    },
+    {
+      n: "02",
+      t: "Made with care",
+      d: "Every piece is carefully crafted, with a setting designed to bring out the beauty of your diamond and keep it looking timeless."
+    },
+    {
+      n: "03",
+      t: "Quality you can trust",
+      d: "Before your jewellery reaches you, we check every detail to make sure it looks beautiful and meets our quality standards."
+    },
   ];
+
   return (
     <section className="cg-section cg-wrap" aria-labelledby="craft-h">
       <div className="cg-craft__grid">
@@ -1609,7 +1629,7 @@ function Visit() {
             Book a private appointment.
           </h2>
           <p style={{ color: "var(--muted)", fontSize: ".9rem", margin: "0 0 26px" }}>
-            Experience private jewellery viewings at our flagship Mumbai atelier or schedule a high-definition virtual consultation.
+            Experience private jewellery viewings at our boutique in Mahanagar, Lucknow or schedule a high-definition virtual consultation.
           </p>
           <form onSubmit={submit}>
             <div className="cg-field">
@@ -1634,9 +1654,34 @@ function Visit() {
               {sent ? "Thank you — we'll be in touch" : "Request Appointment"}
             </button>
           </form>
-          <a className="cg-wa" href="https://wa.me/919820123456?text=Hello%20Carats%20by%20Grace%2C%20I%20would%20like%20to%20book%20a%20private%20atelier%20consultation." target="_blank" rel="noreferrer" aria-label="Chat on WhatsApp">
+          <a className="cg-wa" href="https://wa.me/919120530531?text=Hello%20Carats%20by%20Grace%2C%20I%20would%20like%20to%20book%20a%20private%20atelier%20consultation." target="_blank" rel="noreferrer" aria-label="Chat on WhatsApp">
             <Icon name="whatsapp" size={18} /> Chat on WhatsApp
           </a>
+          <div className="cg-visit__store" style={{ marginTop: 22, paddingTop: 18, borderTop: "1px solid var(--sand-light, #E9E1D8)" }}>
+            <span style={{ display: "block", fontSize: "0.72rem", letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--gold, #C5A059)", fontWeight: 600, marginBottom: 4 }}>
+              Offline Store & Boutique
+            </span>
+            <p style={{ margin: "0 0 8px", fontSize: "0.95rem", color: "var(--charcoal, #17120F)", fontWeight: 500 }}>
+              Carats By Grace, Mahanagar, Lucknow
+            </p>
+            <a
+              href="https://share.google/FkH78O9JeWQrn62Ik"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 6,
+                fontSize: "0.85rem",
+                color: "var(--wine, #7B1E3A)",
+                fontWeight: 600,
+                textDecoration: "underline",
+                textUnderlineOffset: 3,
+              }}
+            >
+              <Icon name="pin" size={15} /> Store Location (Google Maps) ↗
+            </a>
+          </div>
         </div>
       </div>
     </section>
@@ -1695,7 +1740,6 @@ function Footer() {
       { label: "Our Story", href: "/about" },
       { label: "Craftsmanship", href: "/craftsmanship" },
       { label: "Private Atelier", href: "#visit" },
-      { label: "Stockists", href: "/stockists" },
     ],
     Atelier: [
       { label: "Private Salon Viewing", href: "#visit" },
@@ -1705,10 +1749,11 @@ function Footer() {
       { label: "Terms of Service", href: "/policies/terms" },
     ],
     Concierge: [
-      { label: "WhatsApp Concierge", href: "https://wa.me/919820123456" },
+      { label: "WhatsApp Concierge", href: "https://wa.me/919120530531" },
       { label: "hello@caratsbygrace.com", href: "mailto:hello@caratsbygrace.com" },
-      { label: "+91 98200 12345", href: "tel:+919820012345" },
-      { label: "Flagship Salon, Mumbai", href: "https://maps.google.com" },
+      { label: "+91 91205 30531", href: "tel:+919120530531" },
+      { label: "Carats By Grace, Mahanagar, Lucknow", href: "https://share.google/FkH78O9JeWQrn62Ik" },
+      { label: "Location: Google Maps ↗", href: "https://share.google/FkH78O9JeWQrn62Ik" },
     ],
   };
   return (
@@ -1719,9 +1764,8 @@ function Footer() {
             <BrandLogo variant="light" height={52} />
             <p>Modern fine jewellery, handcrafted quietly with heirloom precision.</p>
             <div className="cg-footer__social">
-              <a href="https://instagram.com" target="_blank" rel="noreferrer" aria-label="Instagram"><Icon name="instagram" size={18} /></a>
-              <a href="https://pinterest.com" target="_blank" rel="noreferrer" aria-label="Pinterest"><Icon name="pinterest" size={18} /></a>
-              <a href="https://wa.me/919820123456" target="_blank" rel="noreferrer" aria-label="WhatsApp"><Icon name="whatsapp" size={18} /></a>
+              <a href="https://www.instagram.com/caratsbygrace/" target="_blank" rel="noreferrer" aria-label="Instagram"><Icon name="instagram" size={18} /></a>
+              <a href="https://wa.me/919120530531" target="_blank" rel="noreferrer" aria-label="WhatsApp"><Icon name="whatsapp" size={18} /></a>
             </div>
           </div>
           <div className="cg-footer__links-grid">
@@ -1748,7 +1792,7 @@ function Footer() {
         <div className="cg-footer__bottom">
           <span>© {new Date().getFullYear()} Carats by Grace. All rights reserved.</span>
           <div className="cg-footer__credential" aria-label="Atelier Credentials">
-            Private Salon Viewing by Appointment · BIS 750 Gold & Certified Diamonds
+            Private Salon Viewing by Appointment · IGI Certified Diamonds
           </div>
           <a className="cg-backtop" href="#top"
             onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}>

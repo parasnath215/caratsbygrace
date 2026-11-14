@@ -323,7 +323,7 @@ export default function ProductQuickViewModal({ product, isOpen, onClose }) {
   ].filter(Boolean);
 
   // Pre-filled WhatsApp enquiry link
-  const waPhone = import.meta.env.VITE_WHATSAPP_NUMBER || "919820123456";
+  const waPhone = import.meta.env.VITE_WHATSAPP_NUMBER || "919120530531";
   const waText = encodeURIComponent(
     `Hello Carats by Grace, I would like to enquire about viewing "${product.name}" (${selectedMetal}, ${product.spec || ""}). Could you please share more details?`
   );
@@ -546,7 +546,7 @@ export default function ProductQuickViewModal({ product, isOpen, onClose }) {
                         id="pq-phone"
                         type="tel"
                         required
-                        placeholder="+91 98200 00000"
+                        placeholder="+91 91205 00000"
                         value={clientPhone}
                         onChange={(e) => setClientPhone(e.target.value)}
                       />

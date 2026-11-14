@@ -9,6 +9,8 @@ const CollectionPage = lazy(() => import('./pages/CollectionPage'));
 const ProductPage    = lazy(() => import('./pages/ProductPage'));
 const WishlistPage   = lazy(() => import('./pages/WishlistPage'));
 const AccountPage    = lazy(() => import('./pages/AccountPage'));
+const AboutPage      = lazy(() => import('./pages/AboutPage'));
+const CraftsmanshipPage = lazy(() => import('./pages/CraftsmanshipPage'));
 const CartDrawer     = lazy(() => import('./components/cart/CartDrawer'));
 const SearchOverlay  = lazy(() => import('./components/search/SearchOverlay'));
 const ProductQuickViewModal = lazy(() => import('./components/product/ProductQuickViewModal'));
@@ -100,6 +102,10 @@ function AppRoutes() {
   const location = useLocation();
   const isHome = location.pathname === '/';
 
+  React.useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }, [location.pathname]);
+
   return (
     <>
       {!isHome && <Header />}
@@ -111,6 +117,8 @@ function AppRoutes() {
         <Route path="/product/:slug"      element={<ProductPage />} />
         <Route path="/wishlist"           element={<WishlistPage />} />
         <Route path="/account"            element={<AccountPage />} />
+        <Route path="/about"              element={<AboutPage />} />
+        <Route path="/craftsmanship"      element={<CraftsmanshipPage />} />
       </Routes>
       {!isHome && <Footer />}
     </>

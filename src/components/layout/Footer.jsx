@@ -36,11 +36,8 @@ const footerLinks = {
   About: [
     { label: 'Our Story', href: '/about' },
     { label: 'Craftsmanship', href: '/craftsmanship' },
-    { label: 'Press', href: '/press' },
-    { label: 'Careers', href: '/careers' },
   ],
   Atelier: [
-    { label: 'Private Salon Viewing', href: '/#visit' },
     { label: 'Bespoke Commissions', href: '/bespoke' },
     { label: 'Jewelry Care Guide', href: '/policies/care' },
     { label: 'Privacy Policy', href: '/policies/privacy' },
@@ -48,16 +45,15 @@ const footerLinks = {
   ],
   Contact: [
     { label: 'hello@caratsbygrace.com', href: 'mailto:hello@caratsbygrace.com' },
-    { label: '+91 98200 12345', href: 'tel:+919820012345' },
-    { label: 'Flagship Atelier, Mumbai', href: 'https://maps.google.com' },
+    { label: '+91 91205 30531', href: 'tel:+919120530531' },
+    { label: 'Carats By Grace, Mahanagar, Lucknow', href: 'https://share.google/FkH78O9JeWQrn62Ik' },
+    { label: 'Location: Google Maps ↗', href: 'https://share.google/FkH78O9JeWQrn62Ik' },
   ],
 };
 
 const socialLinks = [
   { icon: Instagram, label: 'Instagram', href: 'https://instagram.com/caratsbygrace' },
-  { icon: Facebook, label: 'Facebook', href: 'https://facebook.com/caratsbygrace' },
   { icon: PinterestIcon, label: 'Pinterest', href: 'https://pinterest.com/caratsbygrace' },
-  { icon: Youtube, label: 'YouTube', href: 'https://youtube.com/@caratsbygrace' },
 ];
 
 export default function Footer() {
@@ -131,7 +127,7 @@ export default function Footer() {
 
             {/* Atelier credentials */}
             <p className={styles.payments} aria-label="Atelier Credentials">
-              Private Salon Viewing by Appointment · BIS 750 Gold & Certified Diamonds
+              Book Appointment · IGI Certified Diamonds
             </p>
 
             {/* Back to top */}

@@ -273,7 +273,7 @@ const DEFAULT_PRODUCT = {
       "Wipe gently with a soft dry cloth after wear.",
     ],
     "Atelier Viewing & Bespoke Consultation": [
-      "Private salon viewing available at our flagship Mumbai atelier.",
+      "Private salon viewing available at Carats By Grace, Mahanagar, Lucknow.",
       "Dedicated one-on-one consultation with our head gemologist.",
       "Custom carat selection, metal options, and bespoke engravings.",
     ],
@@ -589,7 +589,7 @@ export default function ProductPage({ onAddToCart }) {
               className="pd-btn pd-btn--solid"
               type="button"
               onClick={() => {
-                const waPhone = "919820123456";
+                const waPhone = "919120530531";
                 const waText = encodeURIComponent(
                   `Hello Carats by Grace, I would like to enquire about viewing "${PRODUCT.name}" (${metal ? PRODUCT.metalOptions.find((m) => m.key === metal)?.label : "18K Gold"}${size ? `, Size ${size}` : ""}).`
                 );

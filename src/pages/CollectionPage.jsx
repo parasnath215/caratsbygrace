@@ -65,7 +65,7 @@ const PAGE_CSS = `
 .cp-filters{position:sticky;top:0;z-index:40;background:var(--white);
   border-bottom:1px solid var(--line);
   box-shadow:0 4px 20px -22px rgba(23,18,15,.4)}
-.cp-filters__inner{display:flex;align-items:center;gap:10px;
+.cp-filters__desktop{display:flex;align-items:center;gap:10px;
   padding-block:14px;flex-wrap:wrap}
 .cp-filter{position:relative}
 .cp-filter__btn{min-height:44px;display:inline-flex;align-items:center;gap:10px;
@@ -77,6 +77,7 @@ const PAGE_CSS = `
 .cp-filter__btn .cp-caret{transition:transform .25s var(--ease)}
 .cp-filter__btn.is-open .cp-caret{transform:rotate(180deg)}
 .cp-filter__panel{position:absolute;left:0;top:calc(100% + 8px);min-width:240px;
+  max-height:340px;overflow-y:auto;
   background:var(--white);border:1px solid var(--line);padding:14px;
   box-shadow:0 20px 40px -30px rgba(23,18,15,.4);
   opacity:0;visibility:hidden;transform:translateY(-4px);
@@ -93,7 +94,7 @@ const PAGE_CSS = `
   padding-right:6px;white-space:nowrap}
 .cp-clear{font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;
   color:var(--burgundy);padding:8px 0;text-decoration:underline;
-  text-underline-offset:4px;background:none;border:0}
+  text-underline-offset:4px;background:none;border:0;cursor:pointer}
 .cp-sort{min-height:44px;padding:0 40px 0 16px;border:1px solid var(--line);
   background:var(--white) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2317120F' stroke-width='1.6'><path d='m6 9 6 6 6-6'/></svg>") no-repeat right 14px center;
   font-family:var(--sans);font-size:.74rem;letter-spacing:.12em;
@@ -101,16 +102,129 @@ const PAGE_CSS = `
   border-radius:1px}
 .cp-sort:focus{outline:2px solid var(--gold);outline-offset:2px}
 
-/* Active chips row */
+/* Active chips row (Desktop) */
 .cp-active{display:flex;flex-wrap:wrap;gap:8px;padding-block:10px;
   border-top:1px solid var(--line)}
 .cp-chipx{display:inline-flex;align-items:center;gap:8px;
   background:var(--ivory);border:1px solid var(--line);
   font-size:.7rem;letter-spacing:.06em;color:var(--ink);
-  padding:7px 10px;border-radius:999px}
-.cp-chipx button{width:18px;height:18px;display:grid;place-items:center;
-  color:var(--muted);font-size:.85rem;line-height:1}
-.cp-chipx button:hover{color:var(--burgundy)}
+  padding:6px 12px;border-radius:999px;flex-shrink:0}
+.cp-chipx button{width:20px;height:20px;display:grid;place-items:center;
+  color:var(--muted);font-size:.85rem;line-height:1;border:0;background:none;
+  cursor:pointer;border-radius:50%;transition:all .2s var(--ease)}
+.cp-chipx button:hover{color:var(--burgundy);background:rgba(123,30,58,.08)}
+
+/* Mobile Filter Bar & Drawer */
+.cp-filters__mobile{display:none}
+.cp-filters__mobile-top{display:flex;align-items:center;justify-content:space-between;
+  gap:8px;padding-block:10px;width:100%;box-sizing:border-box}
+.cp-mobile-filter-btn{flex:1;min-width:0;min-height:40px;display:inline-flex;
+  align-items:center;justify-content:center;gap:6px;padding:0 12px;
+  border:1px solid var(--line);border-radius:999px;font-size:.7rem;
+  letter-spacing:.1em;text-transform:uppercase;font-weight:500;color:var(--ink);
+  background:var(--white);cursor:pointer;transition:all .25s var(--ease);
+  -webkit-tap-highlight-color:transparent}
+.cp-mobile-filter-btn:hover{border-color:var(--burgundy);color:var(--burgundy)}
+.cp-mobile-filter-btn.is-active{background:var(--ink);border-color:var(--ink);color:var(--ivory)}
+.cp-filter-badge{display:inline-grid;place-items:center;min-width:18px;height:18px;
+  padding:0 5px;border-radius:999px;background:var(--burgundy);color:var(--ivory);
+  font-size:.64rem;font-weight:600;line-height:1}
+.cp-mobile-filter-btn.is-active .cp-filter-badge{background:var(--gold);color:var(--ink)}
+.cp-mobile-count{font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);font-weight:500;white-space:nowrap;padding:0 4px;flex-shrink:0}
+.cp-mobile-sort-btn{flex:1;min-width:0;min-height:40px;display:inline-flex;
+  align-items:center;justify-content:center;gap:6px;padding:0 12px;
+  border:1px solid var(--line);border-radius:999px;font-size:.7rem;
+  letter-spacing:.08em;text-transform:uppercase;font-weight:500;color:var(--ink);
+  background:var(--white);cursor:pointer;transition:all .25s var(--ease);
+  -webkit-tap-highlight-color:transparent}
+.cp-mobile-sort-btn:hover{border-color:var(--burgundy);color:var(--burgundy)}
+.cp-mobile-sort-btn.is-active{border-color:var(--gold);color:var(--burgundy);
+  background:rgba(123,30,58,.04);font-weight:600}
+.cp-mobile-sort-btn span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cp-mobile-sort-btn .cp-caret{transition:transform .25s var(--ease);color:var(--muted);flex-shrink:0}
+.cp-mobile-sort-btn:hover .cp-caret{color:var(--burgundy)}
+
+/* Mobile Sort Bottom Sheet */
+.cp-drawer--sort{max-height:65vh}
+.cp-sort-list{padding:14px 18px 28px;display:flex;flex-direction:column;gap:6px}
+.cp-sort-option{width:100%;min-height:52px;display:flex;align-items:center;
+  justify-content:space-between;padding:12px 16px;border-radius:8px;
+  border:1px solid transparent;background:var(--white);cursor:pointer;
+  text-align:left;transition:all .2s var(--ease);-webkit-tap-highlight-color:transparent}
+.cp-sort-option:hover{background:var(--ivory)}
+.cp-sort-option.is-selected{background:var(--ivory);border-color:var(--line)}
+.cp-sort-option__info{display:flex;flex-direction:column;gap:3px}
+.cp-sort-option__label{font-family:var(--sans);font-size:.84rem;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--ink);font-weight:500;
+  transition:color .2s var(--ease)}
+.cp-sort-option.is-selected .cp-sort-option__label{color:var(--burgundy);font-weight:600}
+.cp-sort-option__desc{font-size:.72rem;color:var(--muted);letter-spacing:.02em}
+.cp-sort-option__radio{display:grid;place-items:center;width:24px;height:24px;flex-shrink:0}
+.cp-sort-check{width:22px;height:22px;border-radius:50%;background:var(--burgundy);
+  color:var(--ivory);display:grid;place-items:center}
+.cp-sort-dot{width:18px;height:18px;border-radius:50%;border:1.5px solid var(--line);
+  background:transparent}
+.cp-sort-option:hover .cp-sort-dot{border-color:var(--burgundy)}
+
+/* Wrapped Applied Chips on Mobile (Zero horizontal scrolling) */
+.cp-active-wrap{display:flex;flex-wrap:wrap;align-items:center;gap:6px;
+  padding-block:8px 10px;border-top:1px solid var(--line);width:100%;box-sizing:border-box}
+.cp-active-wrap .cp-chipx{font-size:.68rem;padding:5px 10px;border-radius:999px;
+  background:var(--ivory);border:1px solid var(--line);display:inline-flex;
+  align-items:center;gap:6px;color:var(--ink)}
+.cp-active-wrap .cp-chipx button{width:18px;height:18px;display:grid;place-items:center;
+  color:var(--muted);border:0;background:none;cursor:pointer;border-radius:50%;
+  transition:all .2s var(--ease)}
+.cp-active-wrap .cp-chipx button:hover{color:var(--burgundy);background:rgba(123,30,58,.08)}
+.cp-active-wrap .cp-clear{padding:4px 6px;font-size:.68rem;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--burgundy);background:none;border:0;
+  text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+
+/* Mobile Filter Drawer (Bottom Sheet) */
+.cp-drawer-backdrop{position:fixed;inset:0;background:rgba(23,18,15,.55);
+  backdrop-filter:blur(2px);z-index:999;opacity:0;
+  animation:cpFadeIn .25s var(--ease) forwards}
+@keyframes cpFadeIn{to{opacity:1}}
+
+.cp-drawer{position:fixed;bottom:0;left:0;right:0;max-height:88vh;
+  background:var(--white);border-radius:20px 20px 0 0;z-index:1000;
+  display:flex;flex-direction:column;box-shadow:0 -10px 40px rgba(23,18,15,.25);
+  transform:translateY(100%);animation:cpSlideUp .3s var(--ease) forwards}
+@keyframes cpSlideUp{to{transform:translateY(0)}}
+
+.cp-drawer__handle{width:38px;height:4px;border-radius:999px;background:var(--line);
+  margin:10px auto 4px;flex-shrink:0}
+.cp-drawer__header{display:flex;align-items:center;justify-content:space-between;
+  padding:10px 20px 14px;border-bottom:1px solid var(--line);flex-shrink:0}
+.cp-drawer__header h3{font-family:var(--serif);font-size:1.35rem;font-weight:400;
+  color:var(--ink);margin:0;line-height:1.1}
+.cp-drawer__subtitle{font-size:.7rem;color:var(--muted);letter-spacing:.08em;
+  text-transform:uppercase;margin-top:4px;display:block}
+.cp-drawer__close{width:38px;height:38px;border-radius:50%;border:1px solid var(--line);
+  background:var(--white);color:var(--ink);display:grid;place-items:center;
+  cursor:pointer;transition:all .2s var(--ease);-webkit-tap-highlight-color:transparent}
+.cp-drawer__close:hover{background:var(--ivory);border-color:var(--burgundy);color:var(--burgundy)}
+
+.cp-drawer__body{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;
+  padding:18px 20px 24px;display:flex;flex-direction:column;gap:20px}
+.cp-drawer__section-title{font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--muted);font-weight:600;margin:0 0 10px}
+.cp-drawer__pills{display:flex;flex-wrap:wrap;gap:8px}
+
+.cp-pill{min-height:42px;padding:0 16px;border-radius:999px;border:1px solid var(--line);
+  background:var(--white);color:var(--ink);font-family:var(--sans);font-size:.78rem;
+  letter-spacing:.04em;display:inline-flex;align-items:center;gap:6px;cursor:pointer;
+  transition:all .2s var(--ease);-webkit-tap-highlight-color:transparent}
+.cp-pill:hover{border-color:var(--burgundy);color:var(--burgundy)}
+.cp-pill.is-active{background:var(--burgundy);border-color:var(--burgundy);
+  color:var(--ivory);font-weight:500}
+.cp-pill.is-active:hover{background:var(--wine);border-color:var(--wine)}
+
+.cp-drawer__footer{padding:14px 20px clamp(14px,4vw,24px);border-top:1px solid var(--line);
+  background:var(--white);display:flex;align-items:center;gap:12px;flex-shrink:0}
+.cp-drawer__footer .cp-btn{flex:1}
+.cp-drawer__footer .cp-btn--solid{flex:1.6}
 
 /* Grid */
 .cp-body{padding-block:clamp(32px,5vw,64px)}
@@ -169,6 +283,15 @@ const PAGE_CSS = `
   background:var(--gold);transition:width .4s var(--ease)}
 
 /* Responsive */
+html, body {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+.cp-main {
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100%;
+}
 @media (max-width:1024px){
   .cp-grid{grid-template-columns:repeat(3,1fr)}
   .cp-filter__panel{min-width:220px}
@@ -176,18 +299,22 @@ const PAGE_CSS = `
   .cp-card__add{opacity:1;transform:none}
 }
 @media (max-width:768px){
-  .cp-grid{grid-template-columns:repeat(2,1fr);gap:20px 12px}
-  .cp-filters__inner{flex-wrap:nowrap;overflow-x:auto;padding-bottom:12px;
-    scrollbar-width:none;-ms-overflow-style:none}
-  .cp-filters__inner::-webkit-scrollbar{display:none}
-  .cp-filters__spacer,.cp-filters__count{display:none}
-  .cp-sort{flex:none}
-  .cp-filter{flex:none}
-  .cp-active{padding-block:8px}
+  :root{--pad-x:16px}
+  .cp-wrap{padding-inline:16px;width:100%;max-width:100%;box-sizing:border-box}
+  .cp-filters{overflow-x:hidden;width:100%;max-width:100%}
+  .cp-grid{grid-template-columns:repeat(2,1fr);gap:16px 10px}
+  .cp-filters__desktop{display:none !important}
+  .cp-filters__mobile{display:block !important;width:100%;box-sizing:border-box}
   .cp-hero__copy{max-width:none}
 }
+@media (min-width:769px){
+  .cp-filters__desktop{display:flex !important}
+  .cp-filters__mobile{display:none !important}
+}
 @media (max-width:480px){
-  .cp-grid{grid-template-columns:repeat(2,1fr);gap:16px 10px}
+  :root{--pad-x:12px}
+  .cp-wrap{padding-inline:12px}
+  .cp-grid{grid-template-columns:repeat(2,1fr);gap:14px 8px}
   .cp-card__name{font-size:.92rem}
   .cp-card__price{font-size:.82rem}
   .cp-card__wish{width:34px;height:34px}
@@ -209,6 +336,8 @@ function Icon({ name, size = 18, className }) {
     chevron: <path d="m6 9 6 6 6-6" />,
     close: <><path d="M6 6l12 12M18 6L6 18" /></>,
     plus: <><path d="M12 5v14M5 12h14" /></>,
+    sliders: <path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6" />,
+    check: <path d="M20 6 9 17l-5-5" />,
   };
   return <svg {...common}>{paths[name] || null}</svg>;
 }
@@ -298,9 +427,10 @@ const BASE_PRODUCTS = [
 ];
 
 const SORT_OPTIONS = [
-  { key: "featured", label: "Featured" },
-  { key: "newest", label: "Newest" },
-  { key: "az", label: "A–Z" },
+  { key: "featured", label: "Featured", desc: "Curated atelier selection" },
+  { key: "newest", label: "Newest", desc: "Latest additions to the collection" },
+  { key: "az", label: "A–Z", desc: "Alphabetical by title" },
+  { key: "za", label: "Z–A", desc: "Reverse alphabetical by title" },
 ];
 
 const PAGE_SIZE = 8;
@@ -316,10 +446,10 @@ function FilterDropdown({ label, open, onToggle, onClose, children, activeCount 
       if (ref.current && !ref.current.contains(e.target)) onClose();
     };
     const onKey = (e) => e.key === "Escape" && onClose();
-    document.addEventListener("mousedown", onDoc);
+    document.addEventListener("pointerdown", onDoc);
     document.addEventListener("keydown", onKey);
     return () => {
-      document.removeEventListener("mousedown", onDoc);
+      document.removeEventListener("pointerdown", onDoc);
       document.removeEventListener("keydown", onKey);
     };
   }, [open, onClose]);
@@ -445,8 +575,45 @@ export default function CollectionPage() {
   const [sort, setSort] = useState("featured");
   const [visible, setVisible] = useState(PAGE_SIZE);
   const [openMenu, setOpenMenu] = useState(null); // 'category' | 'price' | 'metal' | 'occasion' | null
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [sortDrawerOpen, setSortDrawerOpen] = useState(false);
 
   const { isWishlisted, toggleWishlist } = useWishlist();
+
+  // Lock body scroll when mobile drawer or sort sheet is open
+  useEffect(() => {
+    if (drawerOpen || sortDrawerOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [drawerOpen, sortDrawerOpen]);
+
+  // Close drawers on Escape key or desktop resize
+  useEffect(() => {
+    if (!drawerOpen && !sortDrawerOpen) return;
+    const onKey = (e) => {
+      if (e.key === "Escape") {
+        setDrawerOpen(false);
+        setSortDrawerOpen(false);
+      }
+    };
+    const onResize = () => {
+      if (window.innerWidth > 768) {
+        setDrawerOpen(false);
+        setSortDrawerOpen(false);
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    window.addEventListener("resize", onResize);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      window.removeEventListener("resize", onResize);
+    };
+  }, [drawerOpen, sortDrawerOpen]);
 
   // reset filters when slug changes
   useEffect(() => {
@@ -485,6 +652,7 @@ export default function CollectionPage() {
     });
     switch (sort) {
       case "az": list = [...list].sort((a, b) => a.name.localeCompare(b.name)); break;
+      case "za": list = [...list].sort((a, b) => b.name.localeCompare(a.name)); break;
       case "newest": list = [...list].reverse(); break;
       default: break; // featured
     }
@@ -501,10 +669,15 @@ export default function CollectionPage() {
     setArr(arr.includes(value) ? arr.filter((v) => v !== value) : [...arr, value]);
   };
 
-  const activeChips = [
+  const activeChips = useMemo(() => [
     ...categories.map((c) => ({ key: `cat:${c}`, label: c, clear: () => setCategories((a) => a.filter((x) => x !== c)) })),
     ...metals.map((m) => ({ key: `metal:${m}`, label: m, clear: () => setMetals((a) => a.filter((x) => x !== m)) })),
     ...occasions.map((o) => ({ key: `occ:${o}`, label: o, clear: () => setOccasions((a) => a.filter((x) => x !== o)) })),
+    ...(priceBand ? [{
+      key: `price:${priceBand}`,
+      label: PRICE_BANDS.find((b) => b.key === priceBand)?.label || priceBand,
+      clear: () => setPriceBand(null),
+    }] : []),
     ...(searchQuery ? [{
       key: "q",
       label: `“${searchQuery}”`,
@@ -514,10 +687,10 @@ export default function CollectionPage() {
         setSearchParams(next, { replace: true });
       },
     }] : []),
-  ];
+  ], [categories, metals, occasions, priceBand, searchQuery, searchParams, setSearchParams]);
 
   const clearAll = () => {
-    setCategories([]); setMetals([]); setOccasions([]);
+    setCategories([]); setMetals([]); setOccasions([]); setPriceBand(null);
     if (searchQuery) {
       const next = new URLSearchParams(searchParams);
       next.delete("q");
@@ -531,7 +704,7 @@ export default function CollectionPage() {
   const toggleMenu = (key) => setOpenMenu(openMenu === key ? null : key);
 
   return (
-    <main>
+    <main className="cp-main">
       <style>{PAGE_CSS}</style>
 
       {/* ============ HERO ============ */}
@@ -560,7 +733,8 @@ export default function CollectionPage() {
 
       {/* ============ STICKY FILTER BAR ============ */}
       <div className="cp-filters" role="region" aria-label="Product filters">
-        <div className="cp-wrap cp-filters__inner">
+        {/* DESKTOP FILTER BAR (>768px) */}
+        <div className="cp-wrap cp-filters__desktop">
           {/* Category */}
           <FilterDropdown
             label="Category"
@@ -621,10 +795,10 @@ export default function CollectionPage() {
             {total} {total === 1 ? "piece" : "pieces"}
           </span>
 
-          <label htmlFor="cp-sort" className="sr-only" style={{
+          <label htmlFor="cp-sort-desktop" className="sr-only" style={{
             position: "absolute", width: 1, height: 1, overflow: "hidden",
             clip: "rect(0 0 0 0)" }}>Sort</label>
-          <select id="cp-sort" className="cp-sort" value={sort}
+          <select id="cp-sort-desktop" className="cp-sort" value={sort}
             onChange={(e) => setSort(e.target.value)}>
             {SORT_OPTIONS.map((o) => (
               <option key={o.key} value={o.key}>{o.label}</option>
@@ -632,8 +806,9 @@ export default function CollectionPage() {
           </select>
         </div>
 
+        {/* DESKTOP ACTIVE CHIPS */}
         {activeChips.length > 0 && (
-          <div className="cp-wrap cp-active">
+          <div className="cp-wrap cp-active cp-filters__desktop">
             {activeChips.map((c) => (
               <span className="cp-chipx" key={c.key}>
                 {c.label}
@@ -644,6 +819,60 @@ export default function CollectionPage() {
             <button className="cp-clear" onClick={clearAll}>Clear all</button>
           </div>
         )}
+
+        {/* MOBILE FILTER BAR (<=768px) */}
+        <div className="cp-wrap cp-filters__mobile">
+          <div className="cp-filters__mobile-top">
+            <button
+              type="button"
+              className={`cp-mobile-filter-btn ${activeChips.length > 0 ? "is-active" : ""}`}
+              onClick={() => setDrawerOpen(true)}
+              aria-label="Open filter options"
+            >
+              <Icon name="sliders" size={14} />
+              <span>Filters</span>
+              {activeChips.length > 0 && (
+                <span className="cp-filter-badge">{activeChips.length}</span>
+              )}
+            </button>
+
+            <span className="cp-mobile-count">
+              {total} {total === 1 ? "piece" : "pieces"}
+            </span>
+
+            <button
+              type="button"
+              className={`cp-mobile-sort-btn ${sort !== "featured" ? "is-active" : ""}`}
+              onClick={() => setSortDrawerOpen(true)}
+              aria-label={`Sort by: ${SORT_OPTIONS.find((o) => o.key === sort)?.label || "Featured"}`}
+              aria-haspopup="dialog"
+            >
+              <span>{SORT_OPTIONS.find((o) => o.key === sort)?.label || "Sort"}</span>
+              <Icon name="chevron" size={13} className="cp-caret" />
+            </button>
+          </div>
+
+          {/* Applied filters (wrapped, zero horizontal scroll) */}
+          {activeChips.length > 0 && (
+            <div className="cp-active-wrap" aria-label="Applied filters">
+              {activeChips.map((c) => (
+                <span className="cp-chipx" key={c.key}>
+                  <span>{c.label}</span>
+                  <button
+                    type="button"
+                    aria-label={`Remove ${c.label} filter`}
+                    onClick={c.clear}
+                  >
+                    <Icon name="close" size={11} />
+                  </button>
+                </span>
+              ))}
+              <button type="button" className="cp-clear" onClick={clearAll}>
+                Clear all
+              </button>
+            </div>
+          )}
+        </div>
       </div>
 
       {/* ============ GRID ============ */}
@@ -697,6 +926,211 @@ export default function CollectionPage() {
           </div>
         )}
       </div>
+
+      {/* ============ MOBILE FILTER DRAWER ============ */}
+      {drawerOpen && (
+        <>
+          <div
+            className="cp-drawer-backdrop"
+            onClick={() => setDrawerOpen(false)}
+            aria-hidden="true"
+          />
+          <div
+            className="cp-drawer"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Filter products"
+          >
+            <div className="cp-drawer__handle" aria-hidden="true" />
+            <div className="cp-drawer__header">
+              <div>
+                <h3>Filters</h3>
+                <span className="cp-drawer__subtitle">
+                  {total} {total === 1 ? "piece" : "pieces"} available
+                </span>
+              </div>
+              <button
+                type="button"
+                className="cp-drawer__close"
+                onClick={() => setDrawerOpen(false)}
+                aria-label="Close filters"
+              >
+                <Icon name="close" size={16} />
+              </button>
+            </div>
+
+            <div className="cp-drawer__body">
+              {/* Category Section */}
+              <div>
+                <h5 className="cp-drawer__section-title">Category</h5>
+                <div className="cp-drawer__pills">
+                  {CATEGORIES.map((c) => {
+                    const isSelected = categories.includes(c);
+                    return (
+                      <button
+                        type="button"
+                        key={c}
+                        className={`cp-pill ${isSelected ? "is-active" : ""}`}
+                        onClick={() => toggle(categories, c, setCategories)}
+                      >
+                        {isSelected && <Icon name="check" size={12} />}
+                        {c}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Precious Metal Section */}
+              <div>
+                <h5 className="cp-drawer__section-title">Precious Metal</h5>
+                <div className="cp-drawer__pills">
+                  {METALS.map((m) => {
+                    const isSelected = metals.includes(m);
+                    return (
+                      <button
+                        type="button"
+                        key={m}
+                        className={`cp-pill ${isSelected ? "is-active" : ""}`}
+                        onClick={() => toggle(metals, m, setMetals)}
+                      >
+                        {isSelected && <Icon name="check" size={12} />}
+                        {m}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Occasion Section */}
+              <div>
+                <h5 className="cp-drawer__section-title">Occasion</h5>
+                <div className="cp-drawer__pills">
+                  {OCCASIONS.map((o) => {
+                    const isSelected = occasions.includes(o);
+                    return (
+                      <button
+                        type="button"
+                        key={o}
+                        className={`cp-pill ${isSelected ? "is-active" : ""}`}
+                        onClick={() => toggle(occasions, o, setOccasions)}
+                      >
+                        {isSelected && <Icon name="check" size={12} />}
+                        {o}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Sort By Section */}
+              <div>
+                <h5 className="cp-drawer__section-title">Sort By</h5>
+                <div className="cp-drawer__pills">
+                  {SORT_OPTIONS.map((o) => {
+                    const isSelected = sort === o.key;
+                    return (
+                      <button
+                        type="button"
+                        key={o.key}
+                        className={`cp-pill ${isSelected ? "is-active" : ""}`}
+                        onClick={() => setSort(o.key)}
+                      >
+                        {isSelected && <Icon name="check" size={12} />}
+                        {o.label}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+
+            <div className="cp-drawer__footer">
+              <button
+                type="button"
+                className="cp-btn cp-btn--ghost"
+                onClick={clearAll}
+                disabled={activeChips.length === 0}
+              >
+                Clear all
+              </button>
+              <button
+                type="button"
+                className="cp-btn cp-btn--solid"
+                onClick={() => setDrawerOpen(false)}
+              >
+                Show {total} {total === 1 ? "Piece" : "Pieces"}
+              </button>
+            </div>
+          </div>
+        </>
+      )}
+
+      {/* ============ MOBILE SORT SHEET ============ */}
+      {sortDrawerOpen && (
+        <>
+          <div
+            className="cp-drawer-backdrop"
+            onClick={() => setSortDrawerOpen(false)}
+            aria-hidden="true"
+          />
+          <div
+            className="cp-drawer cp-drawer--sort"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Sort options"
+          >
+            <div className="cp-drawer__handle" aria-hidden="true" />
+            <div className="cp-drawer__header">
+              <div>
+                <h3>Sort By</h3>
+                <span className="cp-drawer__subtitle">
+                  Choose how to view pieces
+                </span>
+              </div>
+              <button
+                type="button"
+                className="cp-drawer__close"
+                onClick={() => setSortDrawerOpen(false)}
+                aria-label="Close sort menu"
+              >
+                <Icon name="close" size={16} />
+              </button>
+            </div>
+
+            <div className="cp-sort-list">
+              {SORT_OPTIONS.map((o) => {
+                const isSelected = sort === o.key;
+                return (
+                  <button
+                    type="button"
+                    key={o.key}
+                    className={`cp-sort-option ${isSelected ? "is-selected" : ""}`}
+                    onClick={() => {
+                      setSort(o.key);
+                      setSortDrawerOpen(false);
+                    }}
+                  >
+                    <div className="cp-sort-option__info">
+                      <span className="cp-sort-option__label">{o.label}</span>
+                      {o.desc && (
+                        <span className="cp-sort-option__desc">{o.desc}</span>
+                      )}
+                    </div>
+                    <div className="cp-sort-option__radio" aria-hidden="true">
+                      {isSelected ? (
+                        <span className="cp-sort-check"><Icon name="check" size={12} /></span>
+                      ) : (
+                        <span className="cp-sort-dot" />
+                      )}
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </>
+      )}
     </main>
   );
 }

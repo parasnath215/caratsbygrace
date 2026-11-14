@@ -310,7 +310,7 @@ export default function AccountPage() {
                         Private Atelier Salon Consultation & Bespoke Handover
                       </span>
                       <a
-                        href="https://wa.me/919820123456?text=Hello%20Carats%20by%20Grace%2C%20inquiring%20about%20Order%20%23CG-9842"
+                        href="https://wa.me/919120530531?text=Hello%20Carats%20by%20Grace%2C%20inquiring%20about%20Order%20%23CG-9842"
                         target="_blank"
                         rel="noreferrer"
                         className="ac-btn ac-btn--ghost"
@@ -337,7 +337,7 @@ export default function AccountPage() {
                     Experience bespoke gemstone selection tailored to your milestones.
                   </p>
                   <a
-                    href="https://wa.me/919820123456?text=Hello%20Carats%20by%20Grace%2C%20I%20would%20like%20to%20book%20a%20private%20atelier%20consultation."
+                    href="https://wa.me/919120530531?text=Hello%20Carats%20by%20Grace%2C%20I%20would%20like%20to%20book%20a%20private%20atelier%20consultation."
                     target="_blank"
                     rel="noreferrer"
                     className="ac-btn ac-btn--solid"
@@ -365,7 +365,7 @@ export default function AccountPage() {
                     Grace Mehta<br />
                     Apt 1402, Altamount Signature Residences<br />
                     Mumbai, Maharashtra — 400026<br />
-                    Phone: +91 98200 12345
+                    Phone: +91 91205 30531
                   </p>
                 </div>
               </div>

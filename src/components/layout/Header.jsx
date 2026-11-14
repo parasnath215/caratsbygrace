@@ -141,7 +141,7 @@ export default function Header() {
           </button>
 
           <a
-            href="https://wa.me/919820123456?text=Hello%20Carats%20by%20Grace%2C%20I%20would%20like%20to%20enquire%20about%20your%20fine%20jewelry%20collection."
+            href="https://wa.me/919120530531?text=Hello%20Carats%20by%20Grace%2C%20I%20would%20like%20to%20enquire%20about%20your%20fine%20jewelry%20collection."
             target="_blank"
             rel="noopener noreferrer"
             className={styles.iconBtn}
@@ -256,6 +256,8 @@ export default function Header() {
             { label: 'Bridal', href: '/collections/bridal' },
             { label: 'Gifting', href: '/collections/gifting' },
             { label: 'High Jewellery', href: '/collections/high-jewellery' },
+            { label: 'Our Story', href: '/about' },
+            { label: 'Craftsmanship', href: '/craftsmanship' },
             { label: 'Wishlist', href: '/wishlist' },
             { label: 'My Account', href: '/account' },
           ].map((l) => (
