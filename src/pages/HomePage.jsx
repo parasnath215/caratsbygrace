@@ -775,6 +775,7 @@ function Header({ cartCount, onOpenCart }) {
     { label: "Bridal", href: "/collections/bridal" },
     { label: "Gifting", href: "/collections/gifting" },
     { label: "High Jewellery", href: "/collections/high-jewellery" },
+    { label: "About", href: "/about" },
   ];
 
   const megaData = {
@@ -1341,7 +1342,7 @@ function Story() {
             to be treasured, worn, and made entirely your own.
           </p>
 
-          <a className="cg-btn cg-btn--ghost-light" href="#">Our Story</a>
+          <Link className="cg-btn cg-btn--ghost-light" to="/about">Our Story</Link>
         </div>
         <div className="cg-story__imgs reveal">
           <figure>

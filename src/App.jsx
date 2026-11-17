@@ -118,6 +118,7 @@ function AppRoutes() {
         <Route path="/wishlist"           element={<WishlistPage />} />
         <Route path="/account"            element={<AccountPage />} />
         <Route path="/about"              element={<AboutPage />} />
+        <Route path="/about-us"           element={<AboutPage />} />
         <Route path="/craftsmanship"      element={<CraftsmanshipPage />} />
       </Routes>
       {!isHome && <Footer />}

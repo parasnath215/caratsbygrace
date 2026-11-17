@@ -45,6 +45,7 @@ export default function Header() {
     { label: 'Bridal', href: '/collections/bridal' },
     { label: 'Gifting', href: '/collections/gifting' },
     { label: 'High Jewellery', href: '/collections/high-jewellery' },
+    { label: 'About', href: '/about' },
   ];
 
   const megaData = {
