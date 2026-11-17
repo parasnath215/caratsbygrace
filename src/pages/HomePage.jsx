@@ -375,30 +375,6 @@ const HOME_CSS = `
 }
 .cg-comp-pill strong { color: var(--burgundy); }
 
-/* ── Bespoke Jewellery ── */
-.cg-bespoke-grid {
-  display: grid; grid-template-columns: 1.1fr 0.9fr;
-  gap: clamp(40px, 6vw, 84px); align-items: center;
-}
-.cg-shapes-mini-grid {
-  display: grid; grid-template-columns: repeat(4, 1fr);
-  gap: 12px; margin: 24px 0;
-}
-.cg-shape-mini-btn {
-  background: var(--ivory); border: 1px solid var(--line);
-  padding: 12px 8px; border-radius: 2px; text-align: center;
-  font-size: 0.74rem; letter-spacing: 0.1em; text-transform: uppercase;
-  cursor: pointer; transition: all 0.2s ease;
-}
-.cg-shape-mini-btn:hover, .cg-shape-mini-btn.active {
-  border-color: var(--burgundy); background: var(--burgundy); color: #FFF;
-}
-.cg-form-box {
-  background: var(--white); border: 1px solid var(--line);
-  padding: clamp(24px, 4vw, 36px); border-radius: 2px;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.04);
-}
-
 /* ── Why Carats by Grace ── */
 .cg-why-grid {
   display: grid; grid-template-columns: repeat(5, 1fr);
@@ -511,7 +487,6 @@ const HOME_CSS = `
   .cg-burger { display: grid; }
   .cg-excl-inner,
   .cg-science-grid,
-  .cg-bespoke-grid,
   .cg-cert-grid,
   .cg-philosophy-grid,
   .cg-showroom-grid {
@@ -525,8 +500,7 @@ const HOME_CSS = `
 
 @media (max-width: 540px) {
   .cg-cert-grid .cg-btn,
-  .cg-philosophy-grid .cg-btn,
-  .cg-bespoke-grid .cg-btn {
+  .cg-philosophy-grid .cg-btn {
     width: 100%;
     justify-content: center;
     box-sizing: border-box;
@@ -546,29 +520,12 @@ export default function HomePage() {
   const { items: wishlistItems } = useWishlist();
   const { toggleSearch } = useUI();
 
-  const [selectedBespokeShape, setSelectedBespokeShape] = useState('Oval Brilliant');
-  const [bespokeName, setBespokeName] = useState('');
-  const [bespokePhone, setBespokePhone] = useState('');
-  const [bespokePreference, setBespokePreference] = useState('Solitaire Engagement Ring');
 
   const productsList = useMemo(() => getStoredProducts(), []);
   const exclusiveShowcase = useMemo(() => {
     return productsList.filter((p) => p.isOneOfOne || p.collection === 'the-empress').slice(0, 4);
   }, [productsList]);
 
-  const handleBespokeSubmit = (e) => {
-    e.preventDefault();
-    const url = buildWhatsAppUrl({
-      type: 'bespoke',
-      bespokeData: {
-        name: bespokeName,
-        phone: bespokePhone,
-        preference: bespokePreference,
-        shape: selectedBespokeShape,
-      },
-    });
-    window.open(url, '_blank', 'noopener,noreferrer');
-  };
 
   return (
     <div className="cg-page">
@@ -816,54 +773,6 @@ export default function HomePage() {
                 src="/assets/model2/m2_8153.webp"
                 alt="Science and Art of Grown Diamonds"
                 loading="lazy"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ============================================================
-          PART 2: SECTION 9 — BESPOKE STUDIO TEASER
-          ============================================================ */}
-      <section className="cg-section" style={{ background: 'var(--white)', borderTop: '1px solid var(--line)' }}>
-        <div className="cg-wrap">
-          <div className="cg-bespoke-grid" style={{ alignItems: 'center' }}>
-            <div>
-              <span className="cg-eyebrow">Interactive Customizer</span>
-              <h2 className="cg-display" style={{ fontSize: 'clamp(2.2rem, 4.2vw, 3.4rem)', margin: '0 0 16px' }}>
-                Design your own
-              </h2>
-              <p style={{ fontSize: '1.05rem', lineHeight: 1.8, color: '#4A3E3D', maxWidth: 540, marginBottom: 28 }}>
-                Experience our interactive Bespoke Studio to customize your piece from stone to silhouette.
-              </p>
-
-              <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap' }}>
-                <Link
-                  to="/bespoke"
-                  className="cg-btn cg-btn-solid"
-                  style={{ background: 'var(--burgundy)', borderColor: 'var(--burgundy)', color: '#FFF' }}
-                >
-                  Start Designing
-                  <ArrowRight size={16} />
-                </Link>
-                <a
-                  href={buildWhatsAppUrl({ type: 'consultation' })}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="cg-btn cg-btn-outline"
-                >
-                  <MessageCircle size={16} />
-                  Book a Consultation
-                </a>
-              </div>
-            </div>
-
-            <div style={{ position: 'relative', borderRadius: 2, overflow: 'hidden', boxShadow: '0 16px 40px rgba(0,0,0,0.08)' }}>
-              <img
-                src="/assets/model1/m1_8403_final.webp"
-                alt="Bespoke Studio · Design Your Own Fine Jewellery"
-                loading="lazy"
-                style={{ width: '100%', height: 'auto', display: 'block' }}
               />
             </div>
           </div>
@@ -1149,7 +1058,6 @@ export default function HomePage() {
                 <li><Link to="/about" style={{ color: 'rgba(250, 246, 241, 0.8)' }}>About Us</Link></li>
                 <li><Link to="/collections" style={{ color: 'rgba(250, 246, 241, 0.8)' }}>Collections</Link></li>
                 <li><Link to="/exclusive-designs" style={{ color: 'rgba(250, 246, 241, 0.8)' }}>Exclusive Designs</Link></li>
-                <li><Link to="/bespoke" style={{ color: 'rgba(250, 246, 241, 0.8)' }}>Bespoke Jewellery</Link></li>
                 <li><Link to="/grown-diamonds" style={{ color: 'rgba(250, 246, 241, 0.8)' }}>Grown Diamonds</Link></li>
                 <li><Link to="/contact" style={{ color: 'rgba(250, 246, 241, 0.8)' }}>Contact & Showroom</Link></li>
               </ul>

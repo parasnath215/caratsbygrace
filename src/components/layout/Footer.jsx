@@ -61,7 +61,6 @@ export default function Footer() {
               <ul className={styles.linkList}>
                 <li><Link to="/about" className={styles.footerLink}>About Us & Founders</Link></li>
                 <li><Link to="/exclusive-designs" className={styles.footerLink}>Designs That Never Repeat</Link></li>
-                <li><Link to="/bespoke" className={styles.footerLink}>Bespoke Jewellery Experience</Link></li>
                 <li><Link to="/grown-diamonds" className={styles.footerLink}>The Art of Grown Diamonds</Link></li>
               </ul>
             </div>

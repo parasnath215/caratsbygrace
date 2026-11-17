@@ -53,7 +53,6 @@ export default function Header() {
     { label: 'Home', href: '/' },
     { label: 'Exclusive Collection', href: '/exclusive-collection', badge: '1-OF-1', isHighlight: true },
     { label: 'Collections', href: '/collections', mega: true },
-    { label: 'Bespoke Studio', href: '/bespoke' },
     { label: 'Craftsmanship', href: '/craftsmanship' },
     { label: 'About Us', href: '/about' },
   ];
@@ -73,7 +72,6 @@ export default function Header() {
       { name: 'The Empress Collection', href: '/collections/the-empress' },
       { name: 'Solitaire Essentials', href: '/collections/solitaire-essentials' },
       { name: 'The Nocturne Edit', href: '/collections/the-nocturne-edit' },
-      { name: 'Bespoke Atelier', href: '/bespoke' },
     ],
     'The Atelier': [
       { name: 'Our Story & Founders', href: '/about' },
@@ -406,14 +404,6 @@ export default function Header() {
           >
             <span>Exclusive Collection</span>
             <span className={styles.subBadge} style={{ marginLeft: 'auto' }}>1-OF-1</span>
-          </Link>
-
-          <Link
-            className={styles.mobileLink}
-            to="/bespoke"
-            onClick={() => setMobileOpen(false)}
-          >
-            <span>Bespoke Studio</span>
           </Link>
 
           <Link

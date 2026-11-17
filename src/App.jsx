@@ -1,5 +1,5 @@
 import React, { Suspense, lazy } from 'react';
-import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
+import { Routes, Route, useNavigate, useLocation, Navigate } from 'react-router-dom';
 import { WishlistProvider } from './context/WishlistContext';
 import { UIProvider, useUI } from './context/UIContext';
 import FloatingWhatsApp from './components/ui/FloatingWhatsApp';
@@ -14,7 +14,6 @@ const AboutPage           = lazy(() => import('./pages/AboutPage'));
 const ExclusiveCollectionPage = lazy(() => import('./pages/ExclusiveCollectionPage'));
 const ExclusiveDesignsPage= lazy(() => import('./pages/ExclusiveDesignsPage'));
 const GrownDiamondsPage   = lazy(() => import('./pages/GrownDiamondsPage'));
-const BespokePage         = lazy(() => import('./pages/BespokePage'));
 const ContactPage         = lazy(() => import('./pages/ContactPage'));
 const AdminPage           = lazy(() => import('./pages/AdminPage'));
 const CraftsmanshipPage   = lazy(() => import('./pages/CraftsmanshipPage'));
@@ -86,7 +85,7 @@ function AppRoutes() {
         <Route path="/exclusive-designs"      element={<ExclusiveDesignsPage />} />
         <Route path="/designs-that-never-repeat" element={<ExclusiveDesignsPage />} />
         <Route path="/grown-diamonds"        element={<GrownDiamondsPage />} />
-        <Route path="/bespoke"               element={<BespokePage />} />
+        <Route path="/bespoke"               element={<Navigate to="/collections" replace />} />
         <Route path="/contact"               element={<ContactPage />} />
         <Route path="/showroom"              element={<ContactPage />} />
         <Route path="/admin"                 element={<AdminPage />} />
