@@ -3,8 +3,8 @@
 ───────────────────────────────────────────── */
 
 .footer {
-  background: #4A1124; /* --wine */
-  color: var(--ivory);
+  background: #3D0617; /* Deep Burgundy Wine */
+  color: var(--ivory, #FAF6F1);
 }
 
 .container {

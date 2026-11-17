@@ -1,18 +1,17 @@
 // src/components/layout/Header.jsx
-// Carats by Grace — Global Header (for inner pages)
-// Matches the exact alignment, layout, and luxury aesthetic of the Home Page header.
+// Carats by Grace — Global Header
+// Luxury Digital Catalogue & Brand Showcase · Mahanagar, Lucknow
 
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { Search, Heart, User, MessageCircle, Menu, X, ChevronDown } from 'lucide-react';
-import { useCart } from '../../context/CartContext';
+import { Search, Heart, MessageCircle, Menu, X, ChevronDown, Sparkles } from 'lucide-react';
 import { useWishlist } from '../../context/WishlistContext';
 import { useUI } from '../../context/UIContext';
 import BrandLogo from '../ui/BrandLogo';
+import { buildWhatsAppUrl } from '../../utils/whatsapp';
 import styles from './Header.module.css';
 
 export default function Header() {
-  const { totalItems, toggleCart } = useCart();
   const { items: wishlistItems } = useWishlist();
   const { toggleSearch } = useUI();
   const navigate = useNavigate();
@@ -31,46 +30,50 @@ export default function Header() {
     };
   }, [mobileOpen]);
 
-  // Close any open menu when the route changes
+  // Close menus on route change
   useEffect(() => {
     setMegaOpen(false);
     setMobileOpen(false);
   }, [location.pathname]);
 
   const nav = [
-    { label: 'Rings', href: '/collections/rings', mega: true },
-    { label: 'Earrings', href: '/collections/earrings', mega: true },
-    { label: 'Necklaces', href: '/collections/necklaces', mega: true },
-    { label: 'Bracelets', href: '/collections/bracelets', mega: true },
-    { label: 'Bridal', href: '/collections/bridal' },
-    { label: 'Gifting', href: '/collections/gifting' },
-    { label: 'High Jewellery', href: '/collections/high-jewellery' },
-    { label: 'About', href: '/about' },
+    { label: 'Home', href: '/' },
+    { label: 'About Us', href: '/about' },
+    { label: 'Collections', href: '/collections', mega: true },
+    { label: 'Exclusive Designs', href: '/exclusive-designs', badge: '1-of-1' },
+    { label: 'Bespoke', href: '/bespoke' },
+    { label: 'Grown Diamonds', href: '/grown-diamonds' },
+    { label: 'Contact', href: '/contact' },
   ];
 
   const megaData = {
     'By Category': [
-      { name: 'Rings', href: '/collections/rings' },
-      { name: 'Earrings', href: '/collections/earrings' },
-      { name: 'Necklaces', href: '/collections/necklaces' },
-      { name: 'Bracelets', href: '/collections/bracelets' },
-      { name: 'Bangles', href: '/collections/bangles' },
+      { name: 'Rings & Solitaires', href: '/collections/rings' },
+      { name: 'Engagement Rings', href: '/collections/rings' },
+      { name: 'Earrings & Studs', href: '/collections/earrings' },
+      { name: 'Necklaces & Chokers', href: '/collections/necklaces' },
       { name: 'Pendants', href: '/collections/pendants' },
+      { name: 'Bracelets & Cuffs', href: '/collections/bracelets' },
+      { name: 'Bangles', href: '/collections/bangles' },
     ],
-    'By Occasion': [
-      { name: 'Everyday', href: '/collections/everyday' },
-      { name: 'Gifting', href: '/collections/gifting' },
-      { name: 'Bridal', href: '/collections/bridal' },
-      { name: 'Festive', href: '/collections/festive' },
-      { name: 'Anniversary', href: '/collections/anniversary' },
+    'Signature Lines': [
+      { name: 'Exclusive Designs (Never Repeat)', href: '/exclusive-designs' },
+      { name: 'The Empress Collection', href: '/collections/the-empress' },
+      { name: 'Solitaire Essentials', href: '/collections/solitaire-essentials' },
+      { name: 'The Nocturne Edit', href: '/collections/the-nocturne-edit' },
+      { name: 'Bespoke Studio', href: '/bespoke' },
     ],
-    'By Metal': [
-      { name: '18K Yellow Gold', href: '/collections/rings' },
-      { name: '18K Rose Gold', href: '/collections/earrings' },
-      { name: '18K White Gold', href: '/collections/necklaces' },
-      { name: '950 Platinum', href: '/collections/bridal' },
+    'The Atelier': [
+      { name: 'Our Story & Founders', href: '/about' },
+      { name: 'The Art of Grown Diamonds', href: '/grown-diamonds' },
+      { name: 'IGI Quality Commitment', href: '/grown-diamonds#4cs' },
+      { name: 'Lucknow Showroom Visit', href: '/contact' },
     ],
   };
+
+  const directWhatsAppUrl = buildWhatsAppUrl({
+    type: 'general',
+  });
 
   return (
     <header className={styles.header} onMouseLeave={() => setMegaOpen(false)}>
@@ -99,6 +102,21 @@ export default function Header() {
               onFocus={() => setMegaOpen(Boolean(item.mega))}
             >
               {item.label}
+              {item.badge && (
+                <span
+                  style={{
+                    fontSize: '0.55rem',
+                    padding: '2px 5px',
+                    borderRadius: 999,
+                    background: 'rgba(93, 10, 36, 0.1)',
+                    color: 'var(--burgundy)',
+                    letterSpacing: '0.08em',
+                    fontWeight: 600,
+                  }}
+                >
+                  {item.badge}
+                </span>
+              )}
             </Link>
           ))}
         </nav>
@@ -128,21 +146,14 @@ export default function Header() {
           >
             <Heart size={20} strokeWidth={1.5} />
             {wishlistCount > 0 && (
-              <span className={styles.badge} aria-hidden="true">{wishlistCount}</span>
+              <span className={styles.badge} aria-hidden="true">
+                {wishlistCount}
+              </span>
             )}
           </Link>
 
-          <button
-            className={styles.iconBtn}
-            onClick={() => navigate('/account')}
-            aria-label="Account"
-            type="button"
-          >
-            <User size={20} strokeWidth={1.5} />
-          </button>
-
           <a
-            href="https://wa.me/919120530531?text=Hello%20Carats%20by%20Grace%2C%20I%20would%20like%20to%20enquire%20about%20your%20fine%20jewelry%20collection."
+            href={directWhatsAppUrl}
             target="_blank"
             rel="noopener noreferrer"
             className={styles.iconBtn}
@@ -151,6 +162,10 @@ export default function Header() {
           >
             <MessageCircle size={20} strokeWidth={1.5} />
           </a>
+
+          <Link to="/contact" className={styles.consultBtn}>
+            Book Visit
+          </Link>
         </div>
       </div>
 
@@ -177,18 +192,28 @@ export default function Header() {
           ))}
 
           <div className={styles.megaCol}>
-            <h4>Featured</h4>
+            <h4>Exclusive Masterpiece</h4>
             <Link
               className={styles.megaImg}
-              to="/collections/rings"
+              to="/exclusive-designs"
               onClick={() => setMegaOpen(false)}
             >
               <img
-                src="/assets/model1/m1_8247_final.webp"
-                alt="New collection preview"
+                src="/assets/model1/m1_8424_final.webp"
+                alt="Designs That Never Repeat preview"
                 loading="lazy"
               />
             </Link>
+            <p
+              style={{
+                fontSize: '0.74rem',
+                color: 'var(--muted)',
+                margin: '8px 0 0',
+                letterSpacing: '0.04em',
+              }}
+            >
+              One design. One owner. Forever yours.
+            </p>
           </div>
         </div>
       </div>
@@ -217,61 +242,170 @@ export default function Header() {
         </div>
 
         <div className={styles.mobileBody}>
-          {Object.entries(megaData).map(([title, items]) => (
-            <div className={styles.mobileGroup} key={title}>
-              <button
-                className={styles.mobileTrigger}
-                aria-expanded={mobileGroup === title}
-                onClick={() =>
-                  setMobileGroup(mobileGroup === title ? null : title)
-                }
-                type="button"
-              >
-                <span>{title}</span>
-                <ChevronDown
-                  size={16}
-                  style={{
-                    transform: mobileGroup === title ? 'rotate(180deg)' : 'none',
-                    transition: 'transform .25s ease',
-                  }}
-                />
-              </button>
-              <div
-                className={styles.mobileSub}
-                style={{ maxHeight: mobileGroup === title ? 400 : 0 }}
-              >
-                {items.map((i) => (
-                  <Link
-                    key={i.name}
-                    to={i.href}
-                    onClick={() => setMobileOpen(false)}
-                  >
-                    {i.name}
-                  </Link>
-                ))}
-              </div>
-            </div>
-          ))}
+          <div className={styles.mobileGroup}>
+            <Link
+              className={styles.mobileTrigger}
+              to="/"
+              onClick={() => setMobileOpen(false)}
+            >
+              Home
+            </Link>
+          </div>
 
-          {[
-            { label: 'Bridal', href: '/collections/bridal' },
-            { label: 'Gifting', href: '/collections/gifting' },
-            { label: 'High Jewellery', href: '/collections/high-jewellery' },
-            { label: 'Our Story', href: '/about' },
-            { label: 'Craftsmanship', href: '/craftsmanship' },
-            { label: 'Wishlist', href: '/wishlist' },
-            { label: 'My Account', href: '/account' },
-          ].map((l) => (
-            <div className={styles.mobileGroup} key={l.label}>
-              <Link
-                className={styles.mobileTrigger}
-                to={l.href}
-                onClick={() => setMobileOpen(false)}
-              >
-                {l.label}
+          <div className={styles.mobileGroup}>
+            <Link
+              className={styles.mobileTrigger}
+              to="/about"
+              onClick={() => setMobileOpen(false)}
+            >
+              About Us
+            </Link>
+          </div>
+
+          {/* Collections with Sub-categories */}
+          <div className={styles.mobileGroup}>
+            <button
+              className={styles.mobileTrigger}
+              aria-expanded={mobileGroup === 'Collections'}
+              onClick={() =>
+                setMobileGroup(mobileGroup === 'Collections' ? null : 'Collections')
+              }
+              type="button"
+            >
+              <span>Collections</span>
+              <ChevronDown
+                size={16}
+                style={{
+                  transform: mobileGroup === 'Collections' ? 'rotate(180deg)' : 'none',
+                  transition: 'transform .25s ease',
+                }}
+              />
+            </button>
+            <div
+              className={styles.mobileSub}
+              style={{ maxHeight: mobileGroup === 'Collections' ? 400 : 0 }}
+            >
+              <Link to="/collections" onClick={() => setMobileOpen(false)}>
+                All Jewellery
+              </Link>
+              <Link to="/collections/rings" onClick={() => setMobileOpen(false)}>
+                Rings & Solitaires
+              </Link>
+              <Link to="/collections/earrings" onClick={() => setMobileOpen(false)}>
+                Earrings & Studs
+              </Link>
+              <Link to="/collections/necklaces" onClick={() => setMobileOpen(false)}>
+                Necklaces & Chokers
+              </Link>
+              <Link to="/collections/pendants" onClick={() => setMobileOpen(false)}>
+                Pendants
+              </Link>
+              <Link to="/collections/bracelets" onClick={() => setMobileOpen(false)}>
+                Bracelets & Cuffs
               </Link>
             </div>
-          ))}
+          </div>
+
+          <div className={styles.mobileGroup}>
+            <Link
+              className={styles.mobileTrigger}
+              to="/exclusive-designs"
+              onClick={() => setMobileOpen(false)}
+              style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
+            >
+              <span>Exclusive Designs</span>
+              <span
+                style={{
+                  fontSize: '0.62rem',
+                  padding: '2px 6px',
+                  borderRadius: 999,
+                  background: 'var(--burgundy)',
+                  color: '#FFF',
+                  letterSpacing: '0.08em',
+                }}
+              >
+                1-OF-1
+              </span>
+            </Link>
+          </div>
+
+          <div className={styles.mobileGroup}>
+            <Link
+              className={styles.mobileTrigger}
+              to="/bespoke"
+              onClick={() => setMobileOpen(false)}
+            >
+              Bespoke Jewellery
+            </Link>
+          </div>
+
+          <div className={styles.mobileGroup}>
+            <Link
+              className={styles.mobileTrigger}
+              to="/grown-diamonds"
+              onClick={() => setMobileOpen(false)}
+            >
+              The Art of Grown Diamonds
+            </Link>
+          </div>
+
+          <div className={styles.mobileGroup}>
+            <Link
+              className={styles.mobileTrigger}
+              to="/contact"
+              onClick={() => setMobileOpen(false)}
+            >
+              Contact & Lucknow Showroom
+            </Link>
+          </div>
+
+          <div className={styles.mobileGroup}>
+            <Link
+              className={styles.mobileTrigger}
+              to="/wishlist"
+              onClick={() => setMobileOpen(false)}
+            >
+              My Saved Pieces ({wishlistCount})
+            </Link>
+          </div>
+
+          <div className={styles.mobileGroup}>
+            <Link
+              className={styles.mobileTrigger}
+              to="/admin"
+              onClick={() => setMobileOpen(false)}
+              style={{ fontSize: '0.9rem', color: 'var(--muted)' }}
+            >
+              Staff Portal (CMS)
+            </Link>
+          </div>
+
+          {/* Quick WhatsApp Action inside Mobile Drawer */}
+          <div style={{ marginTop: 28 }}>
+            <a
+              href={directWhatsAppUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: 8,
+                background: 'var(--burgundy)',
+                color: '#FAF6F1',
+                padding: '12px 18px',
+                borderRadius: 2,
+                fontSize: '0.74rem',
+                letterSpacing: '0.14em',
+                textTransform: 'uppercase',
+                textDecoration: 'none',
+                fontWeight: 500,
+              }}
+            >
+              <MessageCircle size={16} />
+              <span>Connect on WhatsApp</span>
+            </a>
+          </div>
         </div>
       </div>
 

@@ -1,0 +1,305 @@
+/* src/pages/GrownDiamondsPage.module.css */
+
+.page {
+  background-color: var(--white, #FFFFFF);
+  color: var(--ink, #17120F);
+  overflow-x: hidden;
+  font-family: var(--font-sans, "Jost", sans-serif);
+}
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding-inline: clamp(20px, 5vw, 64px);
+}
+
+.hero {
+  background: linear-gradient(180deg, #FBF8F4 0%, #FAF6F1 100%);
+  padding: clamp(60px, 8vw, 100px) 0 clamp(48px, 6vw, 80px);
+  text-align: center;
+  border-bottom: 1px solid var(--line, #E9E1D8);
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.72rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold, #C6A15B);
+  font-weight: 500;
+  margin-bottom: 16px;
+}
+
+.title {
+  font-family: var(--font-serif, "Cormorant Garamond", Georgia, serif);
+  font-size: clamp(2.4rem, 5vw, 4.2rem);
+  font-weight: 400;
+  line-height: 1.1;
+  color: var(--ink, #17120F);
+  margin: 0 0 20px;
+}
+
+.lede {
+  max-width: 760px;
+  margin: 0 auto;
+  font-size: clamp(1.05rem, 1.3vw, 1.2rem);
+  line-height: 1.8;
+  color: #3D3534;
+}
+
+/* Comparison Table */
+.comparisonSection {
+  padding-block: clamp(64px, 8vw, 110px);
+}
+
+.sectionHeader {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto clamp(36px, 5vw, 60px);
+}
+
+.sectionTitle {
+  font-family: var(--font-serif, "Cormorant Garamond", Georgia, serif);
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 400;
+  line-height: 1.15;
+  margin: 0 0 16px;
+}
+
+.tableWrap {
+  background: var(--ivory, #FAF6F1);
+  border: 1px solid var(--line, #E9E1D8);
+  border-radius: 4px;
+  overflow-x: auto;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.03);
+}
+
+.compTable {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.compTable th {
+  padding: 20px 24px;
+  background: var(--burgundy, #5D0A24);
+  color: var(--ivory, #FAF6F1);
+  font-family: var(--font-serif, "Cormorant Garamond", Georgia, serif);
+  font-size: 1.15rem;
+  letter-spacing: 0.06em;
+  font-weight: 400;
+}
+
+.compTable td {
+  padding: 18px 24px;
+  border-bottom: 1px solid var(--line, #E9E1D8);
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: #3B3231;
+}
+
+.compTable tr:last-child td {
+  border-bottom: none;
+}
+
+.featureCol {
+  font-weight: 600;
+  color: var(--ink, #17120F);
+  width: 28%;
+}
+
+.highlightCell {
+  background: rgba(198, 161, 91, 0.08);
+  font-weight: 500;
+  color: var(--burgundy, #5D0A24);
+}
+
+/* 4Cs Section */
+.fourCsSection {
+  background: #17120F;
+  color: var(--ivory, #FAF6F1);
+  padding-block: clamp(64px, 8vw, 120px);
+}
+
+.fourCsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  margin-top: 48px;
+}
+
+.fourCCard {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(198, 161, 91, 0.25);
+  padding: 32px 24px;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.fourCCard:hover {
+  transform: translateY(-4px);
+  border-color: var(--gold, #C6A15B);
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.fourCLabel {
+  font-family: var(--font-serif, "Cormorant Garamond", Georgia, serif);
+  font-size: 2.2rem;
+  color: var(--gold, #C6A15B);
+  margin-bottom: 8px;
+  line-height: 1;
+}
+
+.fourCTitle {
+  font-family: var(--font-sans, "Jost", sans-serif);
+  font-size: 0.85rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--ivory, #FAF6F1);
+  margin-bottom: 12px;
+}
+
+.fourCDesc {
+  font-size: 0.88rem;
+  line-height: 1.7;
+  color: rgba(250, 246, 241, 0.75);
+  margin: 0;
+}
+
+/* IGI Certification Section */
+.certSection {
+  padding-block: clamp(64px, 8vw, 110px);
+  background: var(--white, #FFFFFF);
+}
+
+.certGrid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: clamp(40px, 6vw, 80px);
+  align-items: center;
+}
+
+.certContent h2 {
+  font-family: var(--font-serif, "Cormorant Garamond", Georgia, serif);
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 400;
+  line-height: 1.15;
+  margin: 0 0 20px;
+}
+
+.certPoints {
+  margin: 28px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.certPoint {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.certPointIcon {
+  color: var(--gold, #C6A15B);
+  margin-top: 3px;
+  flex-shrink: 0;
+}
+
+.certPointText strong {
+  display: block;
+  font-size: 0.92rem;
+  color: var(--ink, #17120F);
+  margin-bottom: 4px;
+}
+
+.certPointText p {
+  margin: 0;
+  font-size: 0.86rem;
+  color: var(--muted, #7A6F70);
+  line-height: 1.5;
+}
+
+.certVisualCard {
+  background: var(--ivory, #FAF6F1);
+  border: 1px solid var(--line, #E9E1D8);
+  padding: 32px;
+  border-radius: 4px;
+  text-align: center;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.05);
+}
+
+.certBadgeWrap {
+  display: inline-flex;
+  padding: 10px 20px;
+  background: var(--burgundy, #5D0A24);
+  color: var(--ivory, #FAF6F1);
+  font-size: 0.75rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 24px;
+}
+
+.certDetailsList {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 20px;
+  font-size: 0.88rem;
+  color: #38302E;
+}
+
+.certRow {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px dashed var(--line, #E9E1D8);
+  padding-bottom: 8px;
+}
+
+.certRow span:first-child {
+  color: var(--muted, #7A6F70);
+}
+
+.btnCta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 0 28px;
+  background: var(--burgundy, #5D0A24);
+  color: var(--ivory, #FAF6F1);
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 600;
+  border-radius: 1px;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  margin-top: 16px;
+}
+
+.btnCta:hover {
+  background: #3D0617;
+  color: #FFFFFF;
+}
+
+@media (max-width: 1024px) {
+  .fourCsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .certGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .fourCsGrid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -128,8 +128,38 @@
 }
 
 .iconBtn:hover {
-  color: var(--burgundy, #7B1E3A);
+  color: var(--burgundy, #5D0A24);
   background: rgba(23, 18, 15, 0.04);
+}
+
+.consultBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: var(--burgundy, #5D0A24);
+  color: #FAF6F1;
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+  margin-left: 6px;
+  border: 1px solid var(--burgundy, #5D0A24);
+}
+
+.consultBtn:hover {
+  background: var(--wine, #3D0617);
+  color: #FFFFFF;
+}
+
+@media (max-width: 768px) {
+  .consultBtn {
+    display: none;
+  }
 }
 
 .badge {

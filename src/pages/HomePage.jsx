@@ -1,1866 +1,1309 @@
 // src/pages/HomePage.jsx
-// Carats by Grace — Landing page (single-file build)
-// Tech: React (JSX).
-// NOTE: Hero is now video-only and loops continuously. All images/URLs marked
-// PLACEHOLDER — replace with brand assets.
+// Carats by Grace — Luxury Digital Catalogue & Brand Showcase
+// Official Brand Color: Burgundy #5D0A24 · Mahanagar, Lucknow
+// No e-commerce / No online payments — Direct WhatsApp ordering and private consultation booking
 
-import React, { useEffect, useRef, useState, useCallback } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useCart } from "../context/CartContext";
-import { useWishlist } from "../context/WishlistContext";
-import { useUI } from "../context/UIContext";
-import BrandLogo from "../components/ui/BrandLogo";
-import { useDocumentTitle } from "../hooks/useDocumentTitle";
+import React, { useState, useEffect, useRef, useMemo } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import {
-  HERO_ASSETS,
-  CATEGORIES_LIST,
-  EDITORIAL_ASSETS,
-  LIMITED_EDITIONS,
-  INSTAGRAM_GALLERY,
-  PRODUCT_ASSETS,
-} from "../data/assets";
+  Sparkles,
+  ShieldCheck,
+  Award,
+  Gem,
+  Compass,
+  ArrowRight,
+  MessageCircle,
+  MapPin,
+  Phone,
+  Clock,
+  ExternalLink,
+  ChevronDown,
+  Menu,
+  X,
+  Search,
+  Heart,
+  User,
+  Star,
+  CheckCircle2,
+} from 'lucide-react';
+import BrandLogo from '../components/ui/BrandLogo';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
+import { useWishlist } from '../context/WishlistContext';
+import { useUI } from '../context/UIContext';
+import {
+  CATEGORIES,
+  COLLECTIONS,
+  TESTIMONIALS,
+  DIAMOND_SHAPES,
+  getStoredProducts,
+} from '../data/products';
+import {
+  buildWhatsAppUrl,
+  SHOWROOM_ADDRESS,
+  SHOWROOM_PHONE,
+  GOOGLE_MAPS_LINK,
+  INSTAGRAM_LINK,
+} from '../utils/whatsapp';
 
 /* ===========================================================================
-   DESIGN TOKENS + GLOBAL STYLES
+   1. BRAND TOKENS & LUXURY EDITORIAL STYLES
 =========================================================================== */
-const BRAND_CSS = `
-:root{
-  --white:#FFFFFF; --ivory:#FAF6F1; --burgundy:#7B1E3A; --wine:#4A1124;
-  --gold:#C6A15B; --ink:#17120F; --muted:#7A6F70; --line:#E9E1D8;
-  --blush:#F1E3DC; --wine-deep:#3B0F1F; --rose-gold:#C9967F; --ruby:#A3152F;
-  --serif:"Cormorant Garamond","Playfair Display",Georgia,serif;
-  --sans:"Jost","Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
-  --ease:cubic-bezier(.22,.61,.36,1);
-  --pad-x:clamp(20px,5vw,80px);
-  --section-y:clamp(38px,4.8vw,64px);
+const HOME_CSS = `
+:root {
+  --white: #FFFFFF;
+  --ivory: #FAF6F1;
+  --burgundy: #5D0A24;
+  --wine: #3D0617;
+  --wine-deep: #25030E;
+  --gold: #C6A15B;
+  --gold-light: #E0C88F;
+  --ink: #17120F;
+  --muted: #7A6F70;
+  --line: #E9E1D8;
+  --blush: #F1E3DC;
+  --serif: "Cormorant Garamond", "Playfair Display", Georgia, serif;
+  --sans: "Jost", "Inter", system-ui, -apple-system, sans-serif;
+  --ease: cubic-bezier(.22, .61, .36, 1);
+  --pad-x: clamp(20px, 5vw, 80px);
 }
-*{box-sizing:border-box}
-html,body{margin:0;padding:0}
-body{font-family:var(--sans);color:var(--ink);background:var(--white);
-  -webkit-font-smoothing:antialiased;line-height:1.55;overflow-x:hidden}
-img{display:block;max-width:100%}
-a{color:inherit;text-decoration:none}
-button{font-family:inherit;cursor:pointer;background:none;border:0}
-:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
 
-.cg-wrap{max-width:1440px;margin:0 auto;padding-inline:var(--pad-x)}
-.cg-section{padding-block:var(--section-y)}
-.cg-eyebrow{font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;
-  color:var(--muted);font-weight:500}
-.cg-display{font-family:var(--serif);font-weight:400;line-height:1.05;
-  letter-spacing:-.01em;margin:0}
-.cg-hairline{height:1px;background:var(--line);border:0;margin:0;width:100%}
-.cg-sparkle{color:var(--gold);font-size:.9em;line-height:1}
+.cg-page { background: var(--white); color: var(--ink); font-family: var(--sans); overflow-x: hidden; }
+.cg-wrap { max-width: 1400px; margin: 0 auto; padding-inline: var(--pad-x); }
+.cg-wrap-narrow { max-width: 980px; margin: 0 auto; padding-inline: var(--pad-x); }
 
-.cg-btn{display:inline-flex;align-items:center;justify-content:center;
-  min-height:44px;padding:0 26px;border-radius:1px;font-size:.78rem;
-  letter-spacing:.16em;text-transform:uppercase;font-weight:500;
-  transition:all .3s var(--ease);border:1px solid transparent;white-space:nowrap}
-.cg-btn--solid{background:var(--burgundy);color:var(--ivory)}
-.cg-btn--solid:hover{background:var(--wine)}
-.cg-btn--ghost{border-color:var(--ink);color:var(--ink)}
-.cg-btn--ghost:hover{background:var(--ink);color:var(--ivory)}
-.cg-btn--ghost-light{border-color:rgba(250,246,241,.7);color:var(--ivory)}
-.cg-btn--ghost-light:hover{background:var(--ivory);color:var(--ink)}
+.cg-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 0.72rem; letter-spacing: 0.28em; text-transform: uppercase;
+  color: var(--gold); font-weight: 500; margin-bottom: 14px;
+}
+.cg-eyebrow-light { color: rgba(250, 246, 241, 0.78); }
 
-.reveal{opacity:0;transform:translateY(28px);
-  transition:opacity .8s var(--ease),transform .8s var(--ease)}
-.reveal.is-in{opacity:1;transform:none}
+.cg-display {
+  font-family: var(--serif); font-weight: 400; line-height: 1.08;
+  letter-spacing: -0.01em; margin: 0 0 18px; color: var(--ink);
+}
+.cg-display-light { color: var(--ivory); }
+
+.cg-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 50px; padding: 0 28px; border-radius: 1px; font-size: 0.75rem;
+  letter-spacing: 0.2em; text-transform: uppercase; font-weight: 600;
+  transition: all 0.3s var(--ease); cursor: pointer; text-decoration: none;
+  white-space: nowrap; box-sizing: border-box;
+}
+.cg-btn-solid {
+  background: var(--burgundy); color: var(--ivory); border: 1px solid var(--burgundy);
+}
+.cg-btn-solid:hover {
+  background: var(--wine); border-color: var(--wine); transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(93, 10, 36, 0.25);
+}
+.cg-btn-gold {
+  background: var(--gold); color: #17120F; border: 1px solid var(--gold);
+}
+.cg-btn-gold:hover {
+  background: #B38E46; border-color: #B38E46; color: #FFF; transform: translateY(-2px);
+}
+.cg-btn-ghost-light {
+  background: rgba(255, 255, 255, 0.08); color: var(--ivory);
+  border: 1px solid rgba(250, 246, 241, 0.45); backdrop-filter: blur(4px);
+}
+.cg-btn-ghost-light:hover {
+  background: var(--ivory); color: var(--wine-deep); border-color: var(--ivory); transform: translateY(-2px);
+}
+.cg-btn-outline {
+  background: transparent; color: var(--ink); border: 1px solid var(--ink);
+}
+.cg-btn-outline:hover {
+  background: var(--ink); color: var(--ivory); transform: translateY(-2px);
+}
+.cg-btn-whatsapp {
+  background: #25D366; color: #FFFFFF; border: 1px solid #25D366;
+}
+.cg-btn-whatsapp:hover {
+  background: #1EBE5D; border-color: #1EBE5D; transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.35);
+}
 
 /* Announcement */
-.cg-ann{background:var(--burgundy);color:var(--ivory);font-size:.7rem;
-  letter-spacing:.14em;text-transform:uppercase;position:relative;z-index:2;width:100%;
-  border-bottom:1px solid rgba(250,246,241,.12)}
-.cg-ann__inner{display:flex;align-items:center;justify-content:center;
-  min-height:38px;gap:16px;padding:6px var(--pad-x);text-align:center}
-.cg-ann__msg{transition:opacity .5s var(--ease)}
-.cg-ann__x{position:absolute;right:calc(var(--pad-x) - 8px);top:50%;
-  transform:translateY(-50%);color:var(--ivory);opacity:.7;font-size:1rem;
-  width:44px;height:44px;display:grid;place-items:center}
-.cg-ann__x:hover{opacity:1}
-
-/* Top bar wrapper — absolute at top of hero, scrolls up naturally with the page */
-.cg-header-wrapper{position:absolute;top:0;left:0;right:0;z-index:70;display:flex;
-  flex-direction:column;width:100%}
+.cg-ann {
+  background: var(--burgundy); color: var(--ivory); font-size: 0.68rem;
+  letter-spacing: 0.2em; text-transform: uppercase; font-weight: 500;
+  text-align: center; padding: 8px var(--pad-x); border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
 
 /* Header */
-.cg-header{position:relative;width:100%;z-index:1;
-  transition:background .35s var(--ease),box-shadow .35s var(--ease),
-  border-color .35s var(--ease);border-bottom:1px solid transparent}
-.cg-header.is-scrolled{background:var(--white);border-bottom:1px solid var(--line);
-  box-shadow:0 6px 24px -18px rgba(23,18,15,.4)}
-.cg-header__bar{display:grid;grid-template-columns:1fr auto 1fr;
-  align-items:center;min-height:72px;gap:16px}
-.cg-header__nav{display:flex;gap:22px;align-items:center}
-.cg-header__nav a{font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;
-  font-weight:500;position:relative;padding:6px 0;color:var(--ink);
-  transition:color .25s var(--ease)}
-.cg-header__nav a::after{content:"";position:absolute;left:0;bottom:0;
-  height:1px;width:0;background:var(--rose-gold);transition:width .35s var(--ease)}
-.cg-header__nav a:hover::after{width:100%}
-.cg-logo{display:flex;align-items:center;justify-content:center}
-.cg-logo img{height:44px;width:auto}
-.cg-logo span{color:inherit;transition:color .25s var(--ease)}
-.cg-header__util{display:flex;gap:6px;justify-content:flex-end;align-items:center}
-.cg-header__util button,
-.cg-header__util a{width:44px;height:44px;display:grid;place-items:center;
-  color:var(--ink);position:relative;transition:color .3s var(--ease)}
-.cg-cart-count,
-.cg-wish-count{position:absolute;top:6px;right:6px;min-width:16px;height:16px;
-  background:var(--burgundy);color:var(--ivory);font-size:.6rem;border-radius:999px;
-  display:grid;place-items:center;padding:0 4px;font-family:var(--sans);font-weight:600;line-height:1}
-.cg-burger{display:none}
-
-/* Header over dark hero — ivory text + soft top scrim for legibility */
-.cg-header.is-onhero{
-  background:linear-gradient(180deg,rgba(23,18,15,.55),rgba(23,18,15,0));
+.cg-header {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--line);
+  transition: all 0.3s ease;
 }
-.cg-header.is-onhero .cg-header__nav a,
-.cg-header.is-onhero .cg-header__util button,
-.cg-header.is-onhero .cg-header__util a,
-.cg-header.is-onhero .cg-logo,
-.cg-header.is-onhero .cg-logo span,
-.cg-header.is-onhero .cg-burger{
-  color:var(--ivory);
-  text-shadow:0 1px 2px rgba(0,0,0,.45);
+.cg-header__inner {
+  display: grid; grid-template-columns: auto 1fr auto;
+  align-items: center; min-height: 76px; gap: 20px;
 }
-.cg-header.is-onhero .cg-header__nav a::after{
-  background:var(--ivory);
+.cg-nav-desktop {
+  display: flex; gap: 24px; align-items: center; justify-content: center;
 }
-.cg-header.is-onhero .cg-cart-count,
-.cg-header.is-onhero .cg-wish-count{
-  background:var(--ivory);color:var(--burgundy);
+.cg-nav-link {
+  font-size: 0.74rem; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--ink); font-weight: 500; position: relative; padding: 6px 0;
+  transition: color 0.2s ease;
+}
+.cg-nav-link::after {
+  content: ""; position: absolute; left: 0; bottom: 0;
+  height: 1px; width: 0; background: var(--burgundy);
+  transition: width 0.3s var(--ease);
+}
+.cg-nav-link:hover::after, .cg-nav-link.active::after { width: 100%; }
+.cg-nav-link:hover { color: var(--burgundy); }
+
+.cg-header-actions {
+  display: flex; align-items: center; gap: 14px;
+}
+.cg-icon-btn {
+  width: 40px; height: 40px; display: grid; place-items: center;
+  color: var(--ink); border-radius: 50%; transition: all 0.2s ease;
+  position: relative;
+}
+.cg-icon-btn:hover { color: var(--burgundy); background: var(--ivory); }
+.cg-badge {
+  position: absolute; top: 4px; right: 4px; background: var(--burgundy);
+  color: var(--ivory); font-size: 0.6rem; border-radius: 999px;
+  width: 16px; height: 16px; display: grid; place-items: center; font-weight: 600;
+}
+.cg-burger { display: none; width: 40px; height: 40px; place-items: center; cursor: pointer; border: 0; background: none; }
+
+/* Mobile Menu */
+.cg-mobile-menu {
+  position: fixed; inset: 0; z-index: 150; background: var(--white);
+  padding: 32px var(--pad-x); display: flex; flex-direction: column;
+  overflow-y: auto; transform: translateX(-100%); transition: transform 0.35s var(--ease);
+}
+.cg-mobile-menu.open { transform: translateX(0); }
+.cg-mobile-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; }
+.cg-mobile-links { display: flex; flex-direction: column; gap: 20px; }
+.cg-mobile-link { font-family: var(--serif); font-size: 1.45rem; color: var(--ink); text-transform: uppercase; }
+
+/* ── Hero Banner ── */
+.cg-hero {
+  position: relative; min-height: 88vh; display: flex; align-items: center;
+  justify-content: center; text-align: center; color: var(--ivory);
+  overflow: hidden; background: #17120F;
+}
+.cg-hero-media {
+  position: absolute; inset: 0; z-index: 1;
+}
+.cg-hero-media video,
+.cg-hero-media img {
+  width: 100%; height: 100%; object-fit: cover; object-position: center;
+}
+.cg-hero-overlay {
+  position: absolute; inset: 0; z-index: 2;
+  background: linear-gradient(180deg, rgba(37, 3, 14, 0.45) 0%, rgba(93, 10, 36, 0.6) 65%, rgba(23, 18, 15, 0.85) 100%);
+}
+.cg-hero-content {
+  position: relative; z-index: 3; max-width: 920px; padding: 60px var(--pad-x);
+}
+.cg-hero-title {
+  font-family: var(--serif); font-size: clamp(2.8rem, 6.5vw, 5.2rem);
+  font-weight: 400; line-height: 1.05; letter-spacing: -0.015em;
+  margin: 12px 0 24px; color: var(--ivory); text-shadow: 0 2px 20px rgba(0,0,0,0.4);
+}
+.cg-hero-sub {
+  font-size: clamp(1.05rem, 1.4vw, 1.25rem); line-height: 1.75;
+  color: rgba(250, 246, 241, 0.92); max-width: 680px; margin: 0 auto 36px;
+  font-weight: 300;
+}
+.cg-hero-ctas {
+  display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
 }
 
-/* Mega menu */
-.cg-mega{position:absolute;left:0;right:0;top:100%;background:var(--white);
-  border-top:1px solid var(--line);border-bottom:1px solid var(--line);
-  opacity:0;visibility:hidden;transform:translateY(-6px);
-  transition:opacity .3s var(--ease),transform .3s var(--ease),visibility .3s;
-  z-index:55}
-.cg-mega.is-open{opacity:1;visibility:visible;transform:none}
-.cg-mega__inner{display:grid;grid-template-columns:repeat(4,1fr) 1.3fr;
-  gap:40px;padding:48px var(--pad-x) 56px;max-width:1440px;margin:0 auto}
-.cg-mega__col h4{font-size:.68rem;letter-spacing:.24em;text-transform:uppercase;
-  color:var(--muted);margin:0 0 16px;font-weight:500}
-.cg-mega__col a{display:block;padding:7px 0;font-size:.9rem;color:var(--ink);
-  transition:color .25s var(--ease)}
-.cg-mega__col a:hover{color:var(--burgundy)}
-.cg-mega__img{aspect-ratio:3/4;overflow:hidden}
-.cg-mega__img img{width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease)}
-.cg-mega__img:hover img{transform:scale(1.04)}
+/* ── Shop by Category ── */
+.cg-section { padding-block: clamp(64px, 8vw, 110px); }
+.cg-cat-grid {
+  display: grid; grid-template-columns: repeat(6, 1fr);
+  gap: 20px; margin-top: 36px;
+}
+.cg-cat-card {
+  display: flex; flex-direction: column; align-items: center;
+  text-decoration: none; group: hover;
+}
+.cg-cat-thumb {
+  width: 100%; aspect-ratio: 1/1.2; overflow: hidden;
+  border-radius: 2px; background: #F0EAE4; margin-bottom: 14px;
+  border: 1px solid var(--line); transition: all 0.35s var(--ease);
+}
+.cg-cat-thumb img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 0.6s var(--ease);
+}
+.cg-cat-card:hover .cg-cat-thumb {
+  border-color: var(--burgundy); transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(93, 10, 36, 0.12);
+}
+.cg-cat-card:hover .cg-cat-thumb img { transform: scale(1.06); }
+.cg-cat-name {
+  font-family: var(--serif); font-size: 1.15rem; color: var(--ink);
+  margin: 0; text-align: center; transition: color 0.2s ease;
+}
+.cg-cat-card:hover .cg-cat-name { color: var(--burgundy); }
 
-/* Hero — video only, continuous loop */
-.cg-hero{position:relative;min-height:100svh;display:grid;overflow:hidden;
-  background:var(--ink)}
-.cg-hero__media{position:absolute;inset:0;overflow:hidden;background:var(--ink);
-  pointer-events:none;user-select:none}
-.cg-hero__media video{width:100%;height:100%;object-fit:cover;
-  object-position:center 35%;display:block;pointer-events:none;user-select:none}
-.cg-hero__media::after{display:none!important;content:none!important}
-.cg-hero__copy{position:relative;align-self:end;z-index:2;color:var(--ivory);
-  padding:0 var(--pad-x) clamp(48px,8vh,96px);max-width:820px;
-  text-shadow:0 2px 14px rgba(0,0,0,.65)}
-.cg-hero__copy .cg-eyebrow{color:rgba(250,246,241,.95);text-shadow:0 1px 8px rgba(0,0,0,.6)}
-.cg-hero__title{font-family:var(--serif);font-weight:300;
-  font-size:clamp(2.6rem,7vw,5.6rem);line-height:1.02;margin:14px 0 18px;
-  letter-spacing:-.015em;max-width:14ch;text-shadow:0 3px 20px rgba(0,0,0,.7)}
-.cg-hero__lede{font-size:clamp(.95rem,1.6vw,1.1rem);max-width:44ch;
-  color:rgba(250,246,241,.98);margin:0 0 28px;font-weight:300;text-shadow:0 2px 12px rgba(0,0,0,.65)}
-.cg-hero__ctas{display:flex;gap:14px;flex-wrap:wrap}
-.cg-scrollcue{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);
-  z-index:3;color:rgba(250,246,241,.8);font-size:.62rem;letter-spacing:.3em;
-  text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:8px;
-  transition:opacity .45s var(--ease),transform .45s var(--ease)}
-.cg-scrollcue span{display:block;width:1px;height:34px;background:currentColor;
-  animation:cue 2.4s ease-in-out infinite;transform-origin:top}
-@keyframes cue{0%,100%{transform:scaleY(.4);opacity:.4}50%{transform:scaleY(1);opacity:1}}
+/* ── Featured Collections ── */
+.cg-coll-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 28px; margin-top: 40px;
+}
+.cg-coll-card {
+  background: var(--ivory); border: 1px solid var(--line);
+  border-radius: 2px; overflow: hidden; display: flex; flex-direction: column;
+  transition: all 0.3s ease;
+}
+.cg-coll-card:hover {
+  border-color: var(--gold); transform: translateY(-4px);
+  box-shadow: 0 16px 36px rgba(0,0,0,0.06);
+}
+.cg-coll-img {
+  aspect-ratio: 4/5; overflow: hidden; background: #EAE3DA;
+}
+.cg-coll-img img {
+  width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease;
+}
+.cg-coll-card:hover .cg-coll-img img { transform: scale(1.05); }
+.cg-coll-body { padding: 26px; display: flex; flex-direction: column; flex-grow: 1; }
+.cg-coll-title { font-family: var(--serif); font-size: 1.6rem; margin: 0 0 8px; }
+.cg-coll-desc { font-size: 0.9rem; line-height: 1.6; color: var(--muted); margin-bottom: 20px; flex-grow: 1; }
 
-/* Trust strip */
-.cg-trust{background:var(--ivory);border-bottom:1px solid var(--line)}
-.cg-trust__grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;
-  padding-block:26px}
-.cg-trust__item{display:flex;align-items:center;gap:12px;justify-content:center;
-  font-size:.74rem;letter-spacing:.06em;color:var(--ink);text-align:left}
-.cg-trust__item svg{color:var(--gold);flex:none}
+/* ── DESIGNS THAT NEVER REPEAT (Section 7) ── */
+.cg-excl-section {
+  background: linear-gradient(180deg, #1C030B 0%, #300512 40%, #5D0A24 100%);
+  color: var(--ivory); position: relative; overflow: hidden;
+}
+.cg-excl-section::after {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(circle at 80% 20%, rgba(198, 161, 91, 0.12) 0%, transparent 60%);
+  pointer-events: none;
+}
+.cg-excl-inner {
+  display: grid; grid-template-columns: 1fr 1.15fr;
+  gap: clamp(40px, 6vw, 84px); align-items: center;
+}
+.cg-excl-copy { max-width: 540px; }
+.cg-excl-highlight-box {
+  background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(198, 161, 91, 0.35);
+  padding: 24px; border-radius: 2px; margin: 24px 0; backdrop-filter: blur(6px);
+}
+.cg-excl-highlight-box p {
+  font-family: var(--serif); font-size: 1.3rem; font-style: italic;
+  color: var(--gold-light); margin: 0; line-height: 1.5;
+}
+.cg-excl-gallery {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 18px;
+}
+.cg-excl-card {
+  background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(250, 246, 241, 0.15);
+  border-radius: 2px; overflow: hidden; transition: all 0.3s ease; position: relative;
+}
+.cg-excl-card:hover { transform: translateY(-4px); border-color: var(--gold); }
+.cg-excl-img { aspect-ratio: 4/5; overflow: hidden; position: relative; }
+.cg-excl-img img { width: 100%; height: 100%; object-fit: cover; }
+.cg-one-badge {
+  position: absolute; top: 12px; left: 12px;
+  background: var(--burgundy); color: #FFF; font-size: 0.62rem;
+  letter-spacing: 0.2em; text-transform: uppercase; padding: 4px 10px;
+  font-weight: 600; border-radius: 1px;
+}
+.cg-excl-details { padding: 18px; }
+.cg-excl-details h3 { font-family: var(--serif); font-size: 1.15rem; margin: 0 0 6px; }
+.cg-excl-details span { font-size: 0.76rem; color: var(--gold-light); display: block; }
 
-/* Category grid — Find your everyday signature (No overlays, clean image alignment) */
-.cg-cat__head{display:flex;justify-content:space-between;align-items:end;
-  gap:24px;margin-bottom:36px;flex-wrap:wrap}
-.cg-cat__grid{display:grid;gap:24px;
-  grid-template-columns:repeat(3,1fr)}
-.cg-tile{display:flex;flex-direction:column;background:var(--white);
-  border:1px solid var(--line);border-radius:1px;overflow:hidden;
-  transition:all .35s var(--ease);text-decoration:none}
-.cg-tile:hover{transform:translateY(-4px);border-color:var(--gold);
-  box-shadow:0 18px 36px -18px rgba(23,18,15,.12)}
-.cg-tile__media{position:relative;width:100%;aspect-ratio:4/5;overflow:hidden;
-  background:var(--blush)}
-.cg-tile__media img{width:100%;height:100%;object-fit:cover;object-position:center center;
-  transition:transform .7s var(--ease);display:block}
-.cg-tile:hover .cg-tile__media img{transform:scale(1.05)}
-.cg-tile::after{display:none!important;content:none!important}
-.cg-tile__info{padding:16px 18px 18px;display:flex;flex-direction:column;
-  background:var(--white);border-top:1px solid var(--line);flex:1}
-.cg-tile__top{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
-.cg-tile__label{color:var(--ink);font-family:var(--serif);font-size:1.35rem;
-  letter-spacing:-.01em;font-weight:400;margin:0}
-.cg-tile__count{font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--muted)}
-.cg-tile__tagline{font-size:.82rem;color:var(--muted);margin:4px 0 10px;font-weight:300}
-.cg-tile__shop{font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;
-  color:var(--burgundy);font-weight:500;display:inline-flex;align-items:center;
-  gap:4px;transition:gap .25s var(--ease);margin-top:auto}
-.cg-tile:hover .cg-tile__shop{gap:8px;color:var(--wine)}
+/* ── The Art of Grown Diamonds ── */
+.cg-science-section { background: var(--ivory); }
+.cg-science-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: clamp(40px, 6vw, 80px); align-items: center;
+}
+.cg-comp-pills { display: flex; flex-direction: column; gap: 12px; margin: 28px 0; }
+.cg-comp-pill {
+  background: var(--white); border: 1px solid var(--line);
+  padding: 16px 20px; border-radius: 2px; display: flex; justify-content: space-between;
+  align-items: center; font-size: 0.9rem;
+}
+.cg-comp-pill strong { color: var(--burgundy); }
 
-/* Campaign split */
-.cg-split{display:grid;grid-template-columns:1fr 1fr;min-height:560px}
-.cg-split__img{position:relative;overflow:hidden;min-height:100%}
-.cg-split__img img{width:100%;height:100%;object-fit:cover;object-position:50% 35%;
-  transition:transform .9s var(--ease)}
-.cg-split__img:hover img{transform:scale(1.03)}
-.cg-split__copy{background:var(--ivory);display:flex;flex-direction:column;
-  justify-content:center;padding:clamp(40px,6vw,96px)}
-.cg-split__title{font-family:var(--serif);font-weight:400;
-  font-size:clamp(2rem,4.2vw,3.4rem);line-height:1.06;margin:16px 0 18px;
-  max-width:16ch}
-.cg-split__lede{color:var(--muted);max-width:40ch;margin:0 0 28px;font-size:.98rem}
+/* ── Bespoke Jewellery ── */
+.cg-bespoke-grid {
+  display: grid; grid-template-columns: 1.1fr 0.9fr;
+  gap: clamp(40px, 6vw, 84px); align-items: center;
+}
+.cg-shapes-mini-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 12px; margin: 24px 0;
+}
+.cg-shape-mini-btn {
+  background: var(--ivory); border: 1px solid var(--line);
+  padding: 12px 8px; border-radius: 2px; text-align: center;
+  font-size: 0.74rem; letter-spacing: 0.1em; text-transform: uppercase;
+  cursor: pointer; transition: all 0.2s ease;
+}
+.cg-shape-mini-btn:hover, .cg-shape-mini-btn.active {
+  border-color: var(--burgundy); background: var(--burgundy); color: #FFF;
+}
+.cg-form-box {
+  background: var(--white); border: 1px solid var(--line);
+  padding: clamp(24px, 4vw, 36px); border-radius: 2px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.04);
+}
 
-/* Best sellers */
-.cg-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px}
-.cg-tab{padding:10px 20px;font-size:.72rem;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--muted);border:1px solid var(--line);
-  background:var(--ivory);border-radius:1px;transition:all .3s var(--ease);cursor:pointer}
-.cg-tab.is-active{color:var(--ivory);background:var(--burgundy);border-color:var(--burgundy)}
-.cg-tab:hover{color:var(--ink);border-color:var(--ink)}
-.cg-tab.is-active:hover{color:var(--ivory);border-color:var(--burgundy)}
+/* ── Why Carats by Grace ── */
+.cg-why-grid {
+  display: grid; grid-template-columns: repeat(5, 1fr);
+  gap: 20px; margin-top: 40px; text-align: center;
+}
+.cg-why-card {
+  padding: 28px 18px; background: var(--ivory); border: 1px solid var(--line);
+  border-radius: 2px; display: flex; flex-direction: column; align-items: center;
+}
+.cg-why-icon {
+  width: 48px; height: 48px; border-radius: 50%;
+  background: rgba(198, 161, 91, 0.12); color: var(--burgundy);
+  display: flex; align-items: center; justify-content: center; margin-bottom: 16px;
+}
+.cg-why-title {
+  font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase;
+  font-weight: 600; margin: 0 0 8px; color: var(--ink);
+}
+.cg-why-desc { font-size: 0.84rem; line-height: 1.55; color: var(--muted); margin: 0; }
 
-.cg-bs-arrows{display:flex;gap:8px}
-.cg-bs-arrow{width:40px;height:40px;display:grid;place-items:center;border-radius:50%;
-  border:1px solid var(--line);background:var(--ivory);color:var(--ink);cursor:pointer;
-  transition:all .25s var(--ease)}
-.cg-bs-arrow:hover{background:var(--burgundy);color:var(--ivory);border-color:var(--burgundy)}
+/* ── Showroom Experience ── */
+.cg-showroom-grid {
+  display: grid; grid-template-columns: 1.1fr 0.9fr;
+  gap: clamp(40px, 6vw, 80px); align-items: center;
+}
+.cg-showroom-card {
+  background: var(--ivory); border: 1px solid var(--line);
+  padding: clamp(24px, 4vw, 36px); border-radius: 2px;
+}
 
-.cg-rail-wrap{position:relative}
-.cg-rail{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(240px,1fr);
-  gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px;
-  scrollbar-width:none;-ms-overflow-style:none}
-.cg-rail::-webkit-scrollbar{display:none}
-.cg-rail > *{scroll-snap-align:start}
+/* ── Testimonials ── */
+.cg-testi-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 24px; margin-top: 36px;
+}
+.cg-testi-card {
+  background: var(--white); border: 1px solid var(--line);
+  padding: 30px; border-radius: 2px; display: flex; flex-direction: column;
+}
+.cg-testi-quote {
+  font-family: var(--serif); font-size: 1.15rem; font-style: italic;
+  line-height: 1.6; color: #2B2423; flex-grow: 1; margin-bottom: 20px;
+}
 
-.cg-rail-arrow{position:absolute;top:42%;transform:translateY(-50%);z-index:8;
-  width:40px;height:40px;border-radius:50%;background:rgba(250,246,241,.94);
-  backdrop-filter:blur(6px);border:1px solid var(--line);color:var(--ink);
-  display:grid;place-items:center;box-shadow:0 4px 14px rgba(23,18,15,.12);
-  cursor:pointer;transition:all .25s var(--ease)}
-.cg-rail-arrow:hover{background:var(--burgundy);color:var(--ivory);border-color:var(--burgundy)}
-.cg-rail-arrow--prev{left:-14px}
-.cg-rail-arrow--next{right:-14px}
-
-.cg-card{position:relative;background:var(--ivory);animation:cgFadeIn .35s ease-out}
-@keyframes cgFadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-.cg-card__media{position:relative;aspect-ratio:4/5;overflow:hidden;background:var(--blush)}
-.cg-card__media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
-  transition:opacity .6s var(--ease),transform .8s var(--ease)}
-.cg-card__img--hover{opacity:0}
-.cg-card:hover .cg-card__img--hover{opacity:1}
-.cg-card:hover .cg-card__img--main{opacity:0}
-.cg-card:hover .cg-card__media img{transform:scale(1.04)}
-.cg-card__wish{position:absolute;top:10px;right:10px;z-index:3;width:40px;height:40px;
-  display:grid;place-items:center;background:rgba(250,246,241,.92);
-  border-radius:999px;opacity:0;transform:translateY(-6px);
-  transition:all .3s var(--ease);color:var(--ink)}
-.cg-card:hover .cg-card__wish,.cg-card__wish.is-saved{opacity:1;transform:none}
-.cg-card__wish.is-saved{color:var(--ruby)}
-.cg-card__add{position:absolute;left:10px;right:10px;bottom:10px;z-index:3;
-  min-height:42px;background:rgba(250,246,241,.96);color:var(--ink);
-  font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;
-  display:flex;align-items:center;justify-content:center;gap:6px;
-  opacity:0;transform:translateY(8px);transition:all .35s var(--ease);
-  border:1px solid var(--line)}
-.cg-card:hover .cg-card__add{opacity:1;transform:none}
-.cg-card__add:hover{background:var(--burgundy);color:var(--ivory);border-color:var(--burgundy)}
-.cg-card__body{padding:16px 14px 18px}
-.cg-card__name{font-family:var(--serif);font-size:1.08rem;margin:0 0 4px;
-  font-weight:500}
-.cg-card__spec{font-size:.74rem;color:var(--muted);margin:0 0 4px;
-  display:block;border-bottom:none}
-.cg-card__enquire-link{display:inline-block;font-size:.72rem;letter-spacing:.12em;
-  text-transform:uppercase;color:var(--burgundy);font-weight:600;margin-top:6px;
-  transition:color .25s var(--ease)}
-.cg-card:hover .cg-card__enquire-link{color:var(--gold)}
-
-/* Limited edition */
-.cg-limited__grid{display:grid;grid-auto-flow:column;
-  grid-auto-columns:minmax(260px,1fr);gap:20px;overflow-x:auto;
-  scroll-snap-type:x mandatory;padding-bottom:8px;
-  scrollbar-width:none;-ms-overflow-style:none}
-.cg-limited__grid::-webkit-scrollbar{display:none}
-.cg-limited__card{position:relative;display:flex;flex-direction:column;border:1px solid var(--line);
-  background:var(--white);scroll-snap-align:start;overflow:hidden;text-decoration:none;
-  transition:all .35s var(--ease)}
-.cg-limited__card:hover{transform:translateY(-4px);border-color:var(--gold);box-shadow:0 18px 36px -18px rgba(23,18,15,.12)}
-.cg-limited__media{position:relative;aspect-ratio:3/4;overflow:hidden;background:var(--blush)}
-.cg-limited__card img{width:100%;height:100%;object-fit:cover;
-  transition:transform .9s var(--ease)}
-.cg-limited__card:hover img{transform:scale(1.05)}
-.cg-limited__card::after{display:none!important}
-.cg-limited__info{padding:14px 16px 16px;background:var(--white);border-top:1px solid var(--line);
-  display:flex;flex-direction:column;gap:4px}
-.cg-limited__tag{font-size:.62rem;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--burgundy);font-weight:600}
-.cg-limited__name{color:var(--ink);font-family:var(--serif);font-size:1.18rem;line-height:1.2;font-weight:400;margin:0}
-
-/* Burgundy story */
-.cg-story{background:var(--burgundy);color:var(--ivory);position:relative;
-  overflow:hidden}
-.cg-story__inner{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(32px,6vw,80px);
-  align-items:center;padding-block:clamp(48px,6vw,80px)}
-.cg-story__title{font-family:var(--serif);font-weight:400;
-  font-size:clamp(2.2rem,4.8vw,4rem);line-height:1.04;margin:18px 0 22px;
-  max-width:16ch}
-.cg-story__body{color:rgba(250,246,241,.82);max-width:44ch;margin:0 0 30px;
-  font-size:1rem;font-weight:300}
-.cg-story__imgs{display:grid;grid-template-columns:1fr 1fr;gap:16px;
-  align-items:start}
-.cg-story__imgs figure{margin:0;overflow:hidden}
-.cg-story__imgs img{width:100%;aspect-ratio:3/4;object-fit:cover}
-.cg-story__imgs figure:nth-child(2){margin-top:48px}
-
-/* Craft */
-.cg-craft__grid{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(32px,6vw,80px);
-  align-items:center}
-.cg-craft__media{position:relative;aspect-ratio:16/11;overflow:hidden;
-  background:var(--blush)}
-.cg-craft__media img{width:100%;height:100%;object-fit:cover}
-.cg-craft__play{position:absolute;inset:0;display:grid;place-items:center;
-  background:rgba(23,18,15,.18);transition:background .3s var(--ease)}
-.cg-craft__play:hover{background:rgba(23,18,15,.3)}
-.cg-craft__play span{width:76px;height:76px;border-radius:999px;
-  border:1px solid rgba(250,246,241,.85);color:var(--ivory);
-  display:grid;place-items:center;font-size:1rem;backdrop-filter:blur(2px)}
-.cg-craft__steps{display:grid;gap:0;margin-top:32px}
-.cg-craft__step{display:grid;grid-template-columns:44px 1fr;gap:16px;
-  padding:18px 0;border-top:1px solid var(--line)}
-.cg-craft__step:last-child{border-bottom:1px solid var(--line)}
-.cg-craft__num{font-family:var(--serif);font-size:1.1rem;color:var(--gold)}
-.cg-craft__step h5{margin:0 0 4px;font-size:.92rem;font-weight:500;
-  letter-spacing:.02em}
-.cg-craft__step p{margin:0;font-size:.84rem;color:var(--muted)}
-
-/* Bridal */
-.cg-bridal{background:var(--ivory)}
-.cg-bridal__grid{display:grid;grid-template-columns:1.25fr .75fr 1fr;
-  grid-template-rows:auto auto;gap:16px}
-.cg-bridal__grid figure{margin:0;overflow:hidden;background:var(--blush)}
-.cg-bridal__grid img{width:100%;height:100%;object-fit:cover;
-  transition:transform .9s var(--ease)}
-.cg-bridal__grid figure:hover img{transform:scale(1.04)}
-.cg-bridal__a{grid-row:span 2;aspect-ratio:3/4}
-.cg-bridal__b{aspect-ratio:1/1}
-.cg-bridal__c{aspect-ratio:4/5}
-.cg-bridal__copy{display:flex;flex-direction:column;justify-content:center;
-  padding:clamp(24px,4vw,48px);background:var(--white);grid-column:3;
-  grid-row:1/3}
-.cg-bridal__title{font-family:var(--serif);font-weight:400;
-  font-size:clamp(1.8rem,3.4vw,2.8rem);line-height:1.08;margin:14px 0 16px}
-.cg-bridal__lede{color:var(--muted);font-size:.92rem;margin:0 0 22px}
-
-/* Why */
-.cg-why__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;
-  margin-top:44px}
-.cg-why__col h5{font-family:var(--serif);font-size:1.15rem;font-weight:500;
-  margin:0 0 8px}
-.cg-why__col p{color:var(--muted);font-size:.88rem;margin:0}
-.cg-why__col .cg-sparkle{font-size:1.1rem}
-
-/* Testimonials — 3 reviews visible simultaneously with smooth scrolling */
-.cg-testi{background:var(--ivory);overflow:hidden}
-.cg-testi__head{display:flex;justify-content:space-between;align-items:flex-end;
-  gap:24px;flex-wrap:wrap;margin-bottom:24px}
-.cg-testi__controls{display:flex;gap:10px;align-items:center}
-.cg-testi__arrow{width:44px;height:44px;border:1px solid var(--line);
-  border-radius:999px;display:grid;place-items:center;color:var(--ink);
-  background:var(--white);transition:all .25s var(--ease);cursor:pointer}
-.cg-testi__arrow:hover:not(:disabled){background:var(--burgundy);color:var(--ivory);border-color:var(--burgundy)}
-.cg-testi__arrow:disabled{opacity:.4;cursor:not-allowed}
-.cg-testi__rail{display:flex;gap:24px;overflow-x:auto;scroll-snap-type:x mandatory;
-  padding:8px 0 16px;scrollbar-width:none;-ms-overflow-style:none;-webkit-overflow-scrolling:touch}
-.cg-testi__rail::-webkit-scrollbar{display:none}
-.cg-testi__card{flex:0 0 calc((100% - 48px) / 3);min-width:0;
-  scroll-snap-align:start;background:var(--white);border:1px solid var(--line);
-  border-radius:2px;padding:32px 28px;display:flex;flex-direction:column;
-  justify-content:space-between;position:relative;box-shadow:0 4px 20px -16px rgba(23,18,15,.1);
-  transition:transform .35s var(--ease),box-shadow .35s var(--ease),border-color .35s var(--ease)}
-.cg-testi__card:hover{transform:translateY(-4px);border-color:var(--gold);
-  box-shadow:0 12px 30px -15px rgba(23,18,15,.18)}
-.cg-testi__stars{color:var(--gold);font-size:.85rem;letter-spacing:.25em;margin-bottom:14px}
-.cg-testi__card-quote{font-family:var(--serif);font-size:1.14rem;line-height:1.45;
-  font-weight:400;color:var(--ink);margin:0 0 20px;flex:1}
-.cg-testi__meta{border-top:1px solid var(--line);padding-top:16px;display:flex;
-  flex-direction:column;gap:4px}
-.cg-testi__card-who{font-size:.76rem;letter-spacing:.12em;text-transform:uppercase;
-  font-weight:600;color:var(--ink)}
-.cg-testi__card-piece{font-size:.68rem;letter-spacing:.1em;color:var(--burgundy);
-  text-transform:uppercase}
-.cg-testi__verified{font-size:.66rem;letter-spacing:.08em;color:var(--muted);
-  display:inline-flex;align-items:center;gap:4px;margin-top:2px}
-
-/* Instagram */
-.cg-insta__grid{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
-.cg-insta__cell{position:relative;aspect-ratio:1/1;overflow:hidden;
-  background:var(--blush)}
-.cg-insta__cell img{width:100%;height:100%;object-fit:cover;
-  transition:transform .8s var(--ease)}
-.cg-insta__cell:hover img{transform:scale(1.06)}
-.cg-insta__cell::after{content:"＋ View";position:absolute;inset:0;
-  display:grid;place-items:center;color:var(--ivory);font-size:.68rem;
-  letter-spacing:.24em;text-transform:uppercase;background:rgba(23,18,15,.36);
-  opacity:0;transition:opacity .3s var(--ease)}
-.cg-insta__cell:hover::after{opacity:1}
-
-/* Visit */
-.cg-visit__grid{display:grid;grid-template-columns:1fr 1fr;gap:0;
-  border:1px solid var(--line)}
-.cg-visit__img{min-height:480px;overflow:hidden;background:var(--blush)}
-.cg-visit__img img{width:100%;height:100%;object-fit:cover}
-.cg-visit__form{padding:clamp(28px,5vw,64px);background:var(--ivory)}
-.cg-field{margin-bottom:22px}
-.cg-field label{display:block;font-size:.68rem;letter-spacing:.2em;
-  text-transform:uppercase;color:var(--muted);margin-bottom:8px}
-.cg-input{width:100%;border:0;border-bottom:1px solid var(--line);
-  background:transparent;padding:10px 0;font-family:var(--sans);font-size:1rem;
-  color:var(--ink);transition:border-color .3s var(--ease);border-radius:0}
-.cg-input:focus{outline:none;border-color:var(--burgundy)}
-.cg-wa{display:inline-flex;align-items:center;gap:8px;color:var(--burgundy);
-  font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;margin-top:18px}
-
-/* FAQ */
-.cg-faq{background:var(--white)}
-.cg-faq__list{max-width:880px;margin:0 auto}
-.cg-faq__item{border-top:1px solid var(--line)}
-.cg-faq__item:last-child{border-bottom:1px solid var(--line)}
-.cg-faq__q{width:100%;display:flex;justify-content:space-between;gap:20px;
-  align-items:center;padding:24px 0;text-align:left;font-family:var(--serif);
-  font-size:clamp(1.05rem,2vw,1.3rem);color:var(--ink);transition:color .3s var(--ease)}
-.cg-faq__q:hover{color:var(--burgundy)}
-.cg-faq__icon{flex:none;width:22px;height:22px;display:grid;place-items:center;
-  color:var(--gold);font-size:1rem;transition:transform .35s var(--ease)}
-.cg-faq__item.is-open .cg-faq__icon{transform:rotate(45deg)}
-.cg-faq__a{overflow:hidden;max-height:0;transition:max-height .4s var(--ease)}
-.cg-faq__a-inner{padding:0 0 26px;color:var(--muted);max-width:60ch;
-  font-size:.92rem}
-
-/* Footer */
-.cg-footer{background:var(--wine-deep);color:var(--ivory);position:relative}
-.cg-footer__top{display:flex;justify-content:space-between;gap:48px;
-  padding-block:clamp(42px,5.5vw,68px)}
-.cg-footer__brand{max-width:320px}
-.cg-footer__brand img{height:52px;margin-bottom:18px}
-.cg-footer__brand p{color:rgba(250,246,241,.7);font-size:.86rem;max-width:30ch}
-.cg-footer__social{display:flex;gap:10px;margin-top:22px}
-.cg-footer__social a{width:40px;height:40px;border:1px solid rgba(250,246,241,.25);
-  display:grid;place-items:center;border-radius:999px;color:var(--ivory);
-  transition:all .3s var(--ease)}
-.cg-footer__social a:hover{background:var(--ivory);color:var(--wine-deep)}
-.cg-footer__links-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:36px;flex:1}
-.cg-footer h4{font-size:.7rem;letter-spacing:.24em;text-transform:uppercase;
-  color:rgba(250,246,241,.6);margin:0 0 18px;font-weight:500}
-.cg-footer ul{list-style:none;margin:0;padding:0}
-.cg-footer li{padding:6px 0}
-.cg-footer li a{font-size:.86rem;color:rgba(250,246,241,.82);
-  transition:color .25s var(--ease);text-decoration:none}
-.cg-footer li a:hover{color:var(--ivory)}
-.cg-footer__bottom{border-top:1px solid rgba(250,246,241,.16);
-  display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
-  align-items:center;padding-block:22px;font-size:.72rem;
-  color:rgba(250,246,241,.65)}
-.cg-footer__credential{color:var(--gold);font-size:.72rem;letter-spacing:.08em;
-  text-transform:uppercase}
-.cg-backtop{display:inline-flex;align-items:center;gap:6px;
-  color:rgba(250,246,241,.8);font-size:.7rem;letter-spacing:.14em;
-  text-transform:uppercase}
-.cg-backtop:hover{color:var(--ivory)}
-
-/* Mobile menu */
-.cg-mobile{position:fixed;inset:0 auto 0 0;width:min(340px,86vw);background:var(--white);z-index:100;
-  transform:translateX(-100%);transition:transform .4s var(--ease);
-  box-shadow:0 0 40px rgba(23,18,15,.2);
-  display:flex;flex-direction:column;overflow-y:auto}
-.cg-mobile.is-open{transform:translateX(0)}
-.cg-mobile-overlay{position:fixed;inset:0;background:rgba(23,18,15,.45);
-  backdrop-filter:blur(2px);z-index:99}
-.cg-mobile__head{display:flex;align-items:center;justify-content:space-between;
-  padding:20px var(--pad-x);border-bottom:1px solid var(--line)}
-.cg-mobile__body{padding:16px var(--pad-x) 40px}
-.cg-mobile__group{border-bottom:1px solid var(--line)}
-.cg-mobile__trigger{width:100%;display:flex;justify-content:space-between;
-  align-items:center;padding:16px 0;font-family:var(--serif);font-size:1.15rem;
-  color:var(--ink)}
-.cg-mobile__sub{overflow:hidden;max-height:0;transition:max-height .35s var(--ease)}
-.cg-mobile__sub a{display:block;padding:8px 0 8px 14px;font-size:.88rem;
-  color:var(--muted)}
-.cg-mobile__sub a:hover{color:var(--burgundy)}
+/* ── Instagram Grid ── */
+.cg-insta-grid {
+  display: grid; grid-template-columns: repeat(6, 1fr);
+  gap: 12px; margin: 36px 0;
+}
+.cg-insta-item {
+  aspect-ratio: 1/1; overflow: hidden; border-radius: 2px; position: relative;
+}
+.cg-insta-item img {
+  width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease;
+}
+.cg-insta-item:hover img { transform: scale(1.08); }
 
 /* Responsive */
-@media (max-width:1024px){
-  .cg-header__nav{display:none}
-  .cg-header__bar{grid-template-columns:auto 1fr auto}
-  .cg-burger{display:grid;width:44px;height:44px;place-items:center}
-  .cg-mega{display:none}
-  .cg-cat__grid{grid-template-columns:repeat(2,1fr)}
-  .cg-tile--wide{grid-column:span 2}
-  .cg-split{grid-template-columns:1fr}
-  .cg-split__img{min-height:420px;order:-1}
-  .cg-story__inner{grid-template-columns:1fr}
-  .cg-craft__grid{grid-template-columns:1fr}
-  .cg-bridal__grid{grid-template-columns:1fr 1fr}
-  .cg-bridal__copy{grid-column:1/3;grid-row:auto}
-  .cg-bridal__a{grid-row:auto}
-  .cg-testi__card{flex:0 0 calc((100% - 20px) / 2);padding:28px 22px}
-  .cg-testi__rail{gap:20px}
-  .cg-insta__grid{grid-template-columns:repeat(3,1fr)}
-  .cg-visit__grid{grid-template-columns:1fr}
-  .cg-visit__img{min-height:320px}
-  .cg-footer__top{flex-direction:column;gap:36px}
-  .cg-footer__links-grid{grid-template-columns:repeat(2,1fr);gap:32px 24px}
-  .cg-trust__grid{grid-template-columns:repeat(2,1fr)}
-  .cg-card__wish{opacity:1;transform:none}
-  .cg-card__add{opacity:1;transform:none}
-  .cg-tile__shop{opacity:1;transform:none}
+@media (max-width: 1100px) {
+  .cg-cat-grid { grid-template-columns: repeat(3, 1fr); }
+  .cg-why-grid { grid-template-columns: repeat(3, 1fr); }
+  .cg-testi-grid { grid-template-columns: 1fr; }
+  .cg-coll-grid { grid-template-columns: 1fr; }
+  .cg-insta-grid { grid-template-columns: repeat(3, 1fr); }
 }
-@media (max-width:768px){
-  .cg-hero{min-height:92svh}
-  .cg-hero__media video{object-position:center center}
-  .cg-hero__copy{max-width:none;padding:0 var(--pad-x) 36px}
-  .cg-hero__ctas{flex-direction:column;align-items:stretch;gap:10px}
-  .cg-hero__ctas .cg-btn{width:100%}
-  .cg-bs-arrows{display:none}
-  .cg-rail-arrow--prev{left:2px}
-  .cg-rail-arrow--next{right:2px}
-  .cg-cat__grid{grid-template-columns:repeat(2,1fr);gap:14px;grid-auto-flow:row;overflow-x:visible;padding-bottom:0}
-  .cg-tile{min-height:auto}
-  .cg-tile__media{aspect-ratio:1/1.18}
-  .cg-tile__info{padding:12px 10px 14px}
-  .cg-tile__label{font-size:1.05rem}
-  .cg-tile__count{display:none}
-  .cg-tile__tagline{font-size:.76rem;line-height:1.25;margin:2px 0 6px}
-  .cg-tile__shop{font-size:.65rem;letter-spacing:.14em}
-  .cg-story__imgs{gap:12px}
-  .cg-story__imgs figure:nth-child(2){margin-top:20px}
-  .cg-why__grid{grid-template-columns:1fr;gap:22px}
-  .cg-bridal__grid{grid-template-columns:1fr}
-  .cg-bridal__copy{grid-column:1;padding:32px 20px}
-  .cg-bridal__a,.cg-bridal__b,.cg-bridal__c{aspect-ratio:4/5}
-  .cg-testi__card{flex:0 0 86%;padding:24px 20px}
-  .cg-testi__rail{gap:16px}
-  .cg-insta__grid{grid-template-columns:repeat(2,1fr);gap:8px}
-  .cg-footer__top{flex-direction:column;gap:32px;padding-block:36px}
-  .cg-footer__brand{max-width:none;text-align:center;display:flex;flex-direction:column;align-items:center;padding-bottom:24px;border-bottom:1px solid rgba(250,246,241,.12)}
-  .cg-footer__brand p{text-align:center;max-width:32ch;margin:0 auto}
-  .cg-footer__links-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:28px 16px;width:100%}
-  .cg-footer__bottom{flex-direction:column;text-align:center;gap:14px;padding-block:22px}
-  .cg-footer__credential{color:var(--gold);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase}
-  .cg-trust__grid{grid-template-columns:1fr 1fr;gap:16px}
-  .cg-trust__item{justify-content:flex-start}
-  .cg-limited__grid{grid-auto-columns:80%}
-  .cg-input{font-size:16px}
-}
-@media (max-width:480px){
-  .cg-wrap{padding-inline:16px}
-  .cg-header__bar{min-height:64px;gap:8px}
-  .cg-logo{min-width:0}
-  .cg-logo img{max-width:118px}
-  .cg-rail{grid-auto-columns:82%}
-  .cg-limited__grid{grid-auto-columns:86%}
-  .cg-testi__card{flex:0 0 90%}
-  .cg-header__util{gap:2px}
-  .cg-header__util button,.cg-header__util a{width:38px;height:38px}
-  .cg-cat__grid{grid-template-columns:repeat(2,1fr);gap:10px}
-  .cg-tile__info{padding:10px 8px 12px}
-  .cg-tile__label{font-size:.95rem}
-  .cg-tile__tagline{display:none}
-  .cg-tile__shop{font-size:.62rem;letter-spacing:.12em}
+
+@media (max-width: 860px) {
+  .cg-nav-desktop { display: none; }
+  .cg-burger { display: grid; }
+  .cg-excl-inner,
+  .cg-science-grid,
+  .cg-bespoke-grid,
+  .cg-showroom-grid {
+    grid-template-columns: 1fr;
+  }
+  .cg-excl-gallery { grid-template-columns: 1fr; }
+  .cg-why-grid { grid-template-columns: 1fr; }
+  .cg-cat-grid { grid-template-columns: repeat(2, 1fr); }
 }
 `;
 
-/* ===========================================================================
-   BRAND ASSETS & PRODUCT DATA (100% sourced from official brand assest)
-=========================================================================== */
-const IMG = {
-  heroVideoDesktop: HERO_ASSETS.videoDesktop,
-  heroVideoMobile: HERO_ASSETS.videoMobile,
-  logo: "/logo-white-transparent.png",
-};
-
-const CATEGORIES = CATEGORIES_LIST;
-const PRODUCTS = PRODUCT_ASSETS;
-const LIMITED = LIMITED_EDITIONS;
-
-const TESTIMONIALS = [
-  { quote: "The kind of piece you never take off. It feels made for me.", who: "Ananya S. · Mumbai", piece: "Aurelia Solitaire" },
-  { quote: "Quietly special. My everyday ring that still feels celebratory.", who: "Meera K. · Bengaluru", piece: "Étoile Band" },
-  { quote: "Beautifully considered, from the bespoke box to the last prong.", who: "Rhea P. · New Delhi", piece: "Drop Lumière" },
-  { quote: "The gold tone is sublime — warm, understated, and impeccably finished.", who: "Tara D. · Hyderabad", piece: "Sculpt Chain" },
-  { quote: "Wore it on our anniversary and haven’t removed it since. Pure heirloom quality.", who: "Kavya M. · Chennai", piece: "Ruby Halo Ring" },
-  { quote: "The private atelier viewing made choosing our bridal rings unforgettable.", who: "Simran & Dev · Pune", piece: "Bridal Suite" },
-];
-
-const FAQS = [
-  {
-    q: "How do I find my ring size?",
-    a: "We offer a complimentary printable size guide, or you may book a personalized video consultation with our gemmologist to accurately determine your exact ring size."
-  },
-  {
-    q: "Are your pieces certified?",
-    a: "Yes. Every piece of Carats by Grace fine jewellery is crafted in hallmarked 18K gold (BIS Hallmark 750) and set with certified lab-grown diamonds, accompanied by individual grading certification from recognized gemmological laboratories (such as IGI)."
-  },
-  {
-    q: "What are your shipping timelines?",
-    a: "All orders include complimentary insured express delivery across India. In-stock creations dispatch within 48 hours and arrive within 3 to 5 business days. Bespoke and custom-sized creations dispatch within 10 to 14 business days."
-  },
-  {
-    q: "What is your returns policy?",
-    a: "We offer a 15-day complimentary return and exchange policy on all unworn creations in their original security packaging. Bespoke engraved or custom-cut pieces are subject to individual consultation terms."
-  },
-  {
-    q: "How should I care for my jewellery?",
-    a: "We recommend storing each creation in the velvet-lined pouch provided, avoiding direct contact with perfumes, hand sanitizers, and harsh household chemicals. Wipe gently with a clean microfibre cloth after wearing."
-  },
-  {
-    q: "Can I customise a piece?",
-    a: "Yes. Our bespoke atelier welcomes custom carat weights, diamond shapes, metal selections (18K yellow, rose, white gold, or 950 platinum), and personalized inner band engraving."
-  },
-  {
-    q: "What payment methods do you accept?",
-    a: "We accept all major credit/debit cards (Visa, Mastercard, Amex), UPI, Net Banking, and flexible no-cost EMI options on leading credit cards."
-  },
-];
-
-/* ===========================================================================
-   HOOKS
-=========================================================================== */
-function useReveal() {
-  useEffect(() => {
-    const els = document.querySelectorAll(".reveal");
-    if (!("IntersectionObserver" in window) ||
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      els.forEach((el) => el.classList.add("is-in"));
-      return;
-    }
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            e.target.classList.add("is-in");
-            io.unobserve(e.target);
-          }
-        });
-      },
-      { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
-    );
-    els.forEach((el) => io.observe(el));
-    return () => io.disconnect();
-  }, []);
-}
-
-function useScrolled(threshold = 80) {
-  const [scrolled, setScrolled] = useState(false);
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > threshold);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, [threshold]);
-  return scrolled;
-}
-
-/* ===========================================================================
-   SMALL COMPONENTS
-=========================================================================== */
-const Sparkle = ({ style }) => (
-  <span className="cg-sparkle" aria-hidden="true" style={style}>✦</span>
-);
-
-function Icon({ name, size = 20, className, style, ...rest }) {
-  const common = {
-    width: size, height: size, viewBox: "0 0 24 24", fill: "none",
-    stroke: "currentColor", strokeWidth: 1.4,
-    strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": true,
-    className, style, ...rest,
-  };
-  const paths = {
-    search: <><circle cx="11" cy="11" r="7" /><path d="m20 20-3.5-3.5" /></>,
-    heart: <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8Z" />,
-    user: <><circle cx="12" cy="8" r="4" /><path d="M4 21a8 8 0 0 1 16 0" /></>,
-    bag: <><path d="M6 8h12l-1 12H7L6 8Z" /><path d="M9 8a3 3 0 0 1 6 0" /></>,
-    menu: <><path d="M4 7h16M4 12h16M4 17h16" /></>,
-    close: <><path d="M6 6l12 12M18 6L6 18" /></>,
-    arrowRight: <><path d="M5 12h14M13 6l6 6-6 6" /></>,
-    arrowLeft: <><path d="M19 12H5M11 18l-6-6 6-6" /></>,
-    arrowUp: <><path d="M12 19V5M6 11l6-6 6 6" /></>,
-    plus: <><path d="M12 5v14M5 12h14" /></>,
-    chevron: <path d="m6 9 6 6 6-6" />,
-    play: <path d="M8 5v14l11-7L8 5Z" />,
-    shield: <><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3Z" /><path d="m9 12 2 2 4-4" /></>,
-    "shield-check": <><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3Z" /><path d="m9 12 2 2 4-4" /></>,
-    gem: <><path d="M6 3h12l4 6-10 12L2 9z" /><path d="M11 3 8 9l4 12 4-12-3-6" /><path d="M2 9h20" /></>,
-    pin: <><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" /><circle cx="12" cy="10" r="3" /></>,
-    calendar: <><rect width="18" height="18" x="3" y="4" rx="2" /><line x1="16" x2="16" y1="2" y2="6" /><line x1="8" x2="8" y1="2" y2="6" /><line x1="3" x2="21" y1="10" y2="10" /></>,
-    refresh: <><path d="M3 12a9 9 0 0 1 15-6.7L21 8" /><path d="M21 3v5h-5" /><path d="M21 12a9 9 0 0 1-15 6.7L3 16" /><path d="M3 21v-5h5" /></>,
-    truck: <><path d="M3 7h11v9H3z" /><path d="M14 10h4l3 3v3h-7z" /><circle cx="7" cy="18" r="1.6" /><circle cx="17" cy="18" r="1.6" /></>,
-    returns: <><path d="M4 12a8 8 0 1 0 3-6.2" /><path d="M4 4v4h4" /></>,
-    instagram: <><rect x="4" y="4" width="16" height="16" rx="4" /><circle cx="12" cy="12" r="3.5" /><circle cx="17" cy="7" r=".6" fill="currentColor" /></>,
-    whatsapp: <><path d="M4 20l1.5-4A8 8 0 1 1 9 19.4L4 20Z" /><path d="M9 10c.5 2 2 3.5 4 4" /></>,
-    pinterest: <><circle cx="12" cy="12" r="8" /><path d="M10 20c1-3 2-6 3-9" /><path d="M9 12a3 3 0 1 1 5 2" /></>,
-    chat: <><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" /></>,
-  };
-  return <svg {...common}>{paths[name] || null}</svg>;
-}
-
-const INR = (n) => "₹" + n.toLocaleString("en-IN");
-
-/* ===========================================================================
-   SECTION COMPONENTS
-=========================================================================== */
-
-/* Announcement */
-function Announcement({ onDismiss }) {
-  const messages = [
-    " 100% exchange on diamond value — with no deduction in making charges.",
-    " 85% buyback on diamond value — excluding GST and making charges.",
-  ];
-  const [idx, setIdx] = useState(0);
-  useEffect(() => {
-    const t = setInterval(() => setIdx((i) => (i + 1) % messages.length), 4200);
-    return () => clearInterval(t);
-  }, []);
-  return (
-    <div className="cg-ann" role="region" aria-label="Announcement">
-      <div className="cg-ann__inner">
-        <Sparkle />
-        <span className="cg-ann__msg" aria-live="polite">{messages[idx]}</span>
-        <Sparkle />
-      </div>
-      <button className="cg-ann__x" aria-label="Dismiss announcement" onClick={onDismiss}>
-        <Icon name="close" size={14} />
-      </button>
-    </div>
-  );
-}
-
-/* Header + Mega + Mobile */
-function Header({ cartCount, onOpenCart }) {
-  const scrolled = useScrolled();
-  const [megaOpen, setMegaOpen] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const [mobileGroup, setMobileGroup] = useState(null);
-  const onHero = true;
-
-  const { toggleSearch } = useUI();
-  const { items: wishlistItems } = useWishlist();
-  const wishlistCount = wishlistItems?.length ?? 0;
+export default function HomePage() {
+  useDocumentTitle('Your Grown Diamond Destination · Premium Fine Jewellery');
   const navigate = useNavigate();
+  const { items: wishlistItems } = useWishlist();
+  const { toggleSearch } = useUI();
 
-  useEffect(() => {
-    document.body.style.overflow = mobileOpen ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
-  }, [mobileOpen]);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [selectedBespokeShape, setSelectedBespokeShape] = useState('Oval Brilliant');
+  const [bespokeName, setBespokeName] = useState('');
+  const [bespokePhone, setBespokePhone] = useState('');
+  const [bespokePreference, setBespokePreference] = useState('Solitaire Engagement Ring');
 
-  const nav = [
-    { label: "Rings", href: "/collections/rings", mega: true },
-    { label: "Earrings", href: "/collections/earrings", mega: true },
-    { label: "Necklaces", href: "/collections/necklaces", mega: true },
-    { label: "Bracelets", href: "/collections/bracelets", mega: true },
-    { label: "Bridal", href: "/collections/bridal" },
-    { label: "Gifting", href: "/collections/gifting" },
-    { label: "High Jewellery", href: "/collections/high-jewellery" },
-    { label: "About", href: "/about" },
-  ];
+  const productsList = useMemo(() => getStoredProducts(), []);
+  const exclusiveShowcase = useMemo(() => {
+    return productsList.filter((p) => p.isOneOfOne || p.collection === 'the-empress').slice(0, 4);
+  }, [productsList]);
 
-  const megaData = {
-    "By Category": [
-      { name: "Rings", href: "/collections/rings" },
-      { name: "Earrings", href: "/collections/earrings" },
-      { name: "Necklaces", href: "/collections/necklaces" },
-      { name: "Bracelets", href: "/collections/bracelets" },
-      { name: "Bangles", href: "/collections/bangles" },
-      { name: "Pendants", href: "/collections/pendants" },
-    ],
-    "By Occasion": [
-      { name: "Everyday", href: "/collections/everyday" },
-      { name: "Gifting", href: "/collections/gifting" },
-      { name: "Bridal", href: "/collections/bridal" },
-      { name: "Festive", href: "/collections/festive" },
-      { name: "Anniversary", href: "/collections/anniversary" },
-    ],
-    "By Metal": [
-      { name: "18K Yellow Gold", href: "/collections/rings" },
-      { name: "18K Rose Gold", href: "/collections/earrings" },
-      { name: "18K White Gold", href: "/collections/necklaces" },
-      { name: "950 Platinum", href: "/collections/bridal" },
-    ],
-  };
-
-  const cls = ["cg-header", "is-onhero"].filter(Boolean).join(" ");
-
-  return (
-    <header className={cls}
-      onMouseLeave={() => setMegaOpen(false)}>
-      <div className="cg-wrap cg-header__bar">
-        <div className="cg-header__nav" aria-hidden={mobileOpen}>
-          <button className="cg-burger" aria-label="Open menu"
-            onClick={() => setMobileOpen(true)}
-            style={{ display: "none" }}>
-            <Icon name="menu" />
-          </button>
-          {nav.map((n) => (
-            <Link key={n.label} to={n.href}
-              onMouseEnter={() => setMegaOpen(!!n.mega)}
-              onFocus={() => setMegaOpen(!!n.mega)}>
-              {n.label}
-            </Link>
-          ))}
-        </div>
-
-        <button className="cg-burger" aria-label="Open menu"
-          onClick={() => setMobileOpen(true)}>
-          <Icon name="menu" />
-        </button>
-
-        <Link className="cg-logo" to="/" aria-label="Carats by Grace — home">
-          <BrandLogo variant="light" height={48} />
-        </Link>
-
-        <div className="cg-header__util">
-          <button aria-label="Search" type="button" onClick={toggleSearch}>
-            <Icon name="search" />
-          </button>
-          <Link to="/wishlist" aria-label={`Wishlist (${wishlistCount} items)`}>
-            <Icon name="heart" />
-            {wishlistCount > 0 && <span className="cg-wish-count">{wishlistCount}</span>}
-          </Link>
-          <button aria-label="Account" type="button" onClick={() => navigate('/account')}>
-            <Icon name="user" />
-          </button>
-          <a
-            href="https://wa.me/919120530531?text=Hello%20Carats%20by%20Grace%2C%20I%20would%20like%20to%20enquire%20about%20your%20fine%20jewelry%20collections."
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Atelier WhatsApp Concierge"
-            title="Chat with Atelier Concierge"
-            className="cg-header__wa"
-          >
-            <Icon name="whatsapp" />
-          </a>
-        </div>
-      </div>
-
-      {/* Mega menu */}
-      <div className={`cg-mega ${megaOpen ? "is-open" : ""}`}
-        onMouseEnter={() => setMegaOpen(true)}
-        onMouseLeave={() => setMegaOpen(false)}>
-        <div className="cg-mega__inner">
-          {Object.entries(megaData).map(([title, items]) => (
-            <div className="cg-mega__col" key={title}>
-              <h4>{title}</h4>
-              {items.map((i) => (
-                <Link key={i.name} to={i.href} onClick={() => setMegaOpen(false)}>
-                  {i.name}
-                </Link>
-              ))}
-            </div>
-          ))}
-          <div className="cg-mega__col">
-            <h4>Discover</h4>
-            <Link to="/collections/latest" onClick={() => setMegaOpen(false)}>Latest Arrivals</Link>
-            <Link to="/collections/bestsellers" onClick={() => setMegaOpen(false)}>Bestsellers</Link>
-            <Link to="/collections/bridal" onClick={() => setMegaOpen(false)}>The Bridal Edit</Link>
-            <a href="#visit" onClick={() => setMegaOpen(false)}>Book a Consultation</a>
-          </div>
-          <Link className="cg-mega__img" to="/collections/rings" onClick={() => setMegaOpen(false)}>
-            <img src={EDITORIAL_ASSETS.headerMegaMenu}
-              alt="Editorial: model wearing Carats by Grace rings" loading="lazy" decoding="async" />
-          </Link>
-        </div>
-      </div>
-
-      {/* Mobile */}
-      <div className={`cg-mobile ${mobileOpen ? "is-open" : ""}`}
-        role="dialog" aria-modal="true" aria-label="Menu">
-        <div className="cg-mobile__head">
-          <span className="cg-eyebrow">Menu</span>
-          <button aria-label="Close menu" onClick={() => setMobileOpen(false)}>
-            <Icon name="close" />
-          </button>
-        </div>
-        <div className="cg-mobile__body">
-          {Object.entries(megaData).flatMap(([title, items]) => [
-            { key: title, label: title, items }
-          ]).map((g) => (
-            <div className="cg-mobile__group" key={g.key}>
-              <button className="cg-mobile__trigger"
-                aria-expanded={mobileGroup === g.key}
-                onClick={() => setMobileGroup(mobileGroup === g.key ? null : g.key)}>
-                {g.label}
-                <Icon name="chevron" size={18} />
-              </button>
-              <div className="cg-mobile__sub"
-                style={{ maxHeight: mobileGroup === g.key ? 400 : 0 }}>
-                {g.items.map((i) => (
-                  <Link key={i.name} to={i.href} onClick={() => setMobileOpen(false)}>
-                    {i.name}
-                  </Link>
-                ))}
-              </div>
-            </div>
-          ))}
-          {[
-            { label: "Bridal", href: "/collections/bridal" },
-            { label: "Gifting", href: "/collections/gifting" },
-            { label: "High Jewellery", href: "/collections/high-jewellery" },
-            { label: "Wishlist", href: "/wishlist" },
-            { label: "My Account", href: "/account" },
-            { label: "Book a Consultation", href: "#visit" },
-          ].map((l) => (
-            <div className="cg-mobile__group" key={l.label}>
-              {l.href.startsWith("#") ? (
-                <a className="cg-mobile__trigger" href={l.href} onClick={() => setMobileOpen(false)}>
-                  {l.label}
-                </a>
-              ) : (
-                <Link className="cg-mobile__trigger" to={l.href} onClick={() => setMobileOpen(false)}>
-                  {l.label}
-                </Link>
-              )}
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Mobile backdrop */}
-      {mobileOpen && (
-        <div
-          className="cg-mobile-overlay"
-          onClick={() => setMobileOpen(false)}
-          aria-hidden="true"
-        />
-      )}
-    </header>
-  );
-}
-
-/* Hero — video only, continuous loop (Desktop & Mobile optimized, NO overlays) */
-function Hero({ scrolled }) {
-  const videoRef = useRef(null);
-  const [isMobile, setIsMobile] = useState(() => {
-    if (typeof window !== "undefined") {
-      return window.innerWidth <= 768;
-    }
-    return false;
-  });
-
-  useEffect(() => {
-    const mq = window.matchMedia("(max-width: 768px)");
-    const handleMQ = (e) => setIsMobile(e.matches);
-    if (mq.addEventListener) {
-      mq.addEventListener("change", handleMQ);
-    } else {
-      mq.addListener(handleMQ);
-    }
-    return () => {
-      if (mq.removeEventListener) {
-        mq.removeEventListener("change", handleMQ);
-      } else {
-        mq.removeListener(handleMQ);
-      }
-    };
-  }, []);
-
-  const currentVideo = isMobile ? HERO_ASSETS.videoMobile : HERO_ASSETS.videoDesktop;
-  const currentPoster = isMobile ? HERO_ASSETS.posterMobile : HERO_ASSETS.posterDesktop;
-
-  useEffect(() => {
-    const v = videoRef.current;
-    if (!v) return;
-
-    v.muted = true;
-    v.defaultMuted = true;
-    v.loop = true;
-
-    const playVideo = () => {
-      const p = v.play();
-      if (p && typeof p.catch === "function") {
-        p.catch(() => {
-          const onUserGesture = () => {
-            v.play().catch(() => { });
-            window.removeEventListener("pointerdown", onUserGesture);
-            window.removeEventListener("touchstart", onUserGesture);
-            window.removeEventListener("keydown", onUserGesture);
-          };
-          window.addEventListener("pointerdown", onUserGesture, { once: true });
-          window.addEventListener("touchstart", onUserGesture, { once: true });
-          window.addEventListener("keydown", onUserGesture, { once: true });
-        });
-      }
-    };
-
-    if (v.readyState >= 2) {
-      playVideo();
-    } else {
-      v.addEventListener("loadeddata", playVideo, { once: true });
-      v.addEventListener("canplay", playVideo, { once: true });
-    }
-
-    const keepPlaying = () => {
-      if (!v.ended && document.visibilityState !== "hidden") {
-        v.play().catch(() => { });
-      }
-    };
-
-    v.addEventListener("pause", keepPlaying);
-    v.addEventListener("waiting", keepPlaying);
-
-    return () => {
-      v.removeEventListener("loadeddata", playVideo);
-      v.removeEventListener("canplay", playVideo);
-      v.removeEventListener("pause", keepPlaying);
-      v.removeEventListener("waiting", keepPlaying);
-    };
-  }, [isMobile, currentVideo]);
-
-  return (
-    <section className="cg-hero" aria-label="Campaign">
-      <div className="cg-hero__media">
-        <video
-          key={isMobile ? "hero-vid-mobile" : "hero-vid-desktop"}
-          ref={videoRef}
-          src={currentVideo}
-          poster={currentPoster}
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload="auto"
-          disablePictureInPicture
-          disableRemotePlayback
-          aria-label="Campaign film — model wearing Carats by Grace jewellery"
-        >
-          <source src={currentVideo} type="video/mp4" />
-        </video>
-      </div>
-      <div className="cg-hero__copy">
-        <span className="cg-eyebrow">The Nocturne Edit </span>
-        <h1 className="cg-hero__title">Made to be worn, not kept away.</h1>
-        <p className="cg-hero__lede">
-          Fine jewellery for the everyday and the once-in-a-lifetime.
-          Quietly luminous, deliberately yours.
-        </p>
-        <div className="cg-hero__ctas">
-          <Link className="cg-btn cg-btn--solid" to="/collections/all">Shop the Collection</Link>
-          <a className="cg-btn cg-btn--ghost-light" href="#visit">Book a Consultation</a>
-        </div>
-      </div>
-      <div
-        className="cg-scrollcue"
-        aria-hidden="true"
-        style={{
-          opacity: scrolled ? 0 : 1,
-          pointerEvents: scrolled ? "none" : "auto",
-        }}
-      >
-        <span />
-        Scroll
-      </div>
-    </section>
-  );
-}
-
-/* Trust */
-function Trust() {
-  const items = [
-    { icon: "shield-check", label: "Certified Lab-Grown Diamonds" },
-    { icon: "gem", label: "Exceptional Craftsmanship" },
-    { icon: "heart", label: "Made for Your Story" },
-    { icon: "calendar", label: "Personalised Consultations" },
-  ];
-  return (
-    <div className="cg-trust">
-      <div className="cg-wrap">
-        <div className="cg-trust__grid">
-          {items.map((it) => (
-            <div className="cg-trust__item" key={it.label}>
-              <Icon name={it.icon} size={22} />
-              <span>{it.label}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-/* Categories — Find your everyday signature (No overlays, clean image alignment) */
-function Categories() {
-  return (
-    <section className="cg-section cg-wrap" aria-labelledby="cat-h">
-      <div className="cg-cat__head reveal">
-        <div>
-          <span className="cg-eyebrow">Shop by category</span>
-          <h2 id="cat-h" className="cg-display"
-            style={{ fontSize: "clamp(1.9rem,3.6vw,2.9rem)", marginTop: 12 }}>
-            Find your everyday signature.
-          </h2>
-        </div>
-        <Link className="cg-btn cg-btn--ghost" to="/collections/all">View all</Link>
-      </div>
-      <div className="cg-cat__grid">
-        {CATEGORIES.map((c, i) => (
-          <Link key={c.name} to={`/collections/${c.slug || c.name.toLowerCase()}`}
-            className="cg-tile reveal"
-            style={{ transitionDelay: `${i * 50}ms` }}>
-            <div className="cg-tile__media">
-              <img src={c.img} alt={`${c.name} — Carats by Grace`} loading="lazy" decoding="async" />
-            </div>
-            <div className="cg-tile__info">
-              <div className="cg-tile__top">
-                <h3 className="cg-tile__label">{c.name}</h3>
-                <span className="cg-tile__count">{c.count}</span>
-              </div>
-              <p className="cg-tile__tagline">{c.tagline}</p>
-              <span className="cg-tile__shop">Explore {c.name} →</span>
-            </div>
-          </Link>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-/* Signature campaign split */
-function CampaignSplit() {
-  return (
-    <section className="cg-section" style={{ paddingTop: 0 }}>
-      <div className="cg-split reveal">
-        <div className="cg-split__img">
-          <img src={EDITORIAL_ASSETS.campaignSplit}
-            alt="Editorial: close-up of a ruby and diamond suite"
-            loading="lazy" decoding="async" />
-        </div>
-        <div className="cg-split__copy">
-          <span className="cg-eyebrow">Featured · The Ruby Hours</span>
-          <h2 className="cg-split__title">A little fire. A great deal of restraint.</h2>
-          <p className="cg-split__lede">
-            Our festive edit pairs a single ruby with warm gold — designed
-            for evenings that ask for nothing more.
-          </p>
-          <Link className="cg-btn cg-btn--solid" to="/collections/rings"
-            style={{ alignSelf: "flex-start" }}>
-            Explore the Edit
-          </Link>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* Best Sellers */
-function BestSellers() {
-  const tabs = ["Rings", "Earrings", "Necklaces", "All"];
-  const [tab, setTab] = useState("Rings");
-  const railRef = useRef(null);
-  const { toggleWishlist, isWishlisted } = useWishlist();
-  const { openQuickView } = useUI();
-
-  const list = tab === "All"
-    ? [...(PRODUCTS.Rings || []), ...(PRODUCTS.Earrings || []), ...(PRODUCTS.Necklaces || [])]
-    : (PRODUCTS[tab] || []);
-
-  const scroll = (dir) => {
-    const el = railRef.current;
-    if (!el) return;
-    el.scrollBy({ left: dir * (el.clientWidth * 0.7), behavior: "smooth" });
-  };
-
-  const handleTabChange = (t) => {
-    setTab(t);
-    if (railRef.current) {
-      railRef.current.scrollTo({ left: 0, behavior: "smooth" });
-    }
-  };
-
-  return (
-    <section className="cg-section cg-wrap" aria-labelledby="bs-h">
-      <div className="reveal" style={{
-        display: "flex",
-        justifyContent: "space-between", alignItems: "end",
-        gap: 20, flexWrap: "wrap", marginBottom: 8
-      }}>
-        <div>
-          <span className="cg-eyebrow">Bestsellers</span>
-          <h2 id="bs-h" className="cg-display"
-            style={{ fontSize: "clamp(1.9rem,3.6vw,2.9rem)", marginTop: 12 }}>
-            The pieces she reaches for.
-          </h2>
-        </div>
-        <div className="cg-bs-arrows">
-          <button className="cg-bs-arrow" aria-label="Scroll left"
-            onClick={() => scroll(-1)}>
-            <Icon name="arrowLeft" size={16} />
-          </button>
-          <button className="cg-bs-arrow" aria-label="Scroll right"
-            onClick={() => scroll(1)}>
-            <Icon name="arrowRight" size={16} />
-          </button>
-        </div>
-      </div>
-
-      <div className="cg-tabs" role="tablist" aria-label="Product category">
-        {tabs.map((t) => (
-          <button key={t} role="tab" aria-selected={tab === t}
-            className={`cg-tab ${tab === t ? "is-active" : ""}`}
-            onClick={() => handleTabChange(t)}>{t}</button>
-        ))}
-      </div>
-
-      <div className="cg-rail-wrap">
-        <button className="cg-rail-arrow cg-rail-arrow--prev"
-          aria-label="Previous pieces"
-          onClick={() => scroll(-1)}>
-          <Icon name="arrowLeft" size={16} />
-        </button>
-
-        <div className="cg-rail" ref={railRef} role="tabpanel" aria-label={tab}>
-          {list.map((p, i) => {
-            const isSaved = isWishlisted(p.name);
-            return (
-              <article className="cg-card" key={p.name + "-" + tab + "-" + i}>
-                <div className="cg-card__media">
-                  <img className="cg-card__img--main" src={p.img}
-                    alt={`${p.name} — Carats by Grace`} loading="lazy" decoding="async" />
-                  <img className="cg-card__img--hover" src={p.hover}
-                    alt="" aria-hidden="true" loading="lazy" decoding="async" />
-                  <button
-                    className={`cg-card__wish ${isSaved ? "is-saved" : ""}`}
-                    aria-label={isSaved ? `Remove ${p.name} from wishlist` : `Add ${p.name} to wishlist`}
-                    aria-pressed={isSaved}
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      toggleWishlist({
-                        id: p.name.toLowerCase().replace(/\s+/g, '-'),
-                        name: p.name,
-                        spec: p.spec,
-                        price: p.price,
-                        img: p.img,
-                        hover: p.hover,
-                        inStock: true,
-                        cat: tab === "All" ? "Jewellery" : tab,
-                      });
-                    }}>
-                    <Icon name="heart" size={18} />
-                  </button>
-                  <button className="cg-card__add"
-                    type="button"
-                    onClick={() => openQuickView({ ...p, cat: tab === "All" ? "Jewellery" : tab })}>
-                    Enquire <span aria-hidden="true">✦</span>
-                  </button>
-                </div>
-                <div className="cg-card__body"
-                  onClick={() => openQuickView({ ...p, cat: tab === "All" ? "Jewellery" : tab })}
-                  style={{ cursor: "pointer" }}>
-                  <h3 className="cg-card__name">{p.name}</h3>
-                  <span className="cg-card__spec">{p.spec}</span>
-                  <span className="cg-card__enquire-link">Enquire Piece →</span>
-                </div>
-              </article>
-            );
-          })}
-        </div>
-
-        <button className="cg-rail-arrow cg-rail-arrow--next"
-          aria-label="Next pieces"
-          onClick={() => scroll(1)}>
-          <Icon name="arrowRight" size={16} />
-        </button>
-      </div>
-
-      <div style={{ textAlign: "center", marginTop: 36 }}>
-        <Link className="cg-btn cg-btn--ghost" to="/collections/bestsellers">Explore More</Link>
-      </div>
-    </section>
-  );
-}
-
-/* Limited edition */
-function Limited() {
-  return (
-    <section className="cg-section cg-wrap" aria-labelledby="lim-h">
-      <div className="reveal" style={{ marginBottom: 32 }}>
-        <span className="cg-eyebrow">Limited edition collections</span>
-        <h2 id="lim-h" className="cg-display"
-          style={{ fontSize: "clamp(1.9rem,3.6vw,2.9rem)", marginTop: 12 }}>
-          Numbered. Never repeated.
-        </h2>
-      </div>
-      <div className="cg-limited__grid">
-        {LIMITED.map((c, i) => (
-          <Link className="cg-limited__card reveal" key={c.name} to={`/collections/${c.name.toLowerCase().replace(/\s+/g, '-')}`}
-            style={{ transitionDelay: `${i * 50}ms` }}>
-            <div className="cg-limited__media">
-              <img src={c.img} alt={`${c.name} — limited edition`} loading="lazy" decoding="async" />
-            </div>
-            <div className="cg-limited__info">
-              <span className="cg-limited__tag">Limited Edition</span>
-              <h3 className="cg-limited__name">{c.name}</h3>
-            </div>
-          </Link>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-/* Story */
-function Story() {
-  return (
-    <section className="cg-story" aria-labelledby="story-h">
-      <div className="cg-wrap cg-story__inner">
-        <div className="reveal">
-          <span className="cg-eyebrow" style={{ color: "rgba(250,246,241,.7)" }}>
-            <Sparkle /> The Carats by Grace Story
-          </span>
-
-          <h2 id="story-h" className="cg-story__title">
-            Luxury, chosen differently.
-          </h2>
-          <p className="cg-story__body">
-            At Carats by Grace, we believe brilliance is more than what meets
-            the eye. Our lab-grown diamond jewellery brings together timeless
-            elegance, considered craftsmanship, and a modern perspective on
-            luxury. Each piece is an expression of individuality — designed
-            to be treasured, worn, and made entirely your own.
-          </p>
-
-          <Link className="cg-btn cg-btn--ghost-light" to="/about">Our Story</Link>
-        </div>
-        <div className="cg-story__imgs reveal">
-          <figure>
-            <img src={EDITORIAL_ASSETS.story1}
-              alt="Editorial: model wearing Carats by Grace diamond choker and ring" loading="lazy" decoding="async" />
-          </figure>
-          <figure>
-            <img src={EDITORIAL_ASSETS.story2}
-              alt="Editorial: model wearing Carats by Grace diamond earrings and ring" loading="lazy" decoding="async" />
-          </figure>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* Craft */
-function Craft() {
-
-  const steps = [
-    {
-      n: "01",
-      t: "Curating lab-grown diamonds",
-      d: "We select each lab-grown diamond for its sparkle, cut, and clarity, so your jewellery shines beautifully from every angle."
-    },
-    {
-      n: "02",
-      t: "Made with care",
-      d: "Every piece is carefully crafted, with a setting designed to bring out the beauty of your diamond and keep it looking timeless."
-    },
-    {
-      n: "03",
-      t: "Quality you can trust",
-      d: "Before your jewellery reaches you, we check every detail to make sure it looks beautiful and meets our quality standards."
-    },
-  ];
-
-  return (
-    <section className="cg-section cg-wrap" aria-labelledby="craft-h">
-      <div className="cg-craft__grid">
-        <div className="cg-craft__media reveal">
-          <img src={EDITORIAL_ASSETS.craft}
-            alt="Craft: precision setting and hallmarking of fine jewellery" loading="lazy" decoding="async" />
-          <button className="cg-craft__play" aria-label="Play craftsmanship film">
-            <span><Icon name="play" size={20} /></span>
-          </button>
-        </div>
-        <div className="reveal">
-          <span className="cg-eyebrow">Craftsmanship</span>
-          <h2 id="craft-h" className="cg-display"
-            style={{ fontSize: "clamp(1.9rem,3.6vw,2.9rem)", margin: "12px 0 14px" }}>
-            Considered at every step.
-          </h2>
-          <p style={{ color: "var(--muted)", maxWidth: "44ch", margin: 0 }}>
-            From the deliberate curve of a bezel to the comfortable weight of solid 18K gold — every piece is crafted for heirloom longevity.
-          </p>
-          <div className="cg-craft__steps">
-            {steps.map((s) => (
-              <div className="cg-craft__step" key={s.n}>
-                <div className="cg-craft__num">{s.n}</div>
-                <div>
-                  <h5>{s.t}</h5>
-                  <p>{s.d}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* Bridal */
-function Bridal() {
-  return (
-    <section className="cg-bridal cg-section" aria-labelledby="bridal-h">
-      <div className="cg-wrap">
-        <div className="cg-bridal__grid reveal">
-          <figure className="cg-bridal__a">
-            <img src={EDITORIAL_ASSETS.bridalA}
-              alt="Bridal: model in haute joaillerie emerald and diamond suite" loading="lazy" decoding="async" />
-          </figure>
-          <figure className="cg-bridal__b">
-            <img src={EDITORIAL_ASSETS.bridalB}
-              alt="Bridal: close-up of diamond chandelier earrings and pendant" loading="lazy" decoding="async" />
-          </figure>
-          <figure className="cg-bridal__c">
-            <img src={EDITORIAL_ASSETS.bridalC}
-              alt="Bridal: diamond cocktail ring on hand" loading="lazy" decoding="async" />
-          </figure>
-          <div className="cg-bridal__copy">
-            <span className="cg-eyebrow">The Bridal Edit</span>
-            <h2 id="bridal-h" className="cg-bridal__title">
-              For the vows. And every day after.
-            </h2>
-            <p className="cg-bridal__lede">
-              Bridal rings and sets, considered in proportion and made to be
-              worn far beyond the day itself.
-            </p>
-            <a className="cg-btn cg-btn--solid" href="#"
-              style={{ alignSelf: "flex-start" }}>
-              Discover Bridal
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* Why */
-function Why() {
-  const items = [
-    { t: "Considered design", d: "Proportions, weight, and silhouette chosen with restraint to celebrate the beauty of solid precious metals." },
-    { t: "Everyday fine", d: "Crafted for effortless daily wear with secure low-profile settings that transition seamlessly into the evening." },
-    { t: "Heirloom craftsmanship", d: "Individually hallmarked 18K gold and certified lab-grown diamonds, accompanied by lifetime authentication." },
-  ];
-  return (
-    <section className="cg-section cg-wrap" aria-labelledby="why-h">
-      <div className="reveal" style={{ textAlign: "center" }}>
-        <span className="cg-eyebrow">Why Carats by Grace</span>
-        <h2 id="why-h" className="cg-display"
-          style={{ fontSize: "clamp(1.9rem,3.6vw,2.9rem)", marginTop: 12 }}>
-          Quiet promises, kept.
-        </h2>
-      </div>
-      <div className="cg-why__grid">
-        {items.map((it, i) => (
-          <div className="cg-why__col reveal" key={it.t}
-            style={{ transitionDelay: `${i * 60}ms` }}>
-            <Sparkle style={{ fontSize: "1.1rem" }} />
-            <h5 style={{ marginTop: 12 }}>{it.t}</h5>
-            <p>{it.d}</p>
-          </div>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-/* Testimonials */
-function Testimonials() {
-  const railRef = useRef(null);
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(true);
-
-  const updateScrollButtons = useCallback(() => {
-    const el = railRef.current;
-    if (!el) return;
-    setCanScrollLeft(el.scrollLeft > 10);
-    setCanScrollRight(el.scrollLeft < el.scrollWidth - el.clientWidth - 10);
-  }, []);
-
-  const scroll = (dir) => {
-    const el = railRef.current;
-    if (!el) return;
-    const cardWidth = el.firstElementChild ? el.firstElementChild.clientWidth + 24 : el.clientWidth * 0.33;
-    el.scrollBy({ left: dir * cardWidth, behavior: "smooth" });
-  };
-
-  useEffect(() => {
-    const el = railRef.current;
-    if (!el) return;
-    el.addEventListener("scroll", updateScrollButtons, { passive: true });
-    updateScrollButtons();
-    return () => el.removeEventListener("scroll", updateScrollButtons);
-  }, [updateScrollButtons]);
-
-  // Subtle auto-scroll every 5.5s
-  useEffect(() => {
-    const timer = setInterval(() => {
-      const el = railRef.current;
-      if (!el) return;
-      if (el.scrollLeft >= el.scrollWidth - el.clientWidth - 10) {
-        el.scrollTo({ left: 0, behavior: "smooth" });
-      } else {
-        scroll(1);
-      }
-    }, 5500);
-    return () => clearInterval(timer);
-  }, []);
-
-  return (
-    <section className="cg-testi cg-section" aria-labelledby="testi-h">
-      <div className="cg-wrap reveal">
-        <div className="cg-testi__head">
-          <div>
-            <span className="cg-eyebrow">Client words</span>
-            <h2 id="testi-h" className="cg-display"
-              style={{ fontSize: "clamp(1.9rem,3.6vw,2.9rem)", marginTop: 12 }}>
-              Cherished in their own words.
-            </h2>
-          </div>
-          <div className="cg-testi__controls">
-            <button
-              className="cg-testi__arrow"
-              onClick={() => scroll(-1)}
-              disabled={!canScrollLeft}
-              aria-label="Previous reviews">
-              <Icon name="arrowRight" size={16} style={{ transform: "rotate(180deg)" }} />
-            </button>
-            <button
-              className="cg-testi__arrow"
-              onClick={() => scroll(1)}
-              disabled={!canScrollRight}
-              aria-label="Next reviews">
-              <Icon name="arrowRight" size={16} />
-            </button>
-          </div>
-        </div>
-
-        <div className="cg-testi__rail" ref={railRef} role="region" aria-label="Customer Reviews">
-          {TESTIMONIALS.map((t, i) => (
-            <article className="cg-testi__card" key={t.who + i}>
-              <div>
-                <div className="cg-testi__stars" aria-label="5 out of 5 stars">
-                  ★★★★★
-                </div>
-                <p className="cg-testi__card-quote">“{t.quote}”</p>
-              </div>
-              <div className="cg-testi__meta">
-                <span className="cg-testi__card-who">{t.who}</span>
-                <span className="cg-testi__card-piece">{t.piece}</span>
-                <span className="cg-testi__verified">
-                  <Sparkle style={{ fontSize: "0.75rem", color: "var(--gold)" }} /> Verified Patron
-                </span>
-              </div>
-            </article>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* Instagram */
-function Instagram() {
-  return (
-    <section className="cg-section cg-wrap" aria-labelledby="ig-h">
-      <div className="reveal" style={{
-        display: "flex", justifyContent: "space-between",
-        alignItems: "end", gap: 24, flexWrap: "wrap", marginBottom: 28
-      }}>
-        <div>
-          <span className="cg-eyebrow">@carats_by_grace</span>
-          <h2 id="ig-h" className="cg-display"
-            style={{ fontSize: "clamp(1.9rem,3.6vw,2.9rem)", marginTop: 12 }}>
-            Seen, worn, shared.
-          </h2>
-        </div>
-        <a className="cg-btn cg-btn--ghost" href="#">Follow @carats_by_grace</a>
-      </div>
-      <div className="cg-insta__grid">
-        {INSTAGRAM_GALLERY.map((it, i) => (
-          <a className="cg-insta__cell reveal" key={i} href="#"
-            style={{ transitionDelay: `${i * 40}ms` }}>
-            <img src={it.src} alt={it.alt} loading="lazy" decoding="async" />
-          </a>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-/* Visit */
-function Visit() {
-  const [form, setForm] = useState({ name: "", phone: "", date: "" });
-  const [sent, setSent] = useState(false);
-  const submit = (e) => {
+  const handleBespokeSubmit = (e) => {
     e.preventDefault();
-    setSent(true); // PLACEHOLDER: wire to backend
+    const url = buildWhatsAppUrl({
+      type: 'bespoke',
+      bespokeData: {
+        name: bespokeName,
+        phone: bespokePhone,
+        preference: bespokePreference,
+        shape: selectedBespokeShape,
+      },
+    });
+    window.open(url, '_blank', 'noopener,noreferrer');
   };
+
+  const navItems = [
+    { label: 'Home', href: '/' },
+    { label: 'About Us', href: '/about' },
+    { label: 'Collections', href: '/collections' },
+    { label: 'Exclusive Designs', href: '/exclusive-designs' },
+    { label: 'Bespoke', href: '/bespoke' },
+    { label: 'Grown Diamonds', href: '/grown-diamonds' },
+    { label: 'Contact', href: '/contact' },
+  ];
+
   return (
-    <section className="cg-section cg-wrap" aria-labelledby="visit-h">
-      <div className="cg-visit__grid reveal">
-        <div className="cg-visit__img">
-          <img src={EDITORIAL_ASSETS.visitAtelier}
-            alt="The Carats by Grace atelier — interior" loading="lazy" decoding="async" />
-        </div>
-        <div className="cg-visit__form">
-          <span className="cg-eyebrow">Visit</span>
-          <h2 id="visit-h" className="cg-display"
-            style={{ fontSize: "clamp(1.7rem,3vw,2.4rem)", margin: "12px 0 8px" }}>
-            Book a private appointment.
-          </h2>
-          <p style={{ color: "var(--muted)", fontSize: ".9rem", margin: "0 0 26px" }}>
-            Experience private jewellery viewings at our boutique in Mahanagar, Lucknow or schedule a high-definition virtual consultation.
-          </p>
-          <form onSubmit={submit}>
-            <div className="cg-field">
-              <label htmlFor="v-name">Name</label>
-              <input id="v-name" className="cg-input" type="text" required
-                value={form.name}
-                onChange={(e) => setForm({ ...form, name: e.target.value })} />
-            </div>
-            <div className="cg-field">
-              <label htmlFor="v-phone">Phone</label>
-              <input id="v-phone" className="cg-input" type="tel" required
-                value={form.phone}
-                onChange={(e) => setForm({ ...form, phone: e.target.value })} />
-            </div>
-            <div className="cg-field">
-              <label htmlFor="v-date">Preferred date</label>
-              <input id="v-date" className="cg-input" type="date"
-                value={form.date}
-                onChange={(e) => setForm({ ...form, date: e.target.value })} />
-            </div>
-            <button type="submit" className="cg-btn cg-btn--solid">
-              {sent ? "Thank you — we'll be in touch" : "Request Appointment"}
+    <div className="cg-page">
+      <style>{HOME_CSS}</style>
+
+      {/* ── Top Announcement ── */}
+      <div className="cg-ann">
+        Atelier Salon & Private Consultations · Mahanagar, Lucknow · IGI Certified Grown Diamonds
+      </div>
+
+      {/* ── Sticky Header (No Cart / Bag Icon) ── */}
+      <header className="cg-header">
+        <div className="cg-wrap cg-header__inner">
+          <button
+            className="cg-burger"
+            onClick={() => setMobileMenuOpen(true)}
+            aria-label="Open mobile menu"
+          >
+            <Menu size={22} strokeWidth={1.5} />
+          </button>
+
+          {/* Logo */}
+          <Link to="/" aria-label="Carats by Grace Home">
+            <BrandLogo height={44} />
+          </Link>
+
+          {/* Desktop Navigation */}
+          <nav className="cg-nav-desktop" aria-label="Main Navigation">
+            {navItems.map((item) => (
+              <Link key={item.label} to={item.href} className="cg-nav-link">
+                {item.label}
+              </Link>
+            ))}
+          </nav>
+
+          {/* Header Action CTAs */}
+          <div className="cg-header-actions">
+            <button
+              className="cg-icon-btn"
+              onClick={toggleSearch}
+              aria-label="Search Catalogue"
+            >
+              <Search size={19} strokeWidth={1.6} />
             </button>
-          </form>
-          <a className="cg-wa" href="https://wa.me/919120530531?text=Hello%20Carats%20by%20Grace%2C%20I%20would%20like%20to%20book%20a%20private%20atelier%20consultation." target="_blank" rel="noreferrer" aria-label="Chat on WhatsApp">
-            <Icon name="whatsapp" size={18} /> Chat on WhatsApp
-          </a>
-          <div className="cg-visit__store" style={{ marginTop: 22, paddingTop: 18, borderTop: "1px solid var(--sand-light, #E9E1D8)" }}>
-            <span style={{ display: "block", fontSize: "0.72rem", letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--gold, #C5A059)", fontWeight: 600, marginBottom: 4 }}>
-              Offline Store & Boutique
-            </span>
-            <p style={{ margin: "0 0 8px", fontSize: "0.95rem", color: "var(--charcoal, #17120F)", fontWeight: 500 }}>
-              Carats By Grace, Mahanagar, Lucknow
-            </p>
+
+            <Link
+              to="/wishlist"
+              className="cg-icon-btn"
+              aria-label={`Wishlist (${wishlistItems?.length || 0} designs)`}
+            >
+              <Heart size={19} strokeWidth={1.6} />
+              {(wishlistItems?.length || 0) > 0 && (
+                <span className="cg-badge">{wishlistItems.length}</span>
+              )}
+            </Link>
+
             <a
-              href="https://share.google/FkH78O9JeWQrn62Ik"
+              href={buildWhatsAppUrl({ type: 'consultation' })}
               target="_blank"
               rel="noopener noreferrer"
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: 6,
-                fontSize: "0.85rem",
-                color: "var(--wine, #7B1E3A)",
-                fontWeight: 600,
-                textDecoration: "underline",
-                textUnderlineOffset: 3,
-              }}
+              className="cg-btn cg-btn-solid"
+              style={{ minHeight: 40, padding: '0 18px', fontSize: '0.7rem' }}
             >
-              <Icon name="pin" size={15} /> Store Location (Google Maps) ↗
+              <MessageCircle size={15} />
+              Book A Visit
             </a>
           </div>
         </div>
-      </div>
-    </section>
-  );
-}
+      </header>
 
-/* FAQ */
-function FAQ() {
-  const [open, setOpen] = useState(0);
-  return (
-    <section className="cg-faq cg-section" aria-labelledby="faq-h">
-      <div className="cg-wrap reveal">
-        <div style={{ textAlign: "center", marginBottom: 40 }}>
-          <span className="cg-eyebrow">Questions</span>
-          <h2 id="faq-h" className="cg-display"
-            style={{ fontSize: "clamp(1.9rem,3.6vw,2.9rem)", marginTop: 12 }}>
-            A few things, answered.
-          </h2>
+      {/* ── Mobile Menu Drawer ── */}
+      <div className={`cg-mobile-menu ${mobileMenuOpen ? 'open' : ''}`} aria-hidden={!mobileMenuOpen}>
+        <div className="cg-mobile-header">
+          <BrandLogo height={38} />
+          <button
+            onClick={() => setMobileMenuOpen(false)}
+            style={{ background: 'none', border: 'none', cursor: 'pointer' }}
+            aria-label="Close menu"
+          >
+            <X size={24} />
+          </button>
         </div>
-        <div className="cg-faq__list">
-          {FAQS.map((f, i) => {
-            const isOpen = open === i;
-            return (
-              <div className={`cg-faq__item ${isOpen ? "is-open" : ""}`} key={f.q}>
-                <button className="cg-faq__q" aria-expanded={isOpen}
-                  aria-controls={`faq-${i}`}
-                  onClick={() => setOpen(isOpen ? -1 : i)}>
-                  {f.q}
-                  <span className="cg-faq__icon" aria-hidden="true">+</span>
-                </button>
-                <div id={`faq-${i}`} className="cg-faq__a"
-                  style={{ maxHeight: isOpen ? 300 : 0 }}>
-                  <div className="cg-faq__a-inner">{f.a}</div>
+        <div className="cg-mobile-links">
+          {navItems.map((item) => (
+            <Link
+              key={item.label}
+              to={item.href}
+              className="cg-mobile-link"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              {item.label}
+            </Link>
+          ))}
+          <Link
+            to="/wishlist"
+            className="cg-mobile-link"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            Saved Designs ({wishlistItems?.length || 0})
+          </Link>
+          <a
+            href={buildWhatsAppUrl({ type: 'general' })}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="cg-btn cg-btn-whatsapp"
+            style={{ marginTop: 24 }}
+          >
+            <MessageCircle size={18} />
+            Chat on WhatsApp
+          </a>
+        </div>
+      </div>
+
+      {/* ============================================================
+          PART 2: SECTION 4 — HERO BANNER
+          ============================================================ */}
+      <section className="cg-hero" aria-label="Hero Showcase">
+        <div className="cg-hero-media">
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="auto"
+            aria-hidden="true"
+          >
+            <source src="/video/hero-desktop.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <div className="cg-hero-overlay" />
+
+        <div className="cg-hero-content">
+          <span className="cg-eyebrow cg-eyebrow-light">
+            <Sparkles size={14} /> Carats by Grace · Fine Jewellery Atelier
+          </span>
+          <h1 className="cg-hero-title">YOUR GROWN DIAMOND DESTINATION.</h1>
+          <p className="cg-hero-sub">
+            Discover a world of exceptional grown diamond jewellery, where
+            timeless brilliance meets contemporary design.
+          </p>
+          <div className="cg-hero-ctas">
+            <Link to="/collections" className="cg-btn cg-btn-gold">
+              EXPLORE COLLECTIONS
+            </Link>
+            <a
+              href={buildWhatsAppUrl({ type: 'general' })}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="cg-btn cg-btn-whatsapp"
+            >
+              <MessageCircle size={18} />
+              CONNECT ON WHATSAPP
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* ============================================================
+          PART 2: SECTION 5 — SHOP BY CATEGORY
+          ============================================================ */}
+      <section className="cg-section" aria-label="Shop by Category">
+        <div className="cg-wrap">
+          <div style={{ textAlign: 'center', maxWidth: 640, margin: '0 auto' }}>
+            <span className="cg-eyebrow">Explore Our Silhouettes</span>
+            <h2 className="cg-display" style={{ fontSize: 'clamp(2rem, 3.8vw, 3rem)' }}>
+              Curated by Category
+            </h2>
+          </div>
+
+          <div className="cg-cat-grid">
+            {CATEGORIES.map((cat) => (
+              <Link key={cat.slug} to={`/collections/${cat.slug}`} className="cg-cat-card">
+                <div className="cg-cat-thumb">
+                  <img src={cat.image} alt={cat.name} loading="lazy" />
                 </div>
-              </div>
-            );
-          })}
+                <h3 className="cg-cat-name">{cat.name}</h3>
+              </Link>
+            ))}
+          </div>
         </div>
-      </div>
-    </section>
-  );
-}
+      </section>
 
-/* Footer */
-function Footer() {
-  const cols = {
-    Jewellery: [
-      { label: "Rings", href: "/collections/rings" },
-      { label: "Earrings", href: "/collections/earrings" },
-      { label: "Necklaces", href: "/collections/necklaces" },
-      { label: "Bracelets", href: "/collections/bracelets" },
-      { label: "The Bridal Edit", href: "/collections/bridal" },
-      { label: "High Jewellery", href: "/collections/high-jewellery" },
-    ],
-    About: [
-      { label: "Our Story", href: "/about" },
-      { label: "Craftsmanship", href: "/craftsmanship" },
-      { label: "Private Atelier", href: "#visit" },
-    ],
-    Atelier: [
-      { label: "Private Salon Viewing", href: "#visit" },
-      { label: "Bespoke Commissions", href: "/bespoke" },
-      { label: "Jewelry Care Guide", href: "/policies/care" },
-      { label: "Privacy Policy", href: "/policies/privacy" },
-      { label: "Terms of Service", href: "/policies/terms" },
-    ],
-    Concierge: [
-      { label: "WhatsApp Concierge", href: "https://wa.me/919120530531" },
-      { label: "hello@caratsbygrace.com", href: "mailto:hello@caratsbygrace.com" },
-      { label: "+91 91205 30531", href: "tel:+919120530531" },
-      { label: "Carats By Grace, Mahanagar, Lucknow", href: "https://share.google/FkH78O9JeWQrn62Ik" },
-      { label: "Location: Google Maps ↗", href: "https://share.google/FkH78O9JeWQrn62Ik" },
-    ],
-  };
-  return (
-    <footer className="cg-footer" aria-label="Footer">
-      <div className="cg-wrap">
-        <div className="cg-footer__top">
-          <div className="cg-footer__brand">
-            <BrandLogo variant="light" height={52} />
-            <p>Modern fine jewellery, handcrafted quietly with heirloom precision.</p>
-            <div className="cg-footer__social">
-              <a href="https://www.instagram.com/caratsbygrace/" target="_blank" rel="noreferrer" aria-label="Instagram"><Icon name="instagram" size={18} /></a>
-              <a href="https://wa.me/919120530531" target="_blank" rel="noreferrer" aria-label="WhatsApp"><Icon name="whatsapp" size={18} /></a>
+      {/* ============================================================
+          PART 2: SECTION 6 — FEATURED COLLECTIONS
+          ============================================================ */}
+      <section className="cg-section" style={{ background: 'var(--ivory)', borderTop: '1px solid var(--line)' }}>
+        <div className="cg-wrap">
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: 16, marginBottom: 36 }}>
+            <div>
+              <span className="cg-eyebrow">Atelier Signatures</span>
+              <h2 className="cg-display" style={{ fontSize: 'clamp(2rem, 4vw, 3.2rem)', margin: 0 }}>
+                Featured Collections
+              </h2>
+            </div>
+            <Link to="/collections" className="cg-btn cg-btn-outline" style={{ minHeight: 42, padding: '0 20px' }}>
+              View All Edits <ArrowRight size={15} />
+            </Link>
+          </div>
+
+          <div className="cg-coll-grid">
+            {COLLECTIONS.slice(0, 3).map((coll) => (
+              <article key={coll.slug} className="cg-coll-card">
+                <div className="cg-coll-img">
+                  <img src={coll.heroImage} alt={coll.name} loading="lazy" />
+                </div>
+                <div className="cg-coll-body">
+                  <span style={{ fontSize: '0.72rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--gold)', fontWeight: 600, marginBottom: 6 }}>
+                    {coll.tagline}
+                  </span>
+                  <h3 className="cg-coll-title">{coll.name}</h3>
+                  <p className="cg-coll-desc">{coll.description}</p>
+                  <div style={{ display: 'flex', gap: 10, marginTop: 'auto' }}>
+                    <Link to={`/collections/${coll.slug}`} className="cg-btn cg-btn-solid" style={{ flexGrow: 1, minHeight: 44, padding: '0 16px', fontSize: '0.72rem' }}>
+                      DISCOVER COLLECTION
+                    </Link>
+                    <a
+                      href={buildWhatsAppUrl({
+                        type: 'general',
+                        customMessage: `Hello Carats by Grace! I am interested in exploring ${coll.name} collection. Please share designs.`,
+                      })}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="cg-btn cg-btn-outline"
+                      style={{ minHeight: 44, padding: '0 14px' }}
+                      title="Enquire on WhatsApp"
+                    >
+                      <MessageCircle size={16} />
+                    </a>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ============================================================
+          PART 2: SECTION 7 — NEW SECTION: DESIGNS THAT NEVER REPEAT
+          ============================================================ */}
+      <section className="cg-section cg-excl-section" aria-label="Designs That Never Repeat">
+        <div className="cg-wrap">
+          <div className="cg-excl-inner">
+            <div className="cg-excl-copy">
+              <span className="cg-eyebrow cg-eyebrow-light">
+                <Sparkles size={14} /> The Ultimate Expression of Exclusivity
+              </span>
+              <h2 className="cg-display cg-display-light" style={{ fontSize: 'clamp(2.4rem, 4.5vw, 3.8rem)' }}>
+                DESIGNS THAT NEVER REPEAT.
+              </h2>
+              <div style={{ fontFamily: 'var(--serif)', fontSize: '1.4rem', color: 'var(--gold-light)', fontStyle: 'italic', marginBottom: 20 }}>
+                ONE DESIGN. ONE OWNER. FOREVER YOURS.
+              </div>
+
+              <p style={{ color: 'rgba(250, 246, 241, 0.88)', lineHeight: 1.8, fontSize: '1rem' }}>
+                Some things are too special to be made twice. Every exclusive
+                design at Carats by Grace is thoughtfully envisioned to stand
+                apart. Created as a one-time expression of artistry, each design
+                is available for a single purchase only. Once it finds its
+                owner, it will never be recreated.
+              </p>
+
+              <div className="cg-excl-highlight-box">
+                <p>
+                  "Because true exclusivity isn't about owning something rare.
+                  It's about owning something no one else can."
+                </p>
+              </div>
+
+              <Link to="/exclusive-designs" className="cg-btn cg-btn-gold">
+                DISCOVER EXCLUSIVE DESIGNS
+                <ArrowRight size={16} />
+              </Link>
+            </div>
+
+            {/* Exclusive Pieces Visual Mini-Grid */}
+            <div className="cg-excl-gallery">
+              {exclusiveShowcase.slice(0, 2).map((piece) => (
+                <div key={piece.id} className="cg-excl-card">
+                  <div className="cg-excl-img">
+                    <img src={piece.images[0]} alt={piece.name} loading="lazy" />
+                    <span className="cg-one-badge">ONE OF ONE</span>
+                  </div>
+                  <div className="cg-excl-details">
+                    <h3>{piece.name}</h3>
+                    <span>{piece.specs}</span>
+                    <div style={{ marginTop: 12 }}>
+                      <Link
+                        to={`/products/${piece.slug}`}
+                        style={{ fontSize: '0.72rem', letterSpacing: '0.14em', textTransform: 'uppercase', color: '#FFF', textDecoration: 'underline' }}
+                      >
+                        Explore Creation →
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
-          <div className="cg-footer__links-grid">
-            {Object.entries(cols).map(([title, items]) => (
-              <div key={title} className="cg-footer__col">
-                <h4>{title}</h4>
-                <ul>
-                  {items.map((i) => (
-                    <li key={i.label}>
-                      {i.href.startsWith("http") || i.href.startsWith("mailto") || i.href.startsWith("tel") ? (
-                        <a href={i.href} target="_blank" rel="noreferrer">{i.label}</a>
-                      ) : i.href.startsWith("#") ? (
-                        <a href={i.href}>{i.label}</a>
-                      ) : (
-                        <Link to={i.href}>{i.label}</Link>
-                      )}
-                    </li>
+        </div>
+      </section>
+
+      {/* ============================================================
+          PART 2: SECTION 8 — THE ART OF GROWN DIAMONDS
+          ============================================================ */}
+      <section className="cg-section cg-science-section">
+        <div className="cg-wrap">
+          <div className="cg-science-grid">
+            <div>
+              <span className="cg-eyebrow">The Science of Brilliance</span>
+              <h2 className="cg-display" style={{ fontSize: 'clamp(2.2rem, 4.2vw, 3.4rem)' }}>
+                THE SCIENCE OF BRILLIANCE.<br />
+                THE ART OF PERFECTION.
+              </h2>
+              <p style={{ fontSize: '1.05rem', lineHeight: 1.8, color: '#4A3E3D' }}>
+                Grown diamonds possess the same essential physical, chemical and
+                optical properties as mined diamonds. Created through advanced
+                technology, they offer the same diamond brilliance with a
+                different origin story.
+              </p>
+
+              <div className="cg-comp-pills">
+                <div className="cg-comp-pill">
+                  <span>Carbon Composition</span>
+                  <strong>100% Pure Crystallized Carbon</strong>
+                </div>
+                <div className="cg-comp-pill">
+                  <span>Hardness on Mohs Scale</span>
+                  <strong>10 (Equal to Mined Diamonds)</strong>
+                </div>
+                <div className="cg-comp-pill">
+                  <span>Optical Refractive Index</span>
+                  <strong>2.42 (Identical Scintillation & Fire)</strong>
+                </div>
+                <div className="cg-comp-pill">
+                  <span>Chemical Purity</span>
+                  <strong>Type IIa (Top 2% Purity in the World)</strong>
+                </div>
+              </div>
+
+              <Link to="/grown-diamonds" className="cg-btn cg-btn-solid">
+                DISCOVER GROWN DIAMONDS
+                <ArrowRight size={16} />
+              </Link>
+            </div>
+
+            <div style={{ position: 'relative', borderRadius: 2, overflow: 'hidden', boxShadow: '0 20px 48px rgba(0,0,0,0.1)' }}>
+              <img
+                src="/assets/model2/m2_8153.webp"
+                alt="Science and Art of Grown Diamonds"
+                loading="lazy"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ============================================================
+          PART 2: SECTION 9 — BESPOKE JEWELLERY – DESIGNED AROUND YOU
+          ============================================================ */}
+      <section className="cg-section" style={{ background: 'var(--white)' }}>
+        <div className="cg-wrap">
+          <div className="cg-bespoke-grid">
+            <div>
+              <span className="cg-eyebrow">Custom Atelier Commissions</span>
+              <h2 className="cg-display" style={{ fontSize: 'clamp(2.2rem, 4.2vw, 3.4rem)' }}>
+                A DESIGN THAT BEGINS WITH YOU.
+              </h2>
+              <p style={{ fontSize: '1.02rem', lineHeight: 1.8, color: '#4A3E3D' }}>
+                Your vision, your choice, your diamond. Discover jewellery
+                designed around your individuality, crafted to reflect your
+                personal style and story.
+              </p>
+
+              <div style={{ marginTop: 24 }}>
+                <span style={{ fontSize: '0.74rem', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--muted)', fontWeight: 600 }}>
+                  Select Preferred Diamond Silhouette:
+                </span>
+                <div className="cg-shapes-mini-grid">
+                  {DIAMOND_SHAPES.map((shape) => (
+                    <button
+                      key={shape.id}
+                      type="button"
+                      className={`cg-shape-mini-btn ${selectedBespokeShape === shape.label ? 'active' : ''}`}
+                      onClick={() => setSelectedBespokeShape(shape.label)}
+                    >
+                      {shape.label}
+                    </button>
                   ))}
-                </ul>
+                </div>
+              </div>
+
+              <div style={{ marginTop: 28, display: 'flex', gap: 14, flexWrap: 'wrap' }}>
+                <Link to="/bespoke" className="cg-btn cg-btn-outline">
+                  EXPLORE BESPOKE STUDIO
+                </Link>
+                <a
+                  href={buildWhatsAppUrl({ type: 'consultation' })}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="cg-btn cg-btn-solid"
+                >
+                  <MessageCircle size={16} />
+                  BOOK A PERSONAL CONSULTATION
+                </a>
+              </div>
+            </div>
+
+            {/* Quick Enquiry Form Box */}
+            <div className="cg-form-box">
+              <h3 style={{ fontFamily: 'var(--serif)', fontSize: '1.5rem', margin: '0 0 16px', color: 'var(--burgundy)' }}>
+                Request Bespoke Consultation
+              </h3>
+              <form onSubmit={handleBespokeSubmit}>
+                <div style={{ marginBottom: 14 }}>
+                  <label style={{ display: 'block', fontSize: '0.72rem', letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: 6, fontWeight: 600 }}>
+                    Your Name *
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    style={{ width: '100%', padding: '12px 14px', border: '1px solid var(--line)', boxSizing: 'border-box' }}
+                    placeholder="e.g. Radhika Verma"
+                    value={bespokeName}
+                    onChange={(e) => setBespokeName(e.target.value)}
+                  />
+                </div>
+
+                <div style={{ marginBottom: 14 }}>
+                  <label style={{ display: 'block', fontSize: '0.72rem', letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: 6, fontWeight: 600 }}>
+                    WhatsApp / Phone Number *
+                  </label>
+                  <input
+                    type="tel"
+                    required
+                    style={{ width: '100%', padding: '12px 14px', border: '1px solid var(--line)', boxSizing: 'border-box' }}
+                    placeholder="+91 98765 43210"
+                    value={bespokePhone}
+                    onChange={(e) => setBespokePhone(e.target.value)}
+                  />
+                </div>
+
+                <div style={{ marginBottom: 18 }}>
+                  <label style={{ display: 'block', fontSize: '0.72rem', letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: 6, fontWeight: 600 }}>
+                    Jewellery Preference
+                  </label>
+                  <select
+                    style={{ width: '100%', padding: '12px 14px', border: '1px solid var(--line)', boxSizing: 'border-box' }}
+                    value={bespokePreference}
+                    onChange={(e) => setBespokePreference(e.target.value)}
+                  >
+                    <option value="Solitaire Engagement Ring">Solitaire Engagement Ring</option>
+                    <option value="Cocktail Ring">Cocktail Ring</option>
+                    <option value="Necklace or Choker">Necklace or Choker</option>
+                    <option value="Tennis Bracelet">Tennis Bracelet</option>
+                    <option value="Chandelier or Drop Earrings">Chandelier or Drop Earrings</option>
+                  </select>
+                </div>
+
+                <button type="submit" className="cg-btn cg-btn-whatsapp" style={{ width: '100%' }}>
+                  <MessageCircle size={16} />
+                  Connect On WhatsApp
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ============================================================
+          PART 2: SECTION 10 — WHY CARATS BY GRACE?
+          ============================================================ */}
+      <section className="cg-section" style={{ background: '#FAF6F1', borderTop: '1px solid var(--line)' }}>
+        <div className="cg-wrap">
+          <div style={{ textAlign: 'center', maxWidth: 640, margin: '0 auto' }}>
+            <span className="cg-eyebrow">The Atelier Distinction</span>
+            <h2 className="cg-display" style={{ fontSize: 'clamp(2rem, 3.8vw, 3rem)' }}>
+              Why Carats by Grace?
+            </h2>
+          </div>
+
+          <div className="cg-why-grid">
+            <div className="cg-why-card">
+              <div className="cg-why-icon"><Award size={22} /></div>
+              <h3 className="cg-why-title">IGI CERTIFIED DIAMONDS</h3>
+              <p className="cg-why-desc">Independently documented with microscopic laser inscription.</p>
+            </div>
+
+            <div className="cg-why-card">
+              <div className="cg-why-icon"><Sparkles size={22} /></div>
+              <h3 className="cg-why-title">EXCEPTIONAL CRAFTSMANSHIP</h3>
+              <p className="cg-why-desc">Hand-finished in solid 18K gold and 950 platinum.</p>
+            </div>
+
+            <div className="cg-why-card">
+              <div className="cg-why-icon"><Gem size={22} /></div>
+              <h3 className="cg-why-title">DISTINCTIVE DESIGNS</h3>
+              <p className="cg-why-desc">Art-deco and modern silhouettes made to stand apart.</p>
+            </div>
+
+            <div className="cg-why-card">
+              <div className="cg-why-icon"><Compass size={22} /></div>
+              <h3 className="cg-why-title">BESPOKE CUSTOMISATION</h3>
+              <p className="cg-why-desc">Tailored around your individual proportions and vision.</p>
+            </div>
+
+            <div className="cg-why-card">
+              <div className="cg-why-icon"><ShieldCheck size={22} /></div>
+              <h3 className="cg-why-title">PERSONAL CONSULTATIONS</h3>
+              <p className="cg-why-desc">Private viewings in our Mahanagar, Lucknow salon.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ============================================================
+          PART 2: SECTION 11 — IGI CERTIFICATION & QUALITY ASSURANCE
+          ============================================================ */}
+      <section className="cg-section" style={{ background: 'var(--white)' }}>
+        <div className="cg-wrap">
+          <div style={{ display: 'grid', gridTemplateColumns: '1.1fr 0.9fr', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
+            <div>
+              <span className="cg-eyebrow">
+                <ShieldCheck size={14} /> Certified Authenticity
+              </span>
+              <h2 className="cg-display" style={{ fontSize: 'clamp(2.2rem, 4vw, 3.4rem)' }}>
+                BRILLIANCE, BACKED BY CERTIFICATION.
+              </h2>
+              <p style={{ fontSize: '1rem', lineHeight: 1.8, color: '#4A3E3D' }}>
+                Every centre stone grown diamond in our collection is
+                independently certified by the International Gemological
+                Institute (IGI). Our gemologists ensure precision evaluation of
+                Cut, Colour, Clarity, and Carat weight, giving you complete
+                transparency.
+              </p>
+
+              <div style={{ margin: '24px 0', display: 'flex', flexDirection: 'column', gap: 12 }}>
+                <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+                  <CheckCircle2 size={18} color="var(--gold)" />
+                  <span style={{ fontSize: '0.92rem' }}>100% Type IIa Optical Purity</span>
+                </div>
+                <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+                  <CheckCircle2 size={18} color="var(--gold)" />
+                  <span style={{ fontSize: '0.92rem' }}>Unique Girdle Laser Inscription</span>
+                </div>
+                <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+                  <CheckCircle2 size={18} color="var(--gold)" />
+                  <span style={{ fontSize: '0.92rem' }}>Zero Conflict · Responsible Modern Origin</span>
+                </div>
+              </div>
+
+              <Link to="/grown-diamonds" className="cg-btn cg-btn-solid">
+                KNOW YOUR DIAMOND
+                <ArrowRight size={16} />
+              </Link>
+            </div>
+
+            <div style={{ background: 'var(--ivory)', border: '1px solid var(--line)', padding: 32, borderRadius: 2, textAlign: 'center' }}>
+              <span style={{ display: 'inline-block', padding: '6px 16px', background: 'var(--burgundy)', color: '#FFF', fontSize: '0.72rem', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: 18 }}>
+                Independent IGI Laboratory Report
+              </span>
+              <h4 style={{ fontFamily: 'var(--serif)', fontSize: '1.4rem', margin: '0 0 10px' }}>
+                Verified Diamond Documentation
+              </h4>
+              <p style={{ fontSize: '0.85rem', color: 'var(--muted)', margin: '0 0 20px' }}>
+                Every diamond is delivered with authentic grading documentation.
+              </p>
+              <img
+                src="/assets/categories/cat_pendants.webp"
+                alt="Diamond Inspection"
+                style={{ width: '100%', height: 220, objectFit: 'cover', borderRadius: 2 }}
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ============================================================
+          PART 2: SECTION 12 — ABOUT US / BRAND STORY
+          ============================================================ */}
+      <section className="cg-section" style={{ background: 'var(--burgundy)', color: 'var(--ivory)' }}>
+        <div className="cg-wrap">
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'clamp(40px, 6vw, 84px)', alignItems: 'center' }}>
+            <div style={{ borderRadius: 2, overflow: 'hidden', boxShadow: '0 20px 50px rgba(0,0,0,0.3)' }}>
+              <img
+                src="/assets/model1/m1_8446_final.webp"
+                alt="Carats by Grace Craftsmanship and Founders"
+                loading="lazy"
+              />
+            </div>
+
+            <div>
+              <span className="cg-eyebrow cg-eyebrow-light">
+                <Sparkles size={14} /> The Brand Philosophy
+              </span>
+              <h2 className="cg-display cg-display-light" style={{ fontSize: 'clamp(2.2rem, 4.2vw, 3.4rem)' }}>
+                WHERE EVERY DIAMOND FINDS ITS STORY.
+              </h2>
+              <p style={{ color: 'rgba(250, 246, 241, 0.88)', lineHeight: 1.8, fontSize: '1rem', marginBottom: 18 }}>
+                Carats by Grace was born from a shared vision of bringing a fresh
+                perspective to the world of fine jewellery — one that celebrates
+                grown diamonds, distinctive design and the beauty of
+                individuality.
+              </p>
+              <p style={{ color: 'rgba(250, 246, 241, 0.88)', lineHeight: 1.8, fontSize: '1rem', marginBottom: 28 }}>
+                Founded by Nishi and Prateek, we create more than jewellery; we
+                create an invitation to celebrate your own radiance without
+                convention.
+              </p>
+              <Link to="/about" className="cg-btn cg-btn-ghost-light">
+                READ OUR STORY
+                <ArrowRight size={16} />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ============================================================
+          PART 2: SECTION 13 — SHOWROOM EXPERIENCE
+          ============================================================ */}
+      <section className="cg-section" style={{ background: 'var(--white)' }}>
+        <div className="cg-wrap">
+          <div className="cg-showroom-grid">
+            <div className="cg-showroom-card">
+              <span className="cg-eyebrow">
+                <MapPin size={14} /> Flagship Boutique
+              </span>
+              <h2 className="cg-display" style={{ fontSize: 'clamp(2.2rem, 4vw, 3.2rem)' }}>
+                EXPERIENCE THE BRILLIANCE.
+              </h2>
+              <p style={{ fontSize: '1.02rem', lineHeight: 1.75, color: '#4A3E3D', marginBottom: 24 }}>
+                Discover your next treasured piece at Carats by Grace,
+                Mahanagar, Lucknow.
+              </p>
+
+              <div style={{ marginBottom: 20 }}>
+                <strong style={{ display: 'block', fontSize: '0.8rem', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--muted)', marginBottom: 4 }}>
+                  Showroom Address
+                </strong>
+                <p style={{ margin: 0, fontSize: '0.96rem', color: 'var(--ink)' }}>
+                  {SHOWROOM_ADDRESS}
+                </p>
+              </div>
+
+              <div style={{ marginBottom: 20 }}>
+                <strong style={{ display: 'block', fontSize: '0.8rem', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--muted)', marginBottom: 4 }}>
+                  Telephone & Enquiries
+                </strong>
+                <p style={{ margin: 0, fontSize: '0.96rem', color: 'var(--ink)' }}>
+                  <a href={`tel:${SHOWROOM_PHONE.replace(/\s+/g, '')}`} style={{ color: 'var(--burgundy)', textDecoration: 'underline' }}>
+                    {SHOWROOM_PHONE}
+                  </a>
+                </p>
+              </div>
+
+              <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginTop: 28 }}>
+                <a
+                  href={GOOGLE_MAPS_LINK}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="cg-btn cg-btn-outline"
+                >
+                  <ExternalLink size={15} />
+                  GET DIRECTIONS
+                </a>
+                <a
+                  href={buildWhatsAppUrl({ type: 'consultation' })}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="cg-btn cg-btn-solid"
+                >
+                  <MessageCircle size={15} />
+                  BOOK A VISIT
+                </a>
+              </div>
+            </div>
+
+            <div style={{ borderRadius: 2, overflow: 'hidden', boxShadow: '0 16px 40px rgba(0,0,0,0.1)' }}>
+              <img
+                src="/assets/model2/cg_jewellers8593.webp"
+                alt="Carats by Grace Mahanagar Lucknow Atelier"
+                loading="lazy"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ============================================================
+          PART 2: SECTION 14 — TESTIMONIALS
+          ============================================================ */}
+      <section className="cg-section" style={{ background: '#FAF6F1', borderTop: '1px solid var(--line)' }}>
+        <div className="cg-wrap">
+          <div style={{ textAlign: 'center', maxWidth: 640, margin: '0 auto' }}>
+            <span className="cg-eyebrow">Client Reflections</span>
+            <h2 className="cg-display" style={{ fontSize: 'clamp(2rem, 3.8vw, 3rem)' }}>
+              Voices of Grace
+            </h2>
+          </div>
+
+          <div className="cg-testi-grid">
+            {TESTIMONIALS.slice(0, 3).map((t, idx) => (
+              <div key={idx} className="cg-testi-card">
+                <div style={{ display: 'flex', gap: 4, color: 'var(--gold)', marginBottom: 14 }}>
+                  {[...Array(t.rating)].map((_, i) => (
+                    <Star key={i} size={15} fill="currentColor" />
+                  ))}
+                </div>
+                <p className="cg-testi-quote">"{t.quote}"</p>
+                <div>
+                  <strong style={{ display: 'block', fontSize: '0.92rem', color: 'var(--ink)' }}>{t.name}</strong>
+                  <span style={{ fontSize: '0.78rem', color: 'var(--muted)' }}>{t.city} · {t.piece}</span>
+                </div>
               </div>
             ))}
           </div>
         </div>
-        <div className="cg-footer__bottom">
-          <span>© {new Date().getFullYear()} Carats by Grace. All rights reserved.</span>
-          <div className="cg-footer__credential" aria-label="Atelier Credentials">
-            Private Salon Viewing by Appointment · IGI Certified Lab-Grown Diamonds
+      </section>
+
+      {/* ============================================================
+          PART 2: SECTION 15 — INSTAGRAM INTEGRATION
+          ============================================================ */}
+      <section className="cg-section" style={{ background: 'var(--white)' }}>
+        <div className="cg-wrap">
+          <div style={{ textAlign: 'center', maxWidth: 640, margin: '0 auto' }}>
+            <span className="cg-eyebrow">@caratsbygrace</span>
+            <h2 className="cg-display" style={{ fontSize: 'clamp(2rem, 3.8vw, 3rem)' }}>
+              Follow The Story
+            </h2>
           </div>
-          <a className="cg-backtop" href="#top"
-            onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}>
-            <Icon name="arrowUp" size={14} /> Back to top
-          </a>
+
+          <div className="cg-insta-grid">
+            {[
+              '/assets/model1/m1_8201_final.webp',
+              '/assets/model2/m2_8124.webp',
+              '/assets/model1/m1_8306_final.webp',
+              '/assets/model2/cg_jewellers8471.webp',
+              '/assets/model1/m1_8424_final.webp',
+              '/assets/model2/m2_8090.webp',
+            ].map((imgSrc, idx) => (
+              <a
+                key={idx}
+                href={INSTAGRAM_LINK}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="cg-insta-item"
+              >
+                <img src={imgSrc} alt="Carats by Grace Instagram" loading="lazy" />
+              </a>
+            ))}
+          </div>
+
+          <div style={{ textAlign: 'center', marginTop: 24 }}>
+            <a
+              href={INSTAGRAM_LINK}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="cg-btn cg-btn-outline"
+            >
+              FOLLOW US ON INSTAGRAM
+            </a>
+          </div>
         </div>
-      </div>
-    </footer>
-  );
-}
+      </section>
 
+      {/* ============================================================
+          FOOTER (Part 5, Section 23 — No Ecommerce / No Online Payment)
+          ============================================================ */}
+      <footer style={{ background: '#17120F', color: 'var(--ivory)', padding: '64px 0 32px', borderTop: '1px solid #2B2120' }}>
+        <div className="cg-wrap">
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 36, marginBottom: 48 }}>
+            <div>
+              <BrandLogo variant="light" height={44} />
+              <p style={{ color: 'rgba(250, 246, 241, 0.75)', fontSize: '0.88rem', lineHeight: 1.7, marginTop: 16 }}>
+                Carats by Grace — Premium grown diamond fine jewellery atelier.
+                Mahanagar, Lucknow.
+              </p>
+            </div>
 
-/* ===========================================================================
-   PAGE
-=========================================================================== */
-export default function HomePage() {
-  useDocumentTitle('Handcrafted Fine Jewellery');
-  const [annVisible, setAnnVisible] = useState(true);
-  const { totalItems, toggleCart, addItem } = useCart();
-  const scrolled = useScrolled(80);
+            <div>
+              <h4 style={{ fontSize: '0.74rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--gold)', marginBottom: 16 }}>
+                Quick Navigation
+              </h4>
+              <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 10, fontSize: '0.86rem' }}>
+                <li><Link to="/about" style={{ color: 'rgba(250, 246, 241, 0.8)' }}>About Us</Link></li>
+                <li><Link to="/collections" style={{ color: 'rgba(250, 246, 241, 0.8)' }}>Collections</Link></li>
+                <li><Link to="/exclusive-designs" style={{ color: 'rgba(250, 246, 241, 0.8)' }}>Exclusive Designs</Link></li>
+                <li><Link to="/bespoke" style={{ color: 'rgba(250, 246, 241, 0.8)' }}>Bespoke Jewellery</Link></li>
+                <li><Link to="/grown-diamonds" style={{ color: 'rgba(250, 246, 241, 0.8)' }}>Grown Diamonds</Link></li>
+                <li><Link to="/contact" style={{ color: 'rgba(250, 246, 241, 0.8)' }}>Contact & Showroom</Link></li>
+              </ul>
+            </div>
 
-  useReveal();
+            <div>
+              <h4 style={{ fontSize: '0.74rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--gold)', marginBottom: 16 }}>
+                Showroom & Concierge
+              </h4>
+              <p style={{ fontSize: '0.86rem', color: 'rgba(250, 246, 241, 0.8)', lineHeight: 1.6, margin: '0 0 10px' }}>
+                {SHOWROOM_ADDRESS}
+              </p>
+              <p style={{ fontSize: '0.86rem', color: 'rgba(250, 246, 241, 0.8)', margin: '0 0 10px' }}>
+                Tel: <a href={`tel:${SHOWROOM_PHONE.replace(/\s+/g, '')}`} style={{ color: 'var(--gold)' }}>{SHOWROOM_PHONE}</a>
+              </p>
+              <p style={{ fontSize: '0.86rem', color: 'rgba(250, 246, 241, 0.8)', margin: '0 0 16px' }}>
+                Email: <a href="mailto:hello@caratsbygrace.com" style={{ color: 'var(--gold)' }}>hello@caratsbygrace.com</a>
+              </p>
+              <a
+                href={GOOGLE_MAPS_LINK}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ fontSize: '0.74rem', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--gold)' }}
+              >
+                View on Google Maps ↗
+              </a>
+            </div>
+          </div>
 
-  const handleAddToCart = useCallback((p) => {
-    addItem({
-      id: p.name.toLowerCase().replace(/\s+/g, '-'),
-      name: p.name,
-      price: p.price,
-      spec: p.spec,
-      image: p.img,
-      img: p.img,
-      qty: 1,
-    });
-  }, [addItem]);
-
-  return (
-    <>
-      {/* Inject tokens + styles once */}
-      <style>{BRAND_CSS}</style>
-
-      {/* Top anchor */}
-      <span id="top" />
-
-      {/* Top Header Wrapper: Announcement on top, Header directly beneath it (scrolls up naturally with page) */}
-      <div className="cg-header-wrapper">
-        {annVisible && <Announcement onDismiss={() => setAnnVisible(false)} />}
-        <Header cartCount={totalItems} onOpenCart={toggleCart} />
-      </div>
-
-      <main>
-        <Hero scrolled={scrolled} />
-        <Trust />
-        <Categories />
-        <CampaignSplit />
-        <BestSellers />
-        <Limited />
-        <Story />
-        <Craft />
-        <Bridal />
-        <Why />
-        <Testimonials />
-        <Instagram />
-        <Visit />
-        <FAQ />
-      </main>
-
-      <Footer />
-    </>
+          <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.1)', paddingTop: 24, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12, fontSize: '0.76rem', color: 'rgba(250, 246, 241, 0.6)' }}>
+            <span>© {new Date().getFullYear()} Carats by Grace. All rights reserved.</span>
+            <div style={{ display: 'flex', gap: 16 }}>
+              <Link to="/about" style={{ color: 'inherit' }}>Privacy Policy</Link>
+              <Link to="/about" style={{ color: 'inherit' }}>Terms of Service</Link>
+              <Link to="/admin" style={{ color: 'inherit' }}>Admin Portal</Link>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
   );
 }

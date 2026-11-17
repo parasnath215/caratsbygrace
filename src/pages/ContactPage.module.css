@@ -1,0 +1,191 @@
+/* src/pages/ContactPage.module.css */
+
+.page {
+  background-color: var(--white, #FFFFFF);
+  color: var(--ink, #17120F);
+  overflow-x: hidden;
+  font-family: var(--font-sans, "Jost", sans-serif);
+}
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding-inline: clamp(20px, 5vw, 64px);
+}
+
+.hero {
+  background: linear-gradient(180deg, #FBF8F4 0%, #FAF6F1 100%);
+  padding: clamp(60px, 8vw, 100px) 0 clamp(48px, 6vw, 80px);
+  text-align: center;
+  border-bottom: 1px solid var(--line, #E9E1D8);
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.72rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold, #C6A15B);
+  font-weight: 500;
+  margin-bottom: 16px;
+}
+
+.title {
+  font-family: var(--font-serif, "Cormorant Garamond", Georgia, serif);
+  font-size: clamp(2.4rem, 5vw, 4.2rem);
+  font-weight: 400;
+  line-height: 1.1;
+  color: var(--ink, #17120F);
+  margin: 0 0 20px;
+}
+
+.lede {
+  max-width: 720px;
+  margin: 0 auto;
+  font-size: clamp(1.05rem, 1.3vw, 1.2rem);
+  line-height: 1.8;
+  color: #3D3534;
+}
+
+/* Showroom Detail Grid */
+.showroomSection {
+  padding-block: clamp(64px, 8vw, 120px);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(40px, 7vw, 90px);
+  align-items: center;
+}
+
+.visualFrame {
+  position: relative;
+  aspect-ratio: 4/5;
+  overflow: hidden;
+  border-radius: 2px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
+  border: 1px solid var(--line, #E9E1D8);
+}
+
+.visualFrame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.infoCard {
+  background: var(--ivory, #FAF6F1);
+  border: 1px solid var(--line, #E9E1D8);
+  padding: clamp(28px, 4vw, 44px);
+  border-radius: 2px;
+}
+
+.infoCard h2 {
+  font-family: var(--font-serif, "Cormorant Garamond", Georgia, serif);
+  font-size: clamp(1.8rem, 3.2vw, 2.6rem);
+  font-weight: 400;
+  margin: 0 0 24px;
+}
+
+.infoItem {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.infoIcon {
+  color: var(--gold, #C6A15B);
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+.infoLabel {
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted, #7A6F70);
+  margin-bottom: 4px;
+  display: block;
+}
+
+.infoValue {
+  font-size: 1rem;
+  color: var(--ink, #17120F);
+  line-height: 1.5;
+  margin: 0;
+  font-weight: 500;
+}
+
+.infoValue a {
+  color: var(--burgundy, #5D0A24);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.actionRow {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 32px;
+}
+
+.btnPrimary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 0 26px;
+  background: var(--burgundy, #5D0A24);
+  color: var(--ivory, #FAF6F1);
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 600;
+  border-radius: 1px;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+.btnPrimary:hover {
+  background: #3D0617;
+}
+
+.btnWhatsApp {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 0 26px;
+  background: #25D366;
+  color: #FFFFFF;
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 600;
+  border-radius: 1px;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+.btnWhatsApp:hover {
+  background: #1EBE5D;
+}
+
+.mapEmbed {
+  margin-top: clamp(48px, 6vw, 80px);
+  border-radius: 2px;
+  overflow: hidden;
+  border: 1px solid var(--line, #E9E1D8);
+  height: 420px;
+}
+
+@media (max-width: 860px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

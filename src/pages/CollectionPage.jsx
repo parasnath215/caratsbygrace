@@ -10,6 +10,7 @@ import { useParams, Link, useSearchParams } from "react-router-dom";
 import { useUI } from "../context/UIContext";
 import { useWishlist } from "../context/WishlistContext";
 import { useDocumentTitle } from "../hooks/useDocumentTitle";
+import { getStoredProducts } from "../data/products";
 
 /* ===========================================================================
    1. SHARED TOKENS (subset — full set lives in global.css)
@@ -481,8 +482,52 @@ function ProductCard({ p, index, saved, onToggleSave, onEnquire }) {
       <div className="cp-card__media">
         <img className="cp-card__img--main" src={p.img}
           alt={`${p.name} — Carats by Grace`} loading="lazy" decoding="async" />
-        <img className="cp-card__img--hover" src={p.hover}
+        <img className="cp-card__img--hover" src={p.hover || p.img}
           alt="" aria-hidden="true" loading="lazy" decoding="async" />
+        
+        {/* Exclusivity Badges */}
+        {p.isOneOfOne && (
+          <span
+            style={{
+              position: 'absolute',
+              top: 10,
+              left: 10,
+              zIndex: 3,
+              background: 'var(--burgundy)',
+              color: '#FAF6F1',
+              fontSize: '0.58rem',
+              letterSpacing: '0.14em',
+              textTransform: 'uppercase',
+              fontWeight: 600,
+              padding: '3px 7px',
+              borderRadius: '2px',
+            }}
+          >
+            One of One
+          </span>
+        )}
+        {p.status === 'sold' && (
+          <span
+            style={{
+              position: 'absolute',
+              top: p.isOneOfOne ? 34 : 10,
+              left: 10,
+              zIndex: 3,
+              background: '#25030E',
+              color: '#E0C88F',
+              fontSize: '0.56rem',
+              letterSpacing: '0.14em',
+              textTransform: 'uppercase',
+              fontWeight: 600,
+              padding: '3px 7px',
+              borderRadius: '2px',
+              border: '1px solid #E0C88F',
+            }}
+          >
+            Sold
+          </span>
+        )}
+
         {/* Whole-image click target so tapping the photo opens the piece */}
         <button
           className="cp-card__cover"
@@ -501,7 +546,7 @@ function ProductCard({ p, index, saved, onToggleSave, onEnquire }) {
           <Icon name="heart" size={16} />
         </button>
         <button className="cp-card__add" type="button" onClick={() => onEnquire(p)}>
-          Enquire <span aria-hidden="true">✦</span>
+          {p.status === 'sold' ? 'Inquire ✦' : 'Enquire ✦'}
         </button>
       </div>
       <div className="cp-card__body" onClick={() => onEnquire(p)} style={{ cursor: "pointer" }}>
@@ -636,10 +681,54 @@ export default function CollectionPage() {
   // reset pagination whenever filters/sort change
   useEffect(() => { setVisible(PAGE_SIZE); }, [categories, metals, occasions, priceBand, sort]);
 
+  // Combined live catalog from dynamic CMS and base items
+  const allCatalog = useMemo(() => {
+    const stored = getStoredProducts();
+    const storedMapped = stored.map((p) => {
+      const catCap = p.category
+        ? p.category.charAt(0).toUpperCase() + p.category.slice(1).toLowerCase()
+        : 'Rings';
+      return {
+        id: p.id,
+        slug: p.slug,
+        name: p.name,
+        cat: catCap,
+        metal: p.metal || '18K Gold',
+        occ: p.occ || ['Everyday', 'Gifting', 'Bridal'],
+        price: p.price || 85000,
+        spec: p.specs || `${p.metal || '18K Gold'} · ${p.caratWeight || ''}`,
+        img: p.images?.[0] || '/assets/model1/m1_8252_final.webp',
+        hover: p.images?.[1] || p.images?.[0] || '/assets/model1/m1_8253_final.webp',
+        isOneOfOne: Boolean(p.isOneOfOne || p.collection === 'exclusive-designs'),
+        status: p.status || 'available',
+        diamondShape: p.diamondShape,
+        caratWeight: p.caratWeight,
+        clarity: p.clarity,
+        cut: p.cut,
+        colour: p.colour,
+        certification: p.certification,
+      };
+    });
+
+    const seen = new Set();
+    const combined = [];
+    for (const item of storedMapped) {
+      seen.add(item.id);
+      seen.add(item.name.toLowerCase());
+      combined.push(item);
+    }
+    for (const item of BASE_PRODUCTS) {
+      if (!seen.has(item.id) && !seen.has(item.name.toLowerCase())) {
+        combined.push(item);
+      }
+    }
+    return combined;
+  }, []);
+
   // ---- derived list
   const filtered = useMemo(() => {
     const band = PRICE_BANDS.find((b) => b.key === priceBand);
-    let list = BASE_PRODUCTS.filter((p) => {
+    let list = allCatalog.filter((p) => {
       if (categories.length && !categories.includes(p.cat)) return false;
       if (metals.length && !metals.includes(p.metal)) return false;
       if (occasions.length && !occasions.some((o) => p.occ.includes(o))) return false;
@@ -657,7 +746,7 @@ export default function CollectionPage() {
       default: break; // featured
     }
     return list;
-  }, [categories, metals, occasions, priceBand, sort, searchQuery]);
+  }, [allCatalog, categories, metals, occasions, priceBand, sort, searchQuery]);
 
   const total = filtered.length;
   const shown = filtered.slice(0, visible);
