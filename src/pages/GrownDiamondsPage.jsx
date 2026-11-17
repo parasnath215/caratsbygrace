@@ -3,7 +3,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Sparkles, Award, ShieldCheck, CheckCircle2, ArrowRight } from 'lucide-react';
+import { Award, ShieldCheck, CheckCircle2, ArrowRight } from 'lucide-react';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 import styles from './GrownDiamondsPage.module.css';
 
@@ -84,7 +84,7 @@ export default function GrownDiamondsPage() {
       <section className={styles.hero}>
         <div className={styles.container}>
           <span className={styles.eyebrow}>
-            <Sparkles size={14} /> The Science of Brilliance
+            The Science of Brilliance
           </span>
           <h1 className={styles.title}>
             THE SCIENCE OF BRILLIANCE.<br />

@@ -4,7 +4,7 @@
 
 import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { X, MessageCircle, ShieldCheck, Award, Sparkles, Lock, ArrowRight } from 'lucide-react';
+import { X, MessageCircle, ShieldCheck, Award, Lock, ArrowRight } from 'lucide-react';
 import { buildWhatsAppUrl } from '../../utils/whatsapp';
 
 const MODAL_CSS = `
@@ -354,16 +354,15 @@ export default function ProductQuickViewModal({ product, isOpen, onClose }) {
               <div className="pq-img-wrap">
                 <img src={imgSrc} alt={product.name} />
                 <div className="pq-badge-wrap">
-                  {isOneOfOne && (
-                    <span className="pq-badge">
-                      <Sparkles size={10} />
-                      One of One
+                  {(isOneOfOne || product.isExclusiveCollection || product.collection === 'the-exclusive-collection') && (
+                    <span className="pq-badge" style={{ background: 'var(--pq-burgundy)', color: '#FAF6F1', border: '1px solid rgba(198, 161, 91, 0.45)' }}>
+                      Exclusive · 1-of-1
                     </span>
                   )}
                   {isSold && (
-                    <span className="pq-badge pq-badge--sold">
+                    <span className="pq-badge pq-badge--sold" style={{ background: '#25030E', color: '#E0C88F', border: '1px solid #E0C88F' }}>
                       <Lock size={10} />
-                      Sold
+                      Found Its Home
                     </span>
                   )}
                 </div>

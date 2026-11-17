@@ -1,35 +1,50 @@
 // src/components/ui/BrandLogo.jsx
 // Carats by Grace — Luxury Brand Logo Component
-// Renders the official brand logo assets:
-// 1. variant="light" (or "white"): Uses /logo-white-transparent.png on dark backgrounds (Hero, Footer, dark overlays).
-// 2. variant="brand-bg": Uses /logo-brand-bg.jpg with the brand burgundy background.
-// 3. variant="dark": Uses /logo-dark-transparent.png (transparent burgundy with gold stars) on white/light backgrounds.
+// Built using official vector assets from src/components/ui (Asset 1 through 8):
+// - 'dark' | 'horizontal-dark': Official burgundy horizontal lockup for light/white backgrounds (Asset 3)
+// - 'light' | 'white' | 'horizontal-light': Pure white horizontal lockup for dark/burgundy backgrounds (Asset 4)
+// - 'stacked-dark': Stacked mark + wordmark in burgundy for splash/loading/editorial (Asset 1)
+// - 'stacked-light': Stacked mark + wordmark in white for dark hero/editorial (Asset 2)
+// - 'compact-dark': Compact lockup in burgundy (Asset 5)
+// - 'compact-light': Compact lockup in white (Asset 6)
+// - 'mark-dark': Standalone emblem / mark in burgundy (Asset 7)
+// - 'mark-light': Standalone emblem / mark in white (Asset 8)
 
 import React from 'react';
 
+const LOGO_MAP = {
+  // Horizontal wide lockups (Header, Navbar, Footer)
+  'dark': '/brand/logo-horizontal-dark.png',
+  'horizontal-dark': '/brand/logo-horizontal-dark.png',
+  'light': '/brand/logo-horizontal-light.png',
+  'white': '/brand/logo-horizontal-light.png',
+  'horizontal-light': '/brand/logo-horizontal-light.png',
+
+  // Stacked centered lockups (Loading screen, Splash, About, Modals)
+  'stacked-dark': '/brand/logo-stacked-dark.png',
+  'stacked-light': '/brand/logo-stacked-light.png',
+
+  // Compact horizontal lockups (Mobile nav, compact bars)
+  'compact-dark': '/brand/logo-compact-dark.png',
+  'compact-light': '/brand/logo-compact-light.png',
+
+  // Standalone marks / emblems (Favicon, seals, stamps, avatars)
+  'mark-dark': '/brand/logo-mark-dark.png',
+  'mark-light': '/brand/logo-mark-light.png',
+
+  // Legacy badge
+  'brand-bg': '/logo-brand-bg.jpg',
+};
+
 export default function BrandLogo({
-  variant = 'dark', // 'light' | 'dark' | 'brand-bg'
+  variant = 'dark',
   className = '',
   height = 46,
   alt = 'Carats by Grace — Handcrafted Fine Jewellery',
   style = {},
 }) {
-  // Determine asset source based on surface contrast
-  let src = '/logo-dark-transparent.png';
-  let isBadge = false;
-
-  if (variant === 'light' || variant === 'white') {
-    // Strictly for dark/wine backgrounds (Hero video header, Footer, dark drawer)
-    src = '/logo-white-transparent.png';
-  } else if (variant === 'brand-bg') {
-    // Logo with brand colour background
-    src = '/logo-brand-bg.jpg';
-    isBadge = true;
-  } else {
-    // For white / light backgrounds:
-    // Uses the dark burgundy transparent version to guarantee crisp visibility on white backgrounds
-    src = '/logo-dark-transparent.png';
-  }
+  const src = LOGO_MAP[variant] || LOGO_MAP['dark'];
+  const isBadge = variant === 'brand-bg';
 
   return (
     <div

@@ -418,7 +418,7 @@ export default function WishlistPage({ onAddToCart, onRemoveFromWishlist }) {
       <div className="wl-wrap wl-body">
         {count === 0 ? (
           <div className="wl-empty">
-            <div className="wl-empty__spark" aria-hidden="true">✦ ✦ ✦</div>
+            <img src="/brand/logo-mark-dark.png" alt="" style={{ width: 28, height: 28, margin: '0 auto 12px', display: 'block', opacity: 0.6 }} />
             <h3>Nothing saved, yet.</h3>
             <p>When you find something worth returning to, it lives here.</p>
             <Link className="wl-btn wl-btn--solid" to="/collections"

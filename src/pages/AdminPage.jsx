@@ -11,7 +11,6 @@ import {
   RotateCcw,
   Check,
   X,
-  Sparkles,
 } from 'lucide-react';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 import {
@@ -239,7 +238,7 @@ export default function AdminPage() {
                             fontWeight: 600,
                           }}
                         >
-                          {p.isOneOfOne ? 'ONE OF ONE ✦' : 'Standard'}
+                          {p.isOneOfOne ? 'ONE OF ONE' : 'Standard'}
                         </button>
                       </td>
                       <td>

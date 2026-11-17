@@ -1,0 +1,704 @@
+/* src/components/home/InstagramReelsSection.module.css */
+/* Carats by Grace — Live Instagram Reels Section */
+
+.section {
+  background: var(--white, #ffffff);
+  padding: clamp(64px, 8vw, 108px) 0;
+  border-top: 1px solid var(--line, #e7ded6);
+  position: relative;
+  overflow: hidden;
+}
+
+.container {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 clamp(16px, 4vw, 48px);
+  box-sizing: border-box;
+}
+
+/* Header */
+.header {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto clamp(32px, 4vw, 48px);
+  position: relative;
+}
+
+.headerTop {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 14px;
+}
+
+.handleBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(91, 30, 49, 0.06);
+  border: 1px solid rgba(91, 30, 49, 0.16);
+  color: var(--burgundy, #5b1e31);
+  font-family: var(--font-body, system-ui, -apple-system, sans-serif);
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+.handleBadge:hover {
+  background: var(--burgundy, #5b1e31);
+  color: #ffffff;
+  border-color: var(--burgundy, #5b1e31);
+  transform: translateY(-1px);
+}
+
+.title {
+  font-family: var(--font-display, "Playfair Display", Georgia, serif);
+  font-size: clamp(2rem, 3.8vw, 3rem);
+  font-weight: 400;
+  color: var(--ink, #1f1a18);
+  margin: 0 0 14px;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+}
+
+.subtitle {
+  font-family: var(--font-body, system-ui, -apple-system, sans-serif);
+  font-size: clamp(0.92rem, 1.2vw, 1.02rem);
+  color: var(--muted, #6f6560);
+  line-height: 1.65;
+  margin: 0 auto;
+}
+
+/* Carousel Prev/Next Buttons */
+.carouselControls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.carouselArrow {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid var(--line, #e7ded6);
+  background: var(--white, #ffffff);
+  color: var(--ink, #1f1a18);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.carouselArrow:hover {
+  background: var(--burgundy, #5b1e31);
+  border-color: var(--burgundy, #5b1e31);
+  color: #ffffff;
+  transform: scale(1.05);
+}
+
+/* Toast */
+.copiedToast {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(31, 26, 24, 0.95);
+  color: #ffffff;
+  font-size: 0.82rem;
+  padding: 10px 20px;
+  border-radius: 999px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  z-index: 1000;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 8px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+/* Reels Grid / Horizontal Scroll Track */
+.reelsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(16px, 2vw, 24px);
+  margin-bottom: clamp(36px, 5vw, 52px);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 8px;
+}
+
+/* Hide scrollbar for clean luxury presentation */
+.reelsGrid::-webkit-scrollbar {
+  height: 4px;
+}
+.reelsGrid::-webkit-scrollbar-thumb {
+  background: rgba(91, 30, 49, 0.2);
+  border-radius: 4px;
+}
+
+/* Individual Reel Card */
+.reelCard {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #17120f;
+  box-shadow: 0 10px 28px -6px rgba(31, 26, 24, 0.14);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+  border: 1px solid rgba(231, 222, 214, 0.7);
+  scroll-snap-align: start;
+}
+
+.reelCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 40px -8px rgba(91, 30, 49, 0.22);
+  border-color: rgba(91, 30, 49, 0.35);
+}
+
+.originalReelCard {
+  border: 1.5px solid rgba(91, 30, 49, 0.45);
+  box-shadow: 0 12px 32px -6px rgba(91, 30, 49, 0.22);
+}
+
+.originalReelCard:hover {
+  border-color: var(--burgundy, #5b1e31);
+}
+
+.reelVideoWrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  cursor: pointer;
+  overflow: hidden;
+  background: #120e0d;
+}
+
+.reelVideo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reelCard:hover .reelVideo {
+  transform: scale(1.025);
+}
+
+/* Gradient Overlay for text contrast */
+.videoOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(18, 14, 13, 0.5) 0%,
+    rgba(18, 14, 13, 0.05) 28%,
+    rgba(18, 14, 13, 0.35) 60%,
+    rgba(18, 14, 13, 0.92) 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Top Bar: Badge + Sound Toggle */
+.reelTopBar {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  right: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.reelBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(23, 18, 15, 0.72);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #ffffff;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-family: var(--font-body, system-ui, -apple-system, sans-serif);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  pointer-events: auto;
+}
+
+.originalBadge {
+  background: rgba(91, 30, 49, 0.88);
+  border-color: rgba(255, 255, 255, 0.35);
+  color: #ffffff;
+}
+
+.livePulseDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ff3b30;
+  box-shadow: 0 0 6px #ff3b30;
+  animation: pulseDot 2s infinite ease-in-out;
+}
+
+@keyframes pulseDot {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.35;
+    transform: scale(0.85);
+  }
+}
+
+.soundBtn {
+  pointer-events: auto;
+  min-width: 40px;
+  min-height: 40px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(23, 18, 15, 0.72);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+.soundBtn:hover {
+  background: rgba(91, 30, 49, 0.9);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: scale(1.08);
+}
+
+/* Center Paused Indicator */
+.pausedIndicator {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: rgba(23, 18, 15, 0.8);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  pointer-events: none;
+  animation: popIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes popIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+/* Right-Side Authentic Reel Action Column */
+.reelActionBar {
+  position: absolute;
+  right: 12px;
+  bottom: 84px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.actionBtn {
+  pointer-events: auto;
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.2s ease, color 0.2s ease;
+  text-decoration: none;
+}
+
+.actionBtn:hover {
+  transform: scale(1.15);
+  color: #f7d9a0;
+}
+
+.liked {
+  color: #ff3b30 !important;
+}
+
+.actionCount {
+  font-family: var(--font-body, system-ui, -apple-system, sans-serif);
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+}
+
+.instaLogoBtn {
+  background: rgba(23, 18, 15, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* Bottom Bar: Profile, Title, Caption & Audio */
+.reelBottomBar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 56px; /* leave room for right action bar */
+  padding: 16px 14px 18px;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  pointer-events: none;
+}
+
+.reelUserRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  pointer-events: auto;
+}
+
+.avatarMini {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--burgundy, #5b1e31);
+  border: 1.5px solid #ffffff;
+  color: #ffffff;
+  font-size: 0.6rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 0.05em;
+}
+
+.usernameLink {
+  color: #ffffff;
+  font-family: var(--font-body, system-ui, -apple-system, sans-serif);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-decoration: none;
+  letter-spacing: 0.02em;
+}
+
+.usernameLink:hover {
+  text-decoration: underline;
+}
+
+.followPill {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  color: #ffffff;
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.followPill:hover {
+  background: #ffffff;
+  color: var(--ink, #1f1a18);
+}
+
+.reelTitle {
+  font-family: var(--font-display, "Playfair Display", Georgia, serif);
+  font-size: 0.98rem;
+  font-weight: 500;
+  color: #ffffff;
+  margin: 0;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.reelCaption {
+  font-family: var(--font-body, system-ui, -apple-system, sans-serif);
+  font-size: 0.76rem;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.4;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.audioTickerRow {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.68rem;
+  font-family: var(--font-body, system-ui, -apple-system, sans-serif);
+  margin-top: 2px;
+}
+
+.musicIcon {
+  flex-shrink: 0;
+  animation: rotateIcon 4s linear infinite;
+}
+
+@keyframes rotateIcon {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.audioTickerText {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 180px;
+}
+
+.watchOnInstaLink {
+  pointer-events: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  align-self: flex-start;
+  margin-top: 4px;
+  font-family: var(--font-body, system-ui, -apple-system, sans-serif);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: #ffffff;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+  padding-bottom: 2px;
+  transition: all 0.2s ease;
+}
+
+.watchOnInstaLink:hover {
+  color: #f7d9a0;
+  border-bottom-color: #f7d9a0;
+}
+
+/* Official Instagram Embed Card */
+.embedCard {
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+}
+
+.embedHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  background: #ffffff;
+  border-bottom: 1px solid var(--line, #e7ded6);
+}
+
+.embedDirectLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--burgundy, #5b1e31);
+  text-decoration: none;
+}
+
+.embedDirectLink:hover {
+  text-decoration: underline;
+}
+
+.iframeWrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  background: #faf6f1;
+}
+
+.instagramIframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
+/* Section Global Action Row */
+.actionsRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: clamp(28px, 4vw, 44px);
+}
+
+.followBtnPrimary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 28px;
+  min-height: 48px;
+  border-radius: 4px;
+  background: var(--burgundy, #5b1e31);
+  border: 1px solid var(--burgundy, #5b1e31);
+  color: #ffffff;
+  font-family: var(--font-body, system-ui, -apple-system, sans-serif);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 14px rgba(91, 30, 49, 0.2);
+}
+
+.followBtnPrimary:hover {
+  background: #461424;
+  border-color: #461424;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(91, 30, 49, 0.3);
+}
+
+.followBtnOutline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 24px;
+  min-height: 48px;
+  border-radius: 4px;
+  background: transparent;
+  border: 1px solid var(--ink, #1f1a18);
+  color: var(--ink, #1f1a18);
+  font-family: var(--font-body, system-ui, -apple-system, sans-serif);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+.followBtnOutline:hover {
+  background: var(--ink, #1f1a18);
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+/* Responsive Media Queries */
+@media (max-width: 1180px) {
+  .reelsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+}
+
+@media (max-width: 640px) {
+  .reelsGrid {
+    grid-template-columns: repeat(4, 280px);
+    overflow-x: auto;
+    gap: 14px;
+    padding: 0 4px 16px;
+    scroll-padding: 0 16px;
+  }
+
+  .container {
+    padding: 0 16px;
+  }
+
+  .reelTitle {
+    font-size: 0.92rem;
+  }
+
+  .reelCaption {
+    font-size: 0.72rem;
+  }
+
+  .reelBottomBar {
+    right: 48px;
+    padding: 12px;
+  }
+
+  .reelActionBar {
+    right: 8px;
+    bottom: 74px;
+    gap: 12px;
+  }
+
+  .followBtnPrimary,
+  .followBtnOutline {
+    width: 100%;
+    padding: 14px 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reelCard,
+  .reelVideo,
+  .handleBadge,
+  .followBtnPrimary,
+  .followBtnOutline,
+  .soundBtn,
+  .actionBtn,
+  .musicIcon,
+  .livePulseDot {
+    transition: none !important;
+    animation: none !important;
+  }
+}

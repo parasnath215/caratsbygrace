@@ -10,7 +10,6 @@ import {
   MessageCircle,
   ShieldCheck,
   Award,
-  Sparkles,
   MapPin,
   Calendar,
   CheckCircle2,
@@ -488,7 +487,12 @@ export default function ProductPage() {
   }, [product]);
 
   const saved = isWishlisted(product.name);
-  const isOneOfOne = Boolean(product.isOneOfOne || product.collection === 'exclusive-designs');
+  const isOneOfOne = Boolean(
+    product.isOneOfOne ||
+    product.collection === 'exclusive-designs' ||
+    product.isExclusiveCollection ||
+    product.collection === 'the-exclusive-collection'
+  );
   const isSold = product.status === 'sold';
 
   // Handle zoom cursor move
@@ -608,8 +612,7 @@ export default function ProductPage() {
           <div className="pd-badge-row">
             {isOneOfOne && (
               <span className="pd-badge pd-badge--one">
-                <Sparkles size={11} />
-                One of One
+                Exclusive · 1-of-1
               </span>
             )}
             {isSold ? (

@@ -3,7 +3,7 @@
 
 import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { MessageCircle, Sparkles, ShieldCheck } from 'lucide-react';
+import { MessageCircle, ShieldCheck } from 'lucide-react';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 import { getStoredProducts } from '../data/products';
 import { buildWhatsAppUrl } from '../utils/whatsapp';
@@ -34,7 +34,7 @@ export default function ExclusiveDesignsPage() {
       <section className={styles.hero}>
         <div className={styles.container}>
           <span className={styles.eyebrow}>
-            <Sparkles size={14} /> The Atelier Signature Edit
+            The Atelier Signature Edit
           </span>
           <h1 className={styles.heroTitle}>DESIGNS THAT NEVER REPEAT.</h1>
           <div className={styles.subheading}>

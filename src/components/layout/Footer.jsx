@@ -63,8 +63,6 @@ export default function Footer() {
                 <li><Link to="/exclusive-designs" className={styles.footerLink}>Designs That Never Repeat</Link></li>
                 <li><Link to="/bespoke" className={styles.footerLink}>Bespoke Jewellery Experience</Link></li>
                 <li><Link to="/grown-diamonds" className={styles.footerLink}>The Art of Grown Diamonds</Link></li>
-                <li><Link to="/grown-diamonds#4cs" className={styles.footerLink}>IGI Quality & 4Cs Guide</Link></li>
-                <li><Link to="/wishlist" className={styles.footerLink}>Saved Pieces</Link></li>
               </ul>
             </div>
 
@@ -80,12 +78,6 @@ export default function Footer() {
                   <Phone size={14} style={{ color: 'var(--gold)' }} />
                   <a href={`tel:${SHOWROOM_PHONE.replace(/\s+/g, '')}`} className={styles.footerLink}>
                     {SHOWROOM_PHONE}
-                  </a>
-                </li>
-                <li style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-                  <Mail size={14} style={{ color: 'var(--gold)' }} />
-                  <a href="mailto:hello@caratsbygrace.com" className={styles.footerLink}>
-                    hello@caratsbygrace.com
                   </a>
                 </li>
                 <li style={{ fontSize: '0.78rem', color: 'rgba(250, 246, 241, 0.65)', marginTop: 4 }}>

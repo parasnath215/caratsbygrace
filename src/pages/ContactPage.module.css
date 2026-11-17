@@ -161,8 +161,9 @@
   gap: 10px;
   min-height: 48px;
   padding: 0 26px;
-  background: #25D366;
+  background: linear-gradient(135deg, #133D2A 0%, #1A5238 100%);
   color: #FFFFFF;
+  border: 1px solid rgba(198, 161, 91, 0.6);
   font-size: 0.75rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -170,10 +171,14 @@
   border-radius: 1px;
   text-decoration: none;
   transition: all 0.25s ease;
+  box-shadow: 0 6px 20px rgba(19, 61, 42, 0.3);
 }
 
 .btnWhatsApp:hover {
-  background: #1EBE5D;
+  background: linear-gradient(135deg, #194D35 0%, #226445 100%);
+  border-color: var(--gold, #C6A15B);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 26px rgba(19, 61, 42, 0.45);
 }
 
 .mapEmbed {

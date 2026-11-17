@@ -6,7 +6,6 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
-  Sparkles,
   ShieldCheck,
   Award,
   Gem,
@@ -44,6 +43,8 @@ import {
   GOOGLE_MAPS_LINK,
   INSTAGRAM_LINK,
 } from '../utils/whatsapp';
+import ExclusiveAnnouncementSection from '../components/exclusive/ExclusiveAnnouncementSection';
+import InstagramReelsSection from '../components/home/InstagramReelsSection';
 
 /* ===========================================================================
    1. BRAND TOKENS & LUXURY EDITORIAL STYLES
@@ -99,10 +100,36 @@ const HOME_CSS = `
   box-shadow: 0 8px 24px rgba(93, 10, 36, 0.25);
 }
 .cg-btn-gold {
-  background: var(--gold); color: #17120F; border: 1px solid var(--gold);
+  background: linear-gradient(135deg, #C6A15B 0%, #E2C98F 50%, #B8934A 100%);
+  color: #17120F;
+  border: 1px solid #EAD5A5;
+  letter-spacing: 0.22em;
+  font-weight: 600;
+  box-shadow: 0 6px 24px rgba(198, 161, 91, 0.4);
 }
 .cg-btn-gold:hover {
-  background: #B38E46; border-color: #B38E46; color: #FFF; transform: translateY(-2px);
+  background: linear-gradient(135deg, #D4B26F 0%, #F0D7A0 50%, #C6A15B 100%);
+  border-color: #FFFFFF;
+  color: #120D0A;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 32px rgba(198, 161, 91, 0.55);
+}
+.cg-btn-luxury-concierge {
+  background: rgba(37, 3, 14, 0.75);
+  color: var(--ivory);
+  border: 1px solid rgba(198, 161, 91, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  letter-spacing: 0.2em;
+  font-weight: 600;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+.cg-btn-luxury-concierge:hover {
+  background: var(--burgundy);
+  border-color: var(--gold-light);
+  color: #FFFFFF;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 32px rgba(93, 10, 36, 0.45);
 }
 .cg-btn-ghost-light {
   background: rgba(255, 255, 255, 0.08); color: var(--ivory);
@@ -118,11 +145,18 @@ const HOME_CSS = `
   background: var(--ink); color: var(--ivory); transform: translateY(-2px);
 }
 .cg-btn-whatsapp {
-  background: #25D366; color: #FFFFFF; border: 1px solid #25D366;
+  background: linear-gradient(135deg, #133D2A 0%, #1A5238 100%);
+  color: #FFFFFF;
+  border: 1px solid rgba(198, 161, 91, 0.6);
+  box-shadow: 0 6px 20px rgba(19, 61, 42, 0.3);
+  letter-spacing: 0.18em;
 }
 .cg-btn-whatsapp:hover {
-  background: #1EBE5D; border-color: #1EBE5D; transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.35);
+  background: linear-gradient(135deg, #194D35 0%, #226445 100%);
+  border-color: var(--gold);
+  color: #FFFFFF;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 26px rgba(19, 61, 42, 0.45);
 }
 
 /* Announcement */
@@ -201,20 +235,29 @@ const HOME_CSS = `
 }
 .cg-hero-overlay {
   position: absolute; inset: 0; z-index: 2;
-  background: linear-gradient(180deg, rgba(37, 3, 14, 0.45) 0%, rgba(93, 10, 36, 0.6) 65%, rgba(23, 18, 15, 0.85) 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(18, 12, 14, 0.32) 0%,
+    rgba(18, 12, 14, 0.18) 35%,
+    rgba(18, 12, 14, 0.22) 65%,
+    rgba(18, 12, 14, 0.42) 100%
+  );
+  pointer-events: none;
 }
 .cg-hero-content {
-  position: relative; z-index: 3; max-width: 920px; padding: 60px var(--pad-x);
+  position: relative; z-index: 3; max-width: 960px; padding: 60px var(--pad-x);
 }
 .cg-hero-title {
   font-family: var(--serif); font-size: clamp(2.8rem, 6.5vw, 5.2rem);
   font-weight: 400; line-height: 1.05; letter-spacing: -0.015em;
-  margin: 12px 0 24px; color: var(--ivory); text-shadow: 0 2px 20px rgba(0,0,0,0.4);
+  margin: 12px 0 24px; color: var(--ivory);
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.75), 0 1px 4px rgba(0, 0, 0, 0.5);
 }
 .cg-hero-sub {
   font-size: clamp(1.05rem, 1.4vw, 1.25rem); line-height: 1.75;
-  color: rgba(250, 246, 241, 0.92); max-width: 680px; margin: 0 auto 36px;
+  color: rgba(250, 246, 241, 0.96); max-width: 680px; margin: 0 auto 36px;
   font-weight: 300;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.7);
 }
 .cg-hero-ctas {
   display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
@@ -413,6 +456,47 @@ const HOME_CSS = `
 }
 .cg-insta-item:hover img { transform: scale(1.08); }
 
+/* ── Certified Authenticity ── */
+.cg-cert-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: clamp(40px, 6vw, 80px);
+  align-items: center;
+}
+.cg-cert-card {
+  background: var(--ivory);
+  border: 1px solid var(--line);
+  padding: clamp(20px, 4vw, 32px);
+  border-radius: 2px;
+  text-align: center;
+}
+.cg-cert-img {
+  width: 100%;
+  height: clamp(180px, 30vw, 240px);
+  object-fit: cover;
+  border-radius: 2px;
+  display: block;
+}
+
+/* ── Brand Philosophy ── */
+.cg-philosophy-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(40px, 6vw, 84px);
+  align-items: center;
+}
+.cg-philosophy-img-wrap {
+  border-radius: 2px;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+}
+.cg-philosophy-img {
+  width: 100%;
+  height: clamp(280px, 45vw, 520px);
+  object-fit: cover;
+  display: block;
+}
+
 /* Responsive */
 @media (max-width: 1100px) {
   .cg-cat-grid { grid-template-columns: repeat(3, 1fr); }
@@ -428,12 +512,31 @@ const HOME_CSS = `
   .cg-excl-inner,
   .cg-science-grid,
   .cg-bespoke-grid,
+  .cg-cert-grid,
+  .cg-philosophy-grid,
   .cg-showroom-grid {
     grid-template-columns: 1fr;
+    gap: 32px;
   }
   .cg-excl-gallery { grid-template-columns: 1fr; }
   .cg-why-grid { grid-template-columns: 1fr; }
   .cg-cat-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 540px) {
+  .cg-cert-grid .cg-btn,
+  .cg-philosophy-grid .cg-btn,
+  .cg-bespoke-grid .cg-btn {
+    width: 100%;
+    justify-content: center;
+    box-sizing: border-box;
+  }
+  .cg-cert-card {
+    padding: 20px 16px;
+  }
+  .cg-philosophy-img {
+    height: 300px;
+  }
 }
 `;
 
@@ -443,7 +546,6 @@ export default function HomePage() {
   const { items: wishlistItems } = useWishlist();
   const { toggleSearch } = useUI();
 
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [selectedBespokeShape, setSelectedBespokeShape] = useState('Oval Brilliant');
   const [bespokeName, setBespokeName] = useState('');
   const [bespokePhone, setBespokePhone] = useState('');
@@ -468,127 +570,9 @@ export default function HomePage() {
     window.open(url, '_blank', 'noopener,noreferrer');
   };
 
-  const navItems = [
-    { label: 'Home', href: '/' },
-    { label: 'About Us', href: '/about' },
-    { label: 'Collections', href: '/collections' },
-    { label: 'Exclusive Designs', href: '/exclusive-designs' },
-    { label: 'Bespoke', href: '/bespoke' },
-    { label: 'Grown Diamonds', href: '/grown-diamonds' },
-    { label: 'Contact', href: '/contact' },
-  ];
-
   return (
     <div className="cg-page">
       <style>{HOME_CSS}</style>
-
-      {/* ── Top Announcement ── */}
-      <div className="cg-ann">
-        Atelier Salon & Private Consultations · Mahanagar, Lucknow · IGI Certified Grown Diamonds
-      </div>
-
-      {/* ── Sticky Header (No Cart / Bag Icon) ── */}
-      <header className="cg-header">
-        <div className="cg-wrap cg-header__inner">
-          <button
-            className="cg-burger"
-            onClick={() => setMobileMenuOpen(true)}
-            aria-label="Open mobile menu"
-          >
-            <Menu size={22} strokeWidth={1.5} />
-          </button>
-
-          {/* Logo */}
-          <Link to="/" aria-label="Carats by Grace Home">
-            <BrandLogo height={44} />
-          </Link>
-
-          {/* Desktop Navigation */}
-          <nav className="cg-nav-desktop" aria-label="Main Navigation">
-            {navItems.map((item) => (
-              <Link key={item.label} to={item.href} className="cg-nav-link">
-                {item.label}
-              </Link>
-            ))}
-          </nav>
-
-          {/* Header Action CTAs */}
-          <div className="cg-header-actions">
-            <button
-              className="cg-icon-btn"
-              onClick={toggleSearch}
-              aria-label="Search Catalogue"
-            >
-              <Search size={19} strokeWidth={1.6} />
-            </button>
-
-            <Link
-              to="/wishlist"
-              className="cg-icon-btn"
-              aria-label={`Wishlist (${wishlistItems?.length || 0} designs)`}
-            >
-              <Heart size={19} strokeWidth={1.6} />
-              {(wishlistItems?.length || 0) > 0 && (
-                <span className="cg-badge">{wishlistItems.length}</span>
-              )}
-            </Link>
-
-            <a
-              href={buildWhatsAppUrl({ type: 'consultation' })}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="cg-btn cg-btn-solid"
-              style={{ minHeight: 40, padding: '0 18px', fontSize: '0.7rem' }}
-            >
-              <MessageCircle size={15} />
-              Book A Visit
-            </a>
-          </div>
-        </div>
-      </header>
-
-      {/* ── Mobile Menu Drawer ── */}
-      <div className={`cg-mobile-menu ${mobileMenuOpen ? 'open' : ''}`} aria-hidden={!mobileMenuOpen}>
-        <div className="cg-mobile-header">
-          <BrandLogo height={38} />
-          <button
-            onClick={() => setMobileMenuOpen(false)}
-            style={{ background: 'none', border: 'none', cursor: 'pointer' }}
-            aria-label="Close menu"
-          >
-            <X size={24} />
-          </button>
-        </div>
-        <div className="cg-mobile-links">
-          {navItems.map((item) => (
-            <Link
-              key={item.label}
-              to={item.href}
-              className="cg-mobile-link"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              {item.label}
-            </Link>
-          ))}
-          <Link
-            to="/wishlist"
-            className="cg-mobile-link"
-            onClick={() => setMobileMenuOpen(false)}
-          >
-            Saved Designs ({wishlistItems?.length || 0})
-          </Link>
-          <a
-            href={buildWhatsAppUrl({ type: 'general' })}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="cg-btn cg-btn-whatsapp"
-            style={{ marginTop: 24 }}
-          >
-            <MessageCircle size={18} />
-            Chat on WhatsApp
-          </a>
-        </div>
-      </div>
 
       {/* ============================================================
           PART 2: SECTION 4 — HERO BANNER
@@ -610,7 +594,7 @@ export default function HomePage() {
 
         <div className="cg-hero-content">
           <span className="cg-eyebrow cg-eyebrow-light">
-            <Sparkles size={14} /> Carats by Grace · Fine Jewellery Atelier
+            Carats by Grace · Fine Jewellery Atelier
           </span>
           <h1 className="cg-hero-title">YOUR GROWN DIAMOND DESTINATION.</h1>
           <p className="cg-hero-sub">
@@ -625,14 +609,19 @@ export default function HomePage() {
               href={buildWhatsAppUrl({ type: 'general' })}
               target="_blank"
               rel="noopener noreferrer"
-              className="cg-btn cg-btn-whatsapp"
+              className="cg-btn cg-btn-luxury-concierge"
             >
-              <MessageCircle size={18} />
+              <MessageCircle size={18} color="#E0C88F" />
               CONNECT ON WHATSAPP
             </a>
           </div>
         </div>
       </section>
+
+      {/* ============================================================
+          EXCLUSIVE COLLECTION ANNOUNCEMENT (Landing-Page Block)
+          ============================================================ */}
+      <ExclusiveAnnouncementSection />
 
       {/* ============================================================
           PART 2: SECTION 5 — SHOP BY CATEGORY
@@ -721,7 +710,7 @@ export default function HomePage() {
           <div className="cg-excl-inner">
             <div className="cg-excl-copy">
               <span className="cg-eyebrow cg-eyebrow-light">
-                <Sparkles size={14} /> The Ultimate Expression of Exclusivity
+                The Ultimate Expression of Exclusivity
               </span>
               <h2 className="cg-display cg-display-light" style={{ fontSize: 'clamp(2.4rem, 4.5vw, 3.8rem)' }}>
                 DESIGNS THAT NEVER REPEAT.
@@ -834,112 +823,48 @@ export default function HomePage() {
       </section>
 
       {/* ============================================================
-          PART 2: SECTION 9 — BESPOKE JEWELLERY – DESIGNED AROUND YOU
+          PART 2: SECTION 9 — BESPOKE STUDIO TEASER
           ============================================================ */}
-      <section className="cg-section" style={{ background: 'var(--white)' }}>
+      <section className="cg-section" style={{ background: 'var(--white)', borderTop: '1px solid var(--line)' }}>
         <div className="cg-wrap">
-          <div className="cg-bespoke-grid">
+          <div className="cg-bespoke-grid" style={{ alignItems: 'center' }}>
             <div>
-              <span className="cg-eyebrow">Custom Atelier Commissions</span>
-              <h2 className="cg-display" style={{ fontSize: 'clamp(2.2rem, 4.2vw, 3.4rem)' }}>
-                A DESIGN THAT BEGINS WITH YOU.
+              <span className="cg-eyebrow">Interactive Customizer</span>
+              <h2 className="cg-display" style={{ fontSize: 'clamp(2.2rem, 4.2vw, 3.4rem)', margin: '0 0 16px' }}>
+                Design your own
               </h2>
-              <p style={{ fontSize: '1.02rem', lineHeight: 1.8, color: '#4A3E3D' }}>
-                Your vision, your choice, your diamond. Discover jewellery
-                designed around your individuality, crafted to reflect your
-                personal style and story.
+              <p style={{ fontSize: '1.05rem', lineHeight: 1.8, color: '#4A3E3D', maxWidth: 540, marginBottom: 28 }}>
+                Experience our interactive Bespoke Studio to customize your piece from stone to silhouette.
               </p>
 
-              <div style={{ marginTop: 24 }}>
-                <span style={{ fontSize: '0.74rem', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--muted)', fontWeight: 600 }}>
-                  Select Preferred Diamond Silhouette:
-                </span>
-                <div className="cg-shapes-mini-grid">
-                  {DIAMOND_SHAPES.map((shape) => (
-                    <button
-                      key={shape.id}
-                      type="button"
-                      className={`cg-shape-mini-btn ${selectedBespokeShape === shape.label ? 'active' : ''}`}
-                      onClick={() => setSelectedBespokeShape(shape.label)}
-                    >
-                      {shape.label}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div style={{ marginTop: 28, display: 'flex', gap: 14, flexWrap: 'wrap' }}>
-                <Link to="/bespoke" className="cg-btn cg-btn-outline">
-                  EXPLORE BESPOKE STUDIO
+              <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap' }}>
+                <Link
+                  to="/bespoke"
+                  className="cg-btn cg-btn-solid"
+                  style={{ background: 'var(--burgundy)', borderColor: 'var(--burgundy)', color: '#FFF' }}
+                >
+                  Start Designing
+                  <ArrowRight size={16} />
                 </Link>
                 <a
                   href={buildWhatsAppUrl({ type: 'consultation' })}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="cg-btn cg-btn-solid"
+                  className="cg-btn cg-btn-outline"
                 >
                   <MessageCircle size={16} />
-                  BOOK A PERSONAL CONSULTATION
+                  Book a Consultation
                 </a>
               </div>
             </div>
 
-            {/* Quick Enquiry Form Box */}
-            <div className="cg-form-box">
-              <h3 style={{ fontFamily: 'var(--serif)', fontSize: '1.5rem', margin: '0 0 16px', color: 'var(--burgundy)' }}>
-                Request Bespoke Consultation
-              </h3>
-              <form onSubmit={handleBespokeSubmit}>
-                <div style={{ marginBottom: 14 }}>
-                  <label style={{ display: 'block', fontSize: '0.72rem', letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: 6, fontWeight: 600 }}>
-                    Your Name *
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    style={{ width: '100%', padding: '12px 14px', border: '1px solid var(--line)', boxSizing: 'border-box' }}
-                    placeholder="e.g. Radhika Verma"
-                    value={bespokeName}
-                    onChange={(e) => setBespokeName(e.target.value)}
-                  />
-                </div>
-
-                <div style={{ marginBottom: 14 }}>
-                  <label style={{ display: 'block', fontSize: '0.72rem', letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: 6, fontWeight: 600 }}>
-                    WhatsApp / Phone Number *
-                  </label>
-                  <input
-                    type="tel"
-                    required
-                    style={{ width: '100%', padding: '12px 14px', border: '1px solid var(--line)', boxSizing: 'border-box' }}
-                    placeholder="+91 98765 43210"
-                    value={bespokePhone}
-                    onChange={(e) => setBespokePhone(e.target.value)}
-                  />
-                </div>
-
-                <div style={{ marginBottom: 18 }}>
-                  <label style={{ display: 'block', fontSize: '0.72rem', letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: 6, fontWeight: 600 }}>
-                    Jewellery Preference
-                  </label>
-                  <select
-                    style={{ width: '100%', padding: '12px 14px', border: '1px solid var(--line)', boxSizing: 'border-box' }}
-                    value={bespokePreference}
-                    onChange={(e) => setBespokePreference(e.target.value)}
-                  >
-                    <option value="Solitaire Engagement Ring">Solitaire Engagement Ring</option>
-                    <option value="Cocktail Ring">Cocktail Ring</option>
-                    <option value="Necklace or Choker">Necklace or Choker</option>
-                    <option value="Tennis Bracelet">Tennis Bracelet</option>
-                    <option value="Chandelier or Drop Earrings">Chandelier or Drop Earrings</option>
-                  </select>
-                </div>
-
-                <button type="submit" className="cg-btn cg-btn-whatsapp" style={{ width: '100%' }}>
-                  <MessageCircle size={16} />
-                  Connect On WhatsApp
-                </button>
-              </form>
+            <div style={{ position: 'relative', borderRadius: 2, overflow: 'hidden', boxShadow: '0 16px 40px rgba(0,0,0,0.08)' }}>
+              <img
+                src="/assets/model1/m1_8403_final.webp"
+                alt="Bespoke Studio · Design Your Own Fine Jewellery"
+                loading="lazy"
+                style={{ width: '100%', height: 'auto', display: 'block' }}
+              />
             </div>
           </div>
         </div>
@@ -965,7 +890,7 @@ export default function HomePage() {
             </div>
 
             <div className="cg-why-card">
-              <div className="cg-why-icon"><Sparkles size={22} /></div>
+              <div className="cg-why-icon"><Compass size={22} /></div>
               <h3 className="cg-why-title">EXCEPTIONAL CRAFTSMANSHIP</h3>
               <p className="cg-why-desc">Hand-finished in solid 18K gold and 950 platinum.</p>
             </div>
@@ -996,12 +921,12 @@ export default function HomePage() {
           ============================================================ */}
       <section className="cg-section" style={{ background: 'var(--white)' }}>
         <div className="cg-wrap">
-          <div style={{ display: 'grid', gridTemplateColumns: '1.1fr 0.9fr', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
+          <div className="cg-cert-grid">
             <div>
               <span className="cg-eyebrow">
                 <ShieldCheck size={14} /> Certified Authenticity
               </span>
-              <h2 className="cg-display" style={{ fontSize: 'clamp(2.2rem, 4vw, 3.4rem)' }}>
+              <h2 className="cg-display" style={{ fontSize: 'clamp(2rem, 3.8vw, 3.4rem)' }}>
                 BRILLIANCE, BACKED BY CERTIFICATION.
               </h2>
               <p style={{ fontSize: '1rem', lineHeight: 1.8, color: '#4A3E3D' }}>
@@ -1033,7 +958,7 @@ export default function HomePage() {
               </Link>
             </div>
 
-            <div style={{ background: 'var(--ivory)', border: '1px solid var(--line)', padding: 32, borderRadius: 2, textAlign: 'center' }}>
+            <div className="cg-cert-card">
               <span style={{ display: 'inline-block', padding: '6px 16px', background: 'var(--burgundy)', color: '#FFF', fontSize: '0.72rem', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: 18 }}>
                 Independent IGI Laboratory Report
               </span>
@@ -1046,7 +971,7 @@ export default function HomePage() {
               <img
                 src="/assets/categories/cat_pendants.webp"
                 alt="Diamond Inspection"
-                style={{ width: '100%', height: 220, objectFit: 'cover', borderRadius: 2 }}
+                className="cg-cert-img"
               />
             </div>
           </div>
@@ -1058,20 +983,21 @@ export default function HomePage() {
           ============================================================ */}
       <section className="cg-section" style={{ background: 'var(--burgundy)', color: 'var(--ivory)' }}>
         <div className="cg-wrap">
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'clamp(40px, 6vw, 84px)', alignItems: 'center' }}>
-            <div style={{ borderRadius: 2, overflow: 'hidden', boxShadow: '0 20px 50px rgba(0,0,0,0.3)' }}>
+          <div className="cg-philosophy-grid">
+            <div className="cg-philosophy-img-wrap">
               <img
                 src="/assets/model1/m1_8446_final.webp"
                 alt="Carats by Grace Craftsmanship and Founders"
                 loading="lazy"
+                className="cg-philosophy-img"
               />
             </div>
 
             <div>
               <span className="cg-eyebrow cg-eyebrow-light">
-                <Sparkles size={14} /> The Brand Philosophy
+                The Brand Philosophy
               </span>
-              <h2 className="cg-display cg-display-light" style={{ fontSize: 'clamp(2.2rem, 4.2vw, 3.4rem)' }}>
+              <h2 className="cg-display cg-display-light" style={{ fontSize: 'clamp(2rem, 4vw, 3.4rem)' }}>
                 WHERE EVERY DIAMOND FINDS ITS STORY.
               </h2>
               <p style={{ color: 'rgba(250, 246, 241, 0.88)', lineHeight: 1.8, fontSize: '1rem', marginBottom: 18 }}>
@@ -1197,50 +1123,9 @@ export default function HomePage() {
       </section>
 
       {/* ============================================================
-          PART 2: SECTION 15 — INSTAGRAM INTEGRATION
+          PART 2: SECTION 15 — LIVE INSTAGRAM REELS INTEGRATION
           ============================================================ */}
-      <section className="cg-section" style={{ background: 'var(--white)' }}>
-        <div className="cg-wrap">
-          <div style={{ textAlign: 'center', maxWidth: 640, margin: '0 auto' }}>
-            <span className="cg-eyebrow">@caratsbygrace</span>
-            <h2 className="cg-display" style={{ fontSize: 'clamp(2rem, 3.8vw, 3rem)' }}>
-              Follow The Story
-            </h2>
-          </div>
-
-          <div className="cg-insta-grid">
-            {[
-              '/assets/model1/m1_8201_final.webp',
-              '/assets/model2/m2_8124.webp',
-              '/assets/model1/m1_8306_final.webp',
-              '/assets/model2/cg_jewellers8471.webp',
-              '/assets/model1/m1_8424_final.webp',
-              '/assets/model2/m2_8090.webp',
-            ].map((imgSrc, idx) => (
-              <a
-                key={idx}
-                href={INSTAGRAM_LINK}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="cg-insta-item"
-              >
-                <img src={imgSrc} alt="Carats by Grace Instagram" loading="lazy" />
-              </a>
-            ))}
-          </div>
-
-          <div style={{ textAlign: 'center', marginTop: 24 }}>
-            <a
-              href={INSTAGRAM_LINK}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="cg-btn cg-btn-outline"
-            >
-              FOLLOW US ON INSTAGRAM
-            </a>
-          </div>
-        </div>
-      </section>
+      <InstagramReelsSection />
 
       {/* ============================================================
           FOOTER (Part 5, Section 23 — No Ecommerce / No Online Payment)

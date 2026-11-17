@@ -486,7 +486,7 @@ function ProductCard({ p, index, saved, onToggleSave, onEnquire }) {
           alt="" aria-hidden="true" loading="lazy" decoding="async" />
         
         {/* Exclusivity Badges */}
-        {p.isOneOfOne && (
+        {(p.isOneOfOne || p.isExclusiveCollection) && (
           <span
             style={{
               position: 'absolute',
@@ -501,16 +501,18 @@ function ProductCard({ p, index, saved, onToggleSave, onEnquire }) {
               fontWeight: 600,
               padding: '3px 7px',
               borderRadius: '2px',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.25)',
+              border: '1px solid rgba(198, 161, 91, 0.4)',
             }}
           >
-            One of One
+            Exclusive · 1-of-1
           </span>
         )}
         {p.status === 'sold' && (
           <span
             style={{
               position: 'absolute',
-              top: p.isOneOfOne ? 34 : 10,
+              top: (p.isOneOfOne || p.isExclusiveCollection) ? 34 : 10,
               left: 10,
               zIndex: 3,
               background: '#25030E',
@@ -524,7 +526,7 @@ function ProductCard({ p, index, saved, onToggleSave, onEnquire }) {
               border: '1px solid #E0C88F',
             }}
           >
-            Sold
+            Found Its Home
           </span>
         )}
 
@@ -546,7 +548,7 @@ function ProductCard({ p, index, saved, onToggleSave, onEnquire }) {
           <Icon name="heart" size={16} />
         </button>
         <button className="cp-card__add" type="button" onClick={() => onEnquire(p)}>
-          {p.status === 'sold' ? 'Inquire ✦' : 'Enquire ✦'}
+          {p.status === 'sold' ? 'Inquire' : 'Enquire'}
         </button>
       </div>
       <div className="cp-card__body" onClick={() => onEnquire(p)} style={{ cursor: "pointer" }}>

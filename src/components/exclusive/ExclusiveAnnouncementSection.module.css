@@ -1,0 +1,507 @@
+/* src/components/exclusive/ExclusiveAnnouncementSection.module.css */
+/* Carats by Grace — Exclusive Collection Announcement
+   1. White background minimalist section on the Home Page with gold swirly boundary.
+   2. Stationery invitation pop-up modal opening upon scrolling past the hero video. */
+
+/* ============================================================
+   1. SMALL MINIMALIST SECTION ON HOME PAGE (WHITE BACKGROUND)
+   ============================================================ */
+.section {
+  position: relative;
+  background: #FFFFFF !important;
+  color: var(--ink, #17120F);
+  padding: clamp(52px, 6.5vw, 84px) clamp(16px, 4vw, 32px);
+  border-top: 1px solid rgba(198, 161, 91, 0.16);
+  border-bottom: 1px solid rgba(198, 161, 91, 0.16);
+}
+
+.container {
+  max-width: 820px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* ── Boundary Card with Gold Swirly Frame ── */
+.boundaryCard {
+  position: relative;
+  background: #FFFFFF;
+  border: 1px solid rgba(198, 161, 91, 0.45);
+  border-radius: 2px;
+  box-shadow:
+    0 16px 40px -12px rgba(93, 10, 36, 0.05),
+    0 4px 18px rgba(198, 161, 91, 0.06);
+  padding: clamp(38px, 5.5vw, 56px) clamp(22px, 5vw, 52px);
+  text-align: center;
+}
+
+/* ── Delicate Inner Inset Hairline ── */
+.innerHairline {
+  position: absolute;
+  inset: 10px;
+  border: 1px solid rgba(198, 161, 91, 0.2);
+  pointer-events: none;
+  border-radius: 1px;
+}
+
+/* ── 4 Corner Swirl Ornaments ── */
+.swirlCorner {
+  position: absolute;
+  width: 58px;
+  height: 58px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.cornerTL {
+  top: -1px;
+  left: -1px;
+}
+
+.cornerTR {
+  top: -1px;
+  right: -1px;
+  transform: scaleX(-1);
+}
+
+.cornerBL {
+  bottom: -1px;
+  left: -1px;
+  transform: scaleY(-1);
+}
+
+.cornerBR {
+  bottom: -1px;
+  right: -1px;
+  transform: scale(-1, -1);
+}
+
+/* ── Top & Bottom Center Crests ── */
+.crestTopWrap {
+  position: absolute;
+  top: -13px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  background: #FFFFFF;
+  padding: 0 10px;
+  line-height: 1;
+}
+
+.crestBottomWrap {
+  position: absolute;
+  bottom: -13px;
+  left: 50%;
+  transform: translateX(-50%) rotate(180deg);
+  z-index: 3;
+  background: #FFFFFF;
+  padding: 0 10px;
+  line-height: 1;
+}
+
+.crestSvg {
+  width: 140px;
+  height: 24px;
+  display: block;
+}
+
+/* ── Card Content Typography ── */
+.cardContent {
+  position: relative;
+  z-index: 4;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--font-sans, "Jost", sans-serif);
+  font-size: 0.7rem;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--gold, #C6A15B);
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.eyebrowIcon {
+  color: var(--gold, #C6A15B);
+}
+
+.heading {
+  font-family: var(--font-serif, "Cormorant Garamond", Georgia, serif);
+  font-size: clamp(1.4rem, 2.5vw, 2.1rem);
+  font-weight: 400;
+  line-height: 1.22;
+  letter-spacing: 0.04em;
+  color: #17120F;
+  margin: 0 0 14px;
+  text-transform: uppercase;
+}
+
+.briefText {
+  font-family: var(--font-serif, "Cormorant Garamond", Georgia, serif);
+  font-size: clamp(1.05rem, 1.35vw, 1.2rem);
+  line-height: 1.7;
+  color: #554A44;
+  max-width: 620px;
+  margin: 0 auto 26px;
+  font-style: normal;
+}
+
+/* ── Minimalist CTAs ── */
+.ctaRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+
+.primaryCta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 0 24px;
+  background: var(--burgundy, #5D0A24);
+  color: #FAF6F1;
+  border: 1px solid rgba(198, 161, 91, 0.6);
+  font-family: var(--font-sans, "Jost", sans-serif);
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 2px;
+  box-shadow: 0 4px 14px rgba(93, 10, 36, 0.2);
+  transition: all 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.primaryCta:hover {
+  background: #3D0617;
+  border-color: var(--gold, #C6A15B);
+  color: #FFFFFF;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(93, 10, 36, 0.35);
+}
+
+.secondaryCta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 0 22px;
+  background: transparent;
+  color: #17120F;
+  border: 1px solid rgba(198, 161, 91, 0.45);
+  font-family: var(--font-sans, "Jost", sans-serif);
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.secondaryCta:hover {
+  background: rgba(198, 161, 91, 0.1);
+  border-color: var(--burgundy, #5D0A24);
+  color: var(--burgundy, #5D0A24);
+  transform: translateY(-2px);
+}
+
+/* ── Open Letter Trigger ── */
+.openLetterBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  color: var(--burgundy, #5D0A24);
+  font-family: var(--font-serif, "Cormorant Garamond", Georgia, serif);
+  font-size: 0.95rem;
+  font-style: italic;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  padding: 4px 8px;
+  transition: all 0.2s ease;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(198, 161, 91, 0.4);
+}
+
+.openLetterBtn:hover {
+  color: #C6A15B;
+  text-decoration-color: #C6A15B;
+}
+
+/* ============================================================
+   2. ANNOUNCEMENT LETTER POP-UP MODAL
+   ============================================================ */
+.popupBackdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  background: rgba(18, 2, 7, 0.68);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(16px, 3vw, 32px);
+  animation: popupBackdropFadeIn 0.32s ease-out both;
+}
+
+@keyframes popupBackdropFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.popupCard {
+  position: relative;
+  max-width: 780px;
+  width: 100%;
+  max-height: 92vh;
+  overflow-y: auto;
+  background: var(--ivory, #FAF6F1);
+  color: var(--ink, #17120F);
+  border: 1px solid rgba(198, 161, 91, 0.5);
+  box-shadow:
+    0 28px 70px rgba(0, 0, 0, 0.45),
+    0 0 0 1px rgba(198, 161, 91, 0.3);
+  border-radius: 2px;
+  padding: clamp(36px, 5.5vw, 60px) clamp(22px, 5vw, 54px);
+  animation: popupCardScaleUp 0.38s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+@keyframes popupCardScaleUp {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Close Button */
+.popupCloseBtn {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(198, 161, 91, 0.35);
+  border-radius: 50%;
+  color: #554A44;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  z-index: 10;
+}
+
+.popupCloseBtn:hover {
+  background: var(--burgundy, #5D0A24);
+  color: #FFFFFF;
+  border-color: var(--burgundy, #5D0A24);
+  transform: rotate(90deg);
+}
+
+.popupInner {
+  position: relative;
+  z-index: 3;
+  text-align: center;
+}
+
+/* Stationery Seal */
+.sealMark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+}
+
+.sealStar {
+  color: var(--gold, #C6A15B);
+  font-size: 1.15rem;
+  letter-spacing: 0.2em;
+}
+
+.popupEyebrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--font-sans, "Jost", sans-serif);
+  font-size: 0.7rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold, #C6A15B);
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.popupTitle {
+  font-family: var(--font-serif, "Cormorant Garamond", Georgia, serif);
+  font-size: clamp(1.8rem, 3.4vw, 2.7rem);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: #17120F;
+  margin: 0 0 10px;
+}
+
+.popupStatement {
+  font-family: var(--font-serif, "Cormorant Garamond", Georgia, serif);
+  font-size: clamp(1.05rem, 1.5vw, 1.3rem);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--burgundy, #5D0A24);
+  font-weight: 500;
+  margin-bottom: 24px;
+}
+
+/* ── Announcement Letter Body ── */
+.letterBody {
+  max-width: 620px;
+  margin: 0 auto;
+  text-align: left;
+  font-family: var(--font-serif, "Cormorant Garamond", Georgia, serif);
+  font-size: clamp(1.05rem, 1.35vw, 1.22rem);
+  line-height: 1.82;
+  color: #2D2321;
+}
+
+.letterBody p {
+  margin: 0 0 16px;
+}
+
+.letterLead {
+  font-size: clamp(1.15rem, 1.55vw, 1.36rem);
+  font-style: italic;
+  color: #17120F;
+  line-height: 1.75;
+}
+
+/* ── Divider ── */
+.divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin: 26px auto 22px;
+  max-width: 320px;
+}
+
+.dividerLine {
+  flex: 1;
+  height: 1px;
+  background: rgba(198, 161, 91, 0.4);
+}
+
+.dividerStar {
+  color: var(--gold, #C6A15B);
+  font-size: 0.85rem;
+}
+
+/* ── Signature ── */
+.signatureBlock {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.signatureMotto {
+  font-family: var(--font-serif, "Cormorant Garamond", Georgia, serif);
+  font-size: 1rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--burgundy, #5D0A24);
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.signatureSignoff {
+  font-family: var(--font-serif, "Cormorant Garamond", Georgia, serif);
+  font-size: 1.15rem;
+  font-style: italic;
+  color: #554A44;
+  margin-bottom: 4px;
+}
+
+.signatureAuthor {
+  font-family: var(--font-sans, "Jost", sans-serif);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #8C8075;
+}
+
+.signatureAuthor em {
+  font-style: normal;
+  color: var(--burgundy, #5D0A24);
+  font-weight: 600;
+}
+
+/* ── CTAs inside popup ── */
+.popupCtaRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+/* ============================================================
+   3. RESPONSIVE & PREFERS-REDUCED-MOTION
+   ============================================================ */
+@media (max-width: 640px) {
+  .ctaRow,
+  .popupCtaRow {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .primaryCta,
+  .secondaryCta {
+    width: 100%;
+  }
+
+  .swirlCorner {
+    width: 44px;
+    height: 44px;
+  }
+
+  .crestSvg {
+    width: 110px;
+    height: 20px;
+  }
+
+  .popupCard {
+    padding: 36px 18px 28px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .popupBackdrop,
+  .popupCard {
+    animation: none !important;
+  }
+
+  .primaryCta,
+  .secondaryCta,
+  .popupCloseBtn {
+    transition: none !important;
+  }
+}

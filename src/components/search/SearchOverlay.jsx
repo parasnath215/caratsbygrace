@@ -616,7 +616,7 @@ export default function SearchOverlay({
 
               {!loading && !hasResults && (
                 <div className="so-empty">
-                  <div className="so-empty__mark" aria-hidden="true">✦</div>
+                  <img src="/brand/logo-mark-dark.png" alt="" style={{ width: 28, height: 28, margin: '0 auto 12px', display: 'block', opacity: 0.6 }} />
                   <h3>Nothing matched “{query.trim()}”.</h3>
                   <p>Try a different word, or explore one of these edits.</p>
                   <div className="so-chips" style={{ justifyContent: "center" }}>

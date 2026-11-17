@@ -1,0 +1,879 @@
+/* src/components/bespoke/BespokeOptionPanel.module.css */
+/* Carats by Grace — Bespoke Studio Option Panel Styles */
+/* Palette: White/Ivory surfaces · Burgundy (#5D0A24) single accent · Neutral hairlines */
+
+.panelContainer {
+  display: flex;
+  flex-direction: column;
+  background: #FFFFFF;
+  border: 1px solid #ECE3D9;
+  border-radius: 2px;
+  overflow: hidden;
+  height: 100%;
+}
+
+/* ── Stepper Navigation Bar ── */
+.stepperNav {
+  background: #FAF7F2;
+  border-bottom: 1px solid #ECE3D9;
+  padding: 8px 16px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.stepperNav::-webkit-scrollbar {
+  display: none;
+}
+
+.stepperList {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  white-space: nowrap;
+}
+
+.stepperItem {
+  display: flex;
+  align-items: center;
+}
+
+.stepBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: none;
+  padding: 6px 10px;
+  font-family: var(--font-sans, "Jost", sans-serif);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #7A6F70;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all 0.2s ease;
+}
+
+.stepBtn:hover {
+  color: var(--burgundy, #5D0A24);
+}
+
+.stepNum {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #E8E2D9;
+  color: #554A44;
+  font-size: 0.65rem;
+  font-weight: 600;
+}
+
+.stepBtnCurrent {
+  color: var(--burgundy, #5D0A24);
+  font-weight: 600;
+}
+
+.stepBtnCurrent .stepNum {
+  background: var(--burgundy, #5D0A24);
+  color: #FFFFFF;
+}
+
+.stepBtnCompleted .stepNum {
+  background: #EFEAE3;
+  color: var(--burgundy, #5D0A24);
+}
+
+/* ── Live Estimated Price Strip ── */
+.priceStrip {
+  background: #FFFFFF;
+  border-bottom: 1px solid #ECE3D9;
+  padding: 14px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.priceMain {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.priceLabel {
+  font-family: var(--font-sans, "Jost", sans-serif);
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #7A6F70;
+  font-weight: 600;
+}
+
+.priceValue {
+  font-family: var(--font-serif, "Cormorant Garamond", Georgia, serif);
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: var(--burgundy, #5D0A24);
+  letter-spacing: 0.02em;
+}
+
+.priceNote {
+  font-family: var(--font-sans, "Jost", sans-serif);
+  font-size: 0.72rem;
+  color: #8C8075;
+}
+
+/* ── Feasibility Advisory Notice ── */
+.advisoryBanner {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: #FDF9F6;
+  border-left: 3px solid var(--burgundy, #5D0A24);
+  border-bottom: 1px solid #ECE3D9;
+  padding: 12px 18px;
+}
+
+.advisoryIcon {
+  color: var(--burgundy, #5D0A24);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.advisoryText {
+  font-family: var(--font-sans, "Jost", sans-serif);
+  font-size: 0.76rem;
+  line-height: 1.5;
+  color: #554A44;
+  margin: 0;
+}
+
+/* ── Main Step Content ── */
+.stepContentWrap {
+  padding: 24px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.stepHeader {
+  margin-bottom: 24px;
+}
+
+.stepEyebrow {
+  display: inline-block;
+  font-family: var(--font-sans, "Jost", sans-serif);
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--burgundy, #5D0A24);
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.stepHeading {
+  font-family: var(--font-serif, "Cormorant Garamond", Georgia, serif);
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: #17120F;
+  margin: 0 0 6px;
+  letter-spacing: -0.01em;
+}
+
+.stepDesc {
+  font-family: var(--font-sans, "Jost", sans-serif);
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: #7A6F70;
+  margin: 0;
+}
+
+/* ── Option Cards Grid ── */
+.optionsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+}
+
+.optionCard {
+  background: #FFFFFF;
+  border: 1px solid #E8E2D9;
+  border-radius: 2px;
+  padding: 16px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.optionCard:hover {
+  border-color: #A99E96;
+}
+
+.optionCardSelected {
+  border: 1.5px solid var(--burgundy, #5D0A24) !important;
+  background: #FAF7F2;
+}
+
+.cardTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.cardName {
+  font-family: var(--font-sans, "Jost", sans-serif);
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: #17120F;
+  letter-spacing: 0.02em;
+}
+
+.selectedCheck {
+  color: var(--burgundy, #5D0A24);
+  display: flex;
+}
+
+.cardHelper {
+  font-family: var(--font-sans, "Jost", sans-serif);
+  font-size: 0.76rem;
+  line-height: 1.45;
+  color: #7A6F70;
+  margin: 0 0 10px;
+  flex: 1;
+}
+
+.cardPriceLead,
+.cardPriceDelta {
+  font-family: var(--font-sans, "Jost", sans-serif);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  color: var(--burgundy, #5D0A24);
+  font-weight: 500;
+}
+
+/* ── Sub Groups & Headings ── */
+.subGroup {
+  margin-bottom: 28px;
+}
+
+.subGroupLabel {
+  display: block;
+  font-family: var(--font-sans, "Jost", sans-serif);
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #554A44;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+/* ── Shape Pills Grid ── */
+.shapePillGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 8px;
+}
+
+.shapePill {
+  background: #FFFFFF;
+  border: 1px solid #E8E2D9;
+  border-radius: 2px;
+  padding: 10px 8px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.shapePill:hover {
+  border-color: #A99E96;
+}
+
+.shapePillSelected {
+  border: 1.5px solid var(--burgundy, #5D0A24) !important;
+  background: #FAF7F2;
+}
+
+.shapePillName {
+  font-family: var(--font-sans, "Jost", sans-serif);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #17120F;
+}
+
+.shapePillRatio {
+  font-family: var(--font-sans, "Jost", sans-serif);
+  font-size: 0.65rem;
+  color: #8C8075;
+}
+
+/* ── Slider & Presets ── */
+.sliderHeader {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.sliderCurrentValue {
+  font-family: var(--font-serif, "Cormorant Garamond", Georgia, serif);
+  font-size: 1.25rem;
+  color: var(--burgundy, #5D0A24);
+  font-weight: 600;
+}
+
+.caratSlider {
+  width: 100%;
+  height: 6px;
+  background: #E8E2D9;
+  border-radius: 999px;
+  outline: none;
+  cursor: pointer;
+  accent-color: var(--burgundy, #5D0A24);
+  margin-bottom: 14px;
+}
+
+.presetRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.presetBtn {
+  background: #FFFFFF;
+  border: 1px solid #E8E2D9;
+  color: #554A44;
+  padding: 6px 12px;
+  border-radius: 2px;
+  font-family: var(--font-sans, "Jost", sans-serif);
+  font-size: 0.74rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.presetBtn:hover {
+  border-color: #A99E96;
+}
+
+.presetBtnActive {
+  background: var(--burgundy, #5D0A24);
+  color: #FFFFFF;
+  border-color: var(--burgundy, #5D0A24);
+  font-weight: 600;
+}
+
+/* ── Diamond Types List ── */
+.typeCardsList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.typeCard {
+  background: #FFFFFF;
+  border: 1px solid #E8E2D9;
+  border-radius: 2px;
+  padding: 14px 16px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.typeCard:hover {
+  border-color: #A99E96;
+}
+
+.typeCardSelected {
+  border: 1.5px solid var(--burgundy, #5D0A24) !important;
+  background: #FAF7F2;
+}
+
+.typeName {
+  display: block;
+  font-family: var(--font-sans, "Jost", sans-serif);
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: #17120F;
+}
+
+.typeGrade {
+  display: block;
+  font-family: var(--font-sans, "Jost", sans-serif);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  color: var(--burgundy, #5D0A24);
+  font-weight: 500;
+  margin-top: 2px;
+}
+
+.typeDesc {
+  font-family: var(--font-sans, "Jost", sans-serif);
+  font-size: 0.76rem;
+  line-height: 1.45;
+  color: #7A6F70;
+  margin: 6px 0;
+}
+
+.typeRate {
+  font-family: var(--font-sans, "Jost", sans-serif);
+  font-size: 0.72rem;
+  color: #554A44;
+  font-weight: 500;
+}
+
+/* ── Metal Round Material Swatches ── */
+.metalSwatchesGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.metalCard {
+  position: relative;
+  background: #FFFFFF;
+  border: 1px solid #E8E2D9;
+  border-radius: 2px;
+  padding: 16px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.metalCard:hover {
+  border-color: #A99E96;
+}
+
+.metalCardSelected {
+  border: 1.5px solid var(--burgundy, #5D0A24) !important;
+  background: #FAF7F2;
+}
+
+.roundSwatch {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1.5px solid #FFFFFF;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  margin-bottom: 12px;
+  display: inline-block;
+}
+
+.metalCardName {
+  font-family: var(--font-sans, "Jost", sans-serif);
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: #17120F;
+  margin-bottom: 4px;
+}
+
+.metalCardDesc {
+  font-family: var(--font-sans, "Jost", sans-serif);
+  font-size: 0.74rem;
+  line-height: 1.4;
+  color: #7A6F70;
+}
+
+.metalSelectedCheck {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  color: var(--burgundy, #5D0A24);
+}
+
+/* ── Purity Buttons ── */
+.purityRow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 10px;
+}
+
+.purityBtn {
+  background: #FFFFFF;
+  border: 1px solid #E8E2D9;
+  border-radius: 2px;
+  padding: 12px 14px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.purityBtn:hover {
+  border-color: #A99E96;
+}
+
+.purityBtnSelected {
+  border: 1.5px solid var(--burgundy, #5D0A24) !important;
+  background: #FAF7F2;
+}
+
+.purityLabel {
+  display: block;
+  font-family: var(--font-sans, "Jost", sans-serif);
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: #17120F;
+}
+
+.purityDesc {
+  display: block;
+  font-family: var(--font-sans, "Jost", sans-serif);
+  font-size: 0.7rem;
+  color: #7A6F70;
+  margin-top: 2px;
+}
+
+/* ── Sizing & Engraving ── */
+.sizeHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.sizeGuideBtn {
+  background: none;
+  border: none;
+  color: var(--burgundy, #5D0A24);
+  font-family: var(--font-sans, "Jost", sans-serif);
+  font-size: 0.72rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  text-decoration: underline;
+}
+
+.sizeSelect {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #E8E2D9;
+  background: #FFFFFF;
+  border-radius: 2px;
+  font-family: var(--font-sans, "Jost", sans-serif);
+  font-size: 0.88rem;
+  color: #17120F;
+  outline: none;
+}
+
+.sizeSelect:focus {
+  border-color: var(--burgundy, #5D0A24);
+}
+
+.charCount {
+  font-family: var(--font-sans, "Jost", sans-serif);
+  font-size: 0.72rem;
+  color: #8C8075;
+}
+
+.engravingInput {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #E8E2D9;
+  background: #FFFFFF;
+  border-radius: 2px;
+  font-family: var(--font-sans, "Jost", sans-serif);
+  font-size: 0.88rem;
+  color: #17120F;
+  outline: none;
+  margin-bottom: 10px;
+}
+
+.engravingInput:focus {
+  border-color: var(--burgundy, #5D0A24);
+}
+
+.fontSelectRow {
+  display: flex;
+  gap: 8px;
+}
+
+.fontBtn {
+  flex: 1;
+  background: #FFFFFF;
+  border: 1px solid #E8E2D9;
+  padding: 8px 12px;
+  border-radius: 2px;
+  font-size: 0.88rem;
+  color: #554A44;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.fontBtn:hover {
+  border-color: #A99E96;
+}
+
+.fontBtnSelected {
+  border: 1.5px solid var(--burgundy, #5D0A24) !important;
+  color: var(--burgundy, #5D0A24);
+  background: #FAF7F2;
+}
+
+.noteTextarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #E8E2D9;
+  background: #FFFFFF;
+  border-radius: 2px;
+  font-family: var(--font-sans, "Jost", sans-serif);
+  font-size: 0.85rem;
+  color: #17120F;
+  outline: none;
+  resize: vertical;
+}
+
+.noteTextarea:focus {
+  border-color: var(--burgundy, #5D0A24);
+}
+
+/* ── Panel Footer Navigation ── */
+.panelFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  background: #FAF7F2;
+  border-top: 1px solid #ECE3D9;
+}
+
+.footerLeft,
+.footerRight {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btnBack,
+.btnReset {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 0 16px;
+  background: transparent;
+  border: 1px solid #E8E2D9;
+  border-radius: 2px;
+  color: #554A44;
+  font-family: var(--font-sans, "Jost", sans-serif);
+  font-size: 0.74rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btnBack:hover,
+.btnReset:hover {
+  border-color: var(--burgundy, #5D0A24);
+  color: var(--burgundy, #5D0A24);
+}
+
+.btnNext {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 24px;
+  background: var(--burgundy, #5D0A24);
+  border: 1px solid var(--burgundy, #5D0A24);
+  color: #FFFFFF;
+  border-radius: 2px;
+  font-family: var(--font-sans, "Jost", sans-serif);
+  font-size: 0.74rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btnNext:hover {
+  background: #3D0617;
+  border-color: #3D0617;
+}
+
+/* ── Size Guide Modal ── */
+.guideModalBackdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(23, 18, 15, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.guideModalCard {
+  background: #FFFFFF;
+  max-width: 520px;
+  width: 100%;
+  padding: 28px;
+  border-radius: 2px;
+  border: 1px solid #ECE3D9;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+}
+
+.guideModalTitle {
+  font-family: var(--font-serif, "Cormorant Garamond", Georgia, serif);
+  font-size: 1.5rem;
+  margin: 0 0 10px;
+  color: #17120F;
+}
+
+.guideModalDesc {
+  font-family: var(--font-sans, "Jost", sans-serif);
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: #7A6F70;
+  margin: 0 0 16px;
+}
+
+.guideTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-sans, "Jost", sans-serif);
+  font-size: 0.82rem;
+  margin-bottom: 20px;
+}
+
+.guideTable th,
+.guideTable td {
+  padding: 8px 10px;
+  text-align: left;
+  border-bottom: 1px solid #ECE3D9;
+}
+
+.guideTable th {
+  background: #FAF7F2;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #554A44;
+}
+
+.btnModalClose {
+  width: 100%;
+  padding: 10px;
+  background: var(--burgundy, #5D0A24);
+  color: #FFFFFF;
+  border: none;
+  border-radius: 2px;
+  font-family: var(--font-sans, "Jost", sans-serif);
+  font-size: 0.74rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+/* ── Mobile Optimization (Sticky bottom controls, 44px+ touch targets) ── */
+@media (max-width: 768px) {
+  .panelFooter {
+    position: sticky;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 40;
+    background: #FFFFFF;
+    border-top: 1px solid #ECE3D9;
+    padding: 12px 14px;
+    box-shadow: 0 -4px 16px rgba(23, 18, 15, 0.08);
+  }
+
+  .footerRight {
+    flex: 1;
+    justify-content: flex-end;
+  }
+
+  .btnNext {
+    width: 100%;
+    justify-content: center;
+    min-height: 48px;
+    font-size: 0.8rem;
+  }
+
+  .btnBack,
+  .btnReset {
+    min-height: 48px;
+    padding: 0 14px;
+  }
+
+  .stepperNav {
+    padding: 6px 10px;
+  }
+
+  .stepBtn {
+    padding: 8px 8px;
+    min-height: 44px;
+    font-size: 0.68rem;
+  }
+
+  .optionsGrid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px;
+  }
+
+  .optionCard {
+    padding: 12px;
+  }
+
+  .shapePillGrid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 8px;
+  }
+
+  .shapePill {
+    padding: 10px 6px;
+    min-height: 44px;
+  }
+
+  .metalSwatchesGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .roundSwatch {
+    min-height: 48px;
+    padding: 10px;
+  }
+
+  .stepContent {
+    padding: 18px 14px;
+  }
+
+  .priceStrip {
+    padding: 12px 16px;
+  }
+
+  .priceValue {
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .shapePillGrid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  .optionsGrid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .metalSwatchesGrid {
+    grid-template-columns: 1fr;
+  }
+}

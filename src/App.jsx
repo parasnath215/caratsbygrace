@@ -3,6 +3,7 @@ import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { WishlistProvider } from './context/WishlistContext';
 import { UIProvider, useUI } from './context/UIContext';
 import FloatingWhatsApp from './components/ui/FloatingWhatsApp';
+import BrandLogo from './components/ui/BrandLogo';
 
 const HomePage            = lazy(() => import('./pages/HomePage'));
 const CollectionPage      = lazy(() => import('./pages/CollectionPage'));
@@ -10,6 +11,7 @@ const ProductPage         = lazy(() => import('./pages/ProductPage'));
 const WishlistPage        = lazy(() => import('./pages/WishlistPage'));
 const AccountPage         = lazy(() => import('./pages/AccountPage'));
 const AboutPage           = lazy(() => import('./pages/AboutPage'));
+const ExclusiveCollectionPage = lazy(() => import('./pages/ExclusiveCollectionPage'));
 const ExclusiveDesignsPage= lazy(() => import('./pages/ExclusiveDesignsPage'));
 const GrownDiamondsPage   = lazy(() => import('./pages/GrownDiamondsPage'));
 const BespokePage         = lazy(() => import('./pages/BespokePage'));
@@ -52,29 +54,12 @@ function BrandedFallback() {
       style={{
         minHeight: '100vh',
         display: 'flex',
-        flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
         background: '#FAF6F1',
-        color: '#5D0A24',
-        fontFamily: "'Cormorant Garamond', Georgia, serif",
       }}
     >
-      <span style={{ fontSize: '1.8rem', color: '#C6A15B', marginBottom: 12 }}>✦</span>
-      <span style={{ fontSize: '1.35rem', letterSpacing: '0.14em', textTransform: 'uppercase' }}>
-        Carats by Grace
-      </span>
-      <span
-        style={{
-          fontSize: '0.72rem',
-          fontFamily: "'Jost', sans-serif', system-ui",
-          color: '#7A6F70',
-          letterSpacing: '0.28em',
-          marginTop: 6,
-        }}
-      >
-        FINE GROWN DIAMOND JEWELLERY · MAHANAGAR, LUCKNOW
-      </span>
+      <BrandLogo variant="stacked-dark" height={88} alt="Carats by Grace" />
     </div>
   );
 }
@@ -89,13 +74,15 @@ function AppRoutes() {
 
   return (
     <>
-      {!isHome && <Header />}
+      <Header />
       <Routes>
         <Route path="/"                       element={<HomePage />} />
         <Route path="/collections"            element={<CollectionPage />} />
         <Route path="/collections/:slug"      element={<CollectionPage />} />
         <Route path="/products/:slug"         element={<ProductPage />} />
         <Route path="/product/:slug"          element={<ProductPage />} />
+        <Route path="/exclusive-collection"   element={<ExclusiveCollectionPage />} />
+        <Route path="/the-exclusive-collection" element={<ExclusiveCollectionPage />} />
         <Route path="/exclusive-designs"      element={<ExclusiveDesignsPage />} />
         <Route path="/designs-that-never-repeat" element={<ExclusiveDesignsPage />} />
         <Route path="/grown-diamonds"        element={<GrownDiamondsPage />} />

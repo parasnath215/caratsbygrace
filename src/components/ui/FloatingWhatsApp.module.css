@@ -14,28 +14,30 @@
   width: 58px;
   height: 58px;
   border-radius: 50%;
-  background: #25D366;
+  background: linear-gradient(135deg, #133D2A 0%, #1A5238 100%);
   color: #FFFFFF;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.4);
+  border: 1.5px solid rgba(198, 161, 91, 0.65);
+  box-shadow: 0 8px 24px rgba(19, 61, 42, 0.45);
   transition: all 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
   text-decoration: none;
   position: relative;
 }
 
 .floatBtn:hover {
-  background: #1EBE5D;
+  background: linear-gradient(135deg, #194D35 0%, #226445 100%);
+  border-color: var(--gold, #C6A15B);
   transform: translateY(-3px) scale(1.05);
-  box-shadow: 0 12px 30px rgba(37, 211, 102, 0.55);
+  box-shadow: 0 12px 30px rgba(19, 61, 42, 0.6);
 }
 
 .pulseRing {
   position: absolute;
   inset: -4px;
   border-radius: 50%;
-  border: 2px solid #25D366;
+  border: 2px solid rgba(198, 161, 91, 0.5);
   opacity: 0.6;
   animation: pulse 2.2s infinite ease-out;
   pointer-events: none;

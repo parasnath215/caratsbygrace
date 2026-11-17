@@ -1,0 +1,296 @@
+/* src/components/bespoke/BespokePreviewStage.module.css */
+/* Carats by Grace — Bespoke 2D Layered Preview Stage Styles */
+
+.stageContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.stageToolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 4px;
+}
+
+.stageLabel {
+  font-family: var(--font-sans, "Jost", sans-serif);
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #7A6F70;
+  font-weight: 500;
+}
+
+.toolbarActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.toolBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #FFFFFF;
+  border: 1px solid #E8E2D9;
+  color: #17120F;
+  padding: 6px 12px;
+  border-radius: 2px;
+  font-family: var(--font-sans, "Jost", sans-serif);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.toolBtn:hover {
+  border-color: var(--burgundy, #5D0A24);
+  color: var(--burgundy, #5D0A24);
+}
+
+.toolBtnActive {
+  background: var(--burgundy, #5D0A24);
+  color: #FFFFFF;
+  border-color: var(--burgundy, #5D0A24);
+}
+
+/* ── Fixed-Aspect Stage Canvas (1:1 Ratio) ── */
+.canvasStage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: radial-gradient(circle at 50% 48%, #FFFFFF 0%, #FAF7F2 100%);
+  border: 1px solid #ECE3D9;
+  border-radius: 2px;
+  overflow: hidden;
+  cursor: crosshair;
+  user-select: none;
+  box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.02);
+}
+
+.canvasTransformWrap {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.35s cubic-bezier(0.22, 0.61, 0.36, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Layer 1: Soft Ground Shadow */
+.layerShadow {
+  position: absolute;
+  bottom: 14%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 58%;
+  height: 14%;
+  background: radial-gradient(ellipse at center, rgba(30, 20, 16, 0.22) 0%, rgba(30, 20, 16, 0.06) 50%, transparent 75%);
+  filter: blur(8px);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Composite Stage */
+.compositeStage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.layerBaseImage {
+  width: 82%;
+  height: 82%;
+  object-fit: contain;
+  object-position: center;
+  position: relative;
+  z-index: 2;
+  transition: opacity 0.3s ease;
+  filter: contrast(1.04);
+}
+
+.layerMetalTint {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  mix-blend-mode: color;
+  opacity: 0.45;
+  pointer-events: none;
+  z-index: 3;
+  transition: filter 0.3s ease;
+}
+
+.layerVectorComposite {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 4;
+}
+
+.vectorAngleGroup {
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.stoneFacetGroup {
+  transition: transform 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* Layer 5: Live Engraving Text Overlay */
+.layerEngraving {
+  position: absolute;
+  bottom: 24%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  pointer-events: none;
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid #ECE3D9;
+  padding: 4px 12px;
+  border-radius: 2px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.engravingTextWrap {
+  font-size: 0.95rem;
+  letter-spacing: 0.1em;
+  color: #352B28;
+  white-space: nowrap;
+}
+
+
+
+/* Live Spec Watermark */
+.specWatermark {
+  position: absolute;
+  bottom: 14px;
+  left: 16px;
+  z-index: 6;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  pointer-events: none;
+}
+
+.specWatermarkMain {
+  font-family: var(--font-serif, "Cormorant Garamond", Georgia, serif);
+  font-size: 1.05rem;
+  color: #17120F;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.specWatermarkSub {
+  font-family: var(--font-sans, "Jost", sans-serif);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #7A6F70;
+}
+
+/* ── Angle Thumbnails Strip ── */
+.angleStrip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 2px;
+}
+
+.angleBtn {
+  flex: 1;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: #FFFFFF;
+  border: 1px solid #E8E2D9;
+  border-radius: 2px;
+  color: #554A44;
+  padding: 8px 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: var(--font-sans, "Jost", sans-serif);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.angleBtn:hover {
+  border-color: var(--burgundy, #5D0A24);
+  color: var(--burgundy, #5D0A24);
+}
+
+.angleBtnActive {
+  background: #FAF6F1;
+  border: 1.5px solid var(--burgundy, #5D0A24);
+  color: var(--burgundy, #5D0A24);
+  font-weight: 600;
+}
+
+.angleThumb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: inherit;
+}
+
+/* ── Mobile Optimization (<= 960px) ── */
+@media (max-width: 960px) {
+  .stageContainer {
+    gap: 10px;
+  }
+
+  .canvasStage {
+    max-height: clamp(230px, 36vh, 320px);
+    width: min(100%, 320px);
+    margin: 0 auto;
+    border-radius: 4px;
+  }
+
+  .toolBtn {
+    min-height: 44px;
+    padding: 8px 12px;
+  }
+
+  .angleBtn {
+    min-height: 44px;
+    padding: 8px 14px;
+  }
+
+  .specWatermark {
+    bottom: 8px;
+    left: 10px;
+    padding: 4px 8px;
+  }
+
+  .specWatermarkTitle {
+    font-size: 0.72rem;
+  }
+
+  .specWatermarkSub {
+    font-size: 0.62rem;
+  }
+}

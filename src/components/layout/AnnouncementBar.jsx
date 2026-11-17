@@ -1,18 +1,20 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { X } from 'lucide-react';
 import { useUI } from '../../context/UIContext';
 import styles from './AnnouncementBar.module.css';
 
-// [PLACEHOLDER: confirm messages with client]
 const MESSAGES = [
-  '✦ Private Salon Viewings & Bespoke Consultations Available',
-  '✦ Certified BIS 750 Hallmarked Gold & Lab-Grown Diamonds',
-  'Book a personal atelier consultation →',
+  'The Exclusive Collection · Singular Creations, Never to be Repeated',
+  'Atelier Salon & Private Consultations · Mahanagar, Lucknow',
+  'Certified BIS 750 Hallmarked Gold & IGI Certified Grown Diamonds',
+  'Bespoke Private Atelier Consultations Available · Book a Visit →',
 ];
 
 export default function AnnouncementBar() {
   const { announcementVisible, dismissAnnouncement } = useUI();
   const [index, setIndex] = useState(0);
   const [fade, setFade] = useState(true);
+  const [isDismissing, setIsDismissing] = useState(false);
   const intervalRef = useRef(null);
 
   useEffect(() => {
@@ -24,15 +26,26 @@ export default function AnnouncementBar() {
         setIndex((prev) => (prev + 1) % MESSAGES.length);
         setFade(true);
       }, 300);
-    }, 4000);
+    }, 4500);
 
     return () => clearInterval(intervalRef.current);
   }, [announcementVisible]);
 
+  const handleDismiss = () => {
+    setIsDismissing(true);
+    setTimeout(() => {
+      dismissAnnouncement();
+    }, 280);
+  };
+
   if (!announcementVisible) return null;
 
   return (
-    <div className={styles.bar} role="region" aria-label="Announcements">
+    <aside
+      className={`${styles.bar} ${isDismissing ? styles.dismissing : ''}`}
+      role="region"
+      aria-label="Announcements"
+    >
       <div className={styles.inner}>
         <span
           className={`${styles.message} ${fade ? styles.visible : styles.hidden}`}
@@ -43,12 +56,14 @@ export default function AnnouncementBar() {
         </span>
         <button
           className={styles.dismiss}
-          onClick={dismissAnnouncement}
+          onClick={handleDismiss}
           aria-label="Dismiss announcement"
+          title="Dismiss announcement"
+          type="button"
         >
-          ✕
+          <X size={15} strokeWidth={2} />
         </button>
       </div>
-    </div>
+    </aside>
   );
 }

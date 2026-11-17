@@ -1,14 +1,26 @@
 // src/components/layout/Header.jsx
-// Carats by Grace — Global Header
-// Luxury Digital Catalogue & Brand Showcase · Mahanagar, Lucknow
+// Carats by Grace — Luxury Two-Tier Global Header
+// Top Bar: Logo (Left) · Pill Search Bar with Camera & Mic (Center) · 5 Luxury Action Icons (Right)
+// Bottom Bar: Category / Navigation row with delicate micro-icons matching reference aesthetic
 
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { Search, Heart, MessageCircle, Menu, X, ChevronDown, Sparkles } from 'lucide-react';
+import {
+  Search,
+  Gem,
+  Store,
+  Camera,
+  Mic,
+  Menu,
+  X,
+  ChevronDown,
+  MessageCircle,
+} from 'lucide-react';
 import { useWishlist } from '../../context/WishlistContext';
 import { useUI } from '../../context/UIContext';
 import BrandLogo from '../ui/BrandLogo';
-import { buildWhatsAppUrl } from '../../utils/whatsapp';
+import AnnouncementBar from './AnnouncementBar';
+import { buildWhatsAppUrl, SHOWROOM_PHONE } from '../../utils/whatsapp';
 import styles from './Header.module.css';
 
 export default function Header() {
@@ -36,14 +48,14 @@ export default function Header() {
     setMobileOpen(false);
   }, [location.pathname]);
 
-  const nav = [
+  // Carats by Grace navigation items (clean minimalist menu items without icons)
+  const navItems = [
     { label: 'Home', href: '/' },
-    { label: 'About Us', href: '/about' },
+    { label: 'Exclusive Collection', href: '/exclusive-collection', badge: '1-OF-1', isHighlight: true },
     { label: 'Collections', href: '/collections', mega: true },
-    { label: 'Exclusive Designs', href: '/exclusive-designs', badge: '1-of-1' },
-    { label: 'Bespoke', href: '/bespoke' },
-    { label: 'Grown Diamonds', href: '/grown-diamonds' },
-    { label: 'Contact', href: '/contact' },
+    { label: 'Bespoke Studio', href: '/bespoke' },
+    { label: 'Craftsmanship', href: '/craftsmanship' },
+    { label: 'About Us', href: '/about' },
   ];
 
   const megaData = {
@@ -61,7 +73,7 @@ export default function Header() {
       { name: 'The Empress Collection', href: '/collections/the-empress' },
       { name: 'Solitaire Essentials', href: '/collections/solitaire-essentials' },
       { name: 'The Nocturne Edit', href: '/collections/the-nocturne-edit' },
-      { name: 'Bespoke Studio', href: '/bespoke' },
+      { name: 'Bespoke Atelier', href: '/bespoke' },
     ],
     'The Atelier': [
       { name: 'Our Story & Founders', href: '/about' },
@@ -71,131 +83,208 @@ export default function Header() {
     ],
   };
 
-  const directWhatsAppUrl = buildWhatsAppUrl({
-    type: 'general',
-  });
+  const directWhatsAppUrl = buildWhatsAppUrl({ type: 'general' });
 
   return (
-    <header className={styles.header} onMouseLeave={() => setMegaOpen(false)}>
-      <div className={styles.inner}>
-        {/* Mobile Hamburger on Left */}
-        <button
-          className={styles.burger}
-          onClick={() => setMobileOpen(true)}
-          aria-label="Open menu"
-          type="button"
-        >
-          <Menu size={22} strokeWidth={1.5} />
-        </button>
+    <header className={styles.headerWrapper} onMouseLeave={() => setMegaOpen(false)}>
+      {/* ── Top Announcement Bar with Dismiss Cross Button ── */}
+      <AnnouncementBar />
 
-        {/* ── Left Nav Links (Desktop) ── */}
-        <nav className={styles.navLeft} aria-label="Primary navigation">
-          {nav.map((item) => (
-            <Link
-              key={item.label}
-              to={item.href}
-              className={`${styles.navLink} ${
-                location.pathname === item.href ? styles.navLinkActive : ''
-              }`}
-              aria-current={location.pathname === item.href ? 'page' : undefined}
-              onMouseEnter={() => setMegaOpen(Boolean(item.mega))}
-              onFocus={() => setMegaOpen(Boolean(item.mega))}
-            >
-              {item.label}
-              {item.badge && (
-                <span
-                  style={{
-                    fontSize: '0.55rem',
-                    padding: '2px 5px',
-                    borderRadius: 999,
-                    background: 'rgba(93, 10, 36, 0.1)',
-                    color: 'var(--burgundy)',
-                    letterSpacing: '0.08em',
-                    fontWeight: 600,
-                  }}
-                >
-                  {item.badge}
-                </span>
-              )}
-            </Link>
-          ))}
-        </nav>
-
-        {/* ── Logo (Centered) ── */}
-        <div className={styles.logoWrap}>
-          <Link to="/" className={styles.logoLink} aria-label="Carats by Grace — Home">
-            <BrandLogo height={44} />
-          </Link>
-        </div>
-
-        {/* ── Utility Icons (Right) ── */}
-        <div className={styles.utilities}>
+      {/* ============================================================
+          ROW 1: MAIN HEADER
+          Logo (Left) · Wide Pill Search (Center) · 5 Action Icons (Right)
+          ============================================================ */}
+      <div className={styles.topBar}>
+        <div className={styles.topBarInner}>
+          {/* Mobile Menu Trigger */}
           <button
-            className={styles.iconBtn}
-            onClick={toggleSearch}
-            aria-label="Search"
+            className={styles.mobileBurger}
+            onClick={() => setMobileOpen(true)}
+            aria-label="Open navigation menu"
             type="button"
           >
-            <Search size={20} strokeWidth={1.5} />
+            <Menu size={22} strokeWidth={1.5} />
           </button>
 
-          <Link
-            to="/wishlist"
-            className={styles.iconBtn}
-            aria-label={`Wishlist (${wishlistCount} items)`}
+          {/* Left: Brand Logo */}
+          <div className={styles.logoCol}>
+            <Link to="/" className={styles.logoLink} aria-label="Carats by Grace — Home">
+              <BrandLogo height={44} variant="dark" />
+            </Link>
+          </div>
+
+          {/* Center: Luxury Pill Search Bar */}
+          <div
+            className={styles.searchPill}
+            onClick={toggleSearch}
+            role="search"
+            aria-label="Search fine jewellery and grown diamonds"
+            title="Click to search rings, solitaires, jewellery..."
           >
-            <Heart size={20} strokeWidth={1.5} />
-            {wishlistCount > 0 && (
-              <span className={styles.badge} aria-hidden="true">
-                {wishlistCount}
+            <div className={styles.searchPillLeft}>
+              <Search size={18} strokeWidth={1.6} className={styles.searchPillIcon} />
+              <span className={styles.searchPlaceholder}>
+                Search for engagement rings, solitaires, fine jewellery...
               </span>
-            )}
-          </Link>
+            </div>
 
-          <a
-            href={directWhatsAppUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.iconBtn}
-            aria-label="Atelier WhatsApp Concierge"
-            title="Chat with Atelier Concierge"
-          >
-            <MessageCircle size={20} strokeWidth={1.5} />
-          </a>
+            <div className={styles.searchPillActions}>
+              <button
+                type="button"
+                className={styles.pillActionBtn}
+                title="Search by image"
+                aria-label="Search by image"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleSearch();
+                }}
+              >
+                <Camera size={17} strokeWidth={1.6} />
+              </button>
+              <button
+                type="button"
+                className={styles.pillActionBtn}
+                title="Voice search"
+                aria-label="Voice search"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleSearch();
+                }}
+              >
+                <Mic size={17} strokeWidth={1.6} />
+              </button>
+            </div>
+          </div>
 
-          <Link to="/contact" className={styles.consultBtn}>
-            Book Visit
-          </Link>
+          {/* Right: Action icons & guaranteed visible Book a Visit CTA */}
+          <div className={styles.actionIconsRow}>
+            {/* Mobile Search Icon (visible on <= 1024px) */}
+            <button
+              type="button"
+              className={styles.mobileSearchIconBtn}
+              onClick={toggleSearch}
+              aria-label="Search fine jewellery"
+              title="Search"
+            >
+              <Search size={18} strokeWidth={1.5} />
+            </button>
+
+            {/* 1. Grown Diamonds Icon */}
+            <Link
+              to="/grown-diamonds"
+              className={`${styles.actionIconBtn} ${styles.hideOnSmallMobile}`}
+              aria-label="The Art of Grown Diamonds"
+              title="Grown Diamonds"
+            >
+              <Gem size={19} strokeWidth={1.5} />
+            </Link>
+
+            {/* 2. Visit Atelier Icon (hidden on mobile <= 768px because 'Book a Visit' CTA is already right here) */}
+            <Link
+              to="/contact"
+              className={`${styles.actionIconBtn} ${styles.hideOnMobile}`}
+              aria-label="Visit Atelier · Mahanagar, Lucknow"
+              title="Visit Atelier"
+            >
+              <Store size={19} strokeWidth={1.5} />
+            </Link>
+
+            {/* 3. Contact WhatsApp Icon */}
+            <a
+              href={directWhatsAppUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.actionIconBtn}
+              aria-label="Contact Atelier on WhatsApp"
+              title="Contact WhatsApp"
+            >
+              <MessageCircle size={19} strokeWidth={1.5} />
+            </a>
+
+            {/* 4. Book a Visit CTA — Guaranteed 100% visible and never cut off */}
+            <Link
+              to="/contact"
+              className={styles.bookVisitBtn}
+              title="Book a Private Atelier Visit"
+            >
+              <span className={styles.bookVisitTextDesktop}>Book a Visit</span>
+              <span className={styles.bookVisitTextMobile}>Book Visit</span>
+            </Link>
+          </div>
         </div>
       </div>
 
-      {/* ── Mega Menu ── */}
+      {/* ============================================================
+          ROW 2: SUB-NAVIGATION BAR (Clean Minimalist Menu Row)
+          ============================================================ */}
+      <nav className={styles.subNavBar} aria-label="Category and Collection Navigation">
+        <div className={styles.subNavInner}>
+          {navItems.map((item) => {
+            const isActive = location.pathname === item.href;
+
+            return (
+              <div
+                key={item.label}
+                className={styles.subNavItem}
+                onMouseEnter={() => setMegaOpen(Boolean(item.mega))}
+              >
+                <Link
+                  to={item.href}
+                  className={`${styles.subNavLink} ${isActive ? styles.subNavLinkActive : ''}`}
+                  aria-current={isActive ? 'page' : undefined}
+                >
+                  <span>{item.label}</span>
+                  {item.badge && <span className={styles.subBadge}>{item.badge}</span>}
+                  {item.mega && (
+                    <ChevronDown
+                      size={12}
+                      strokeWidth={1.8}
+                      className={`${styles.subNavChevron} ${megaOpen ? styles.chevronRotated : ''}`}
+                    />
+                  )}
+                </Link>
+              </div>
+            );
+          })}
+        </div>
+      </nav>
+
+      {/* ============================================================
+          MEGA MENU (Opens under Collections)
+          ============================================================ */}
       <div
         className={`${styles.mega} ${megaOpen ? styles.megaOpen : ''}`}
         onMouseEnter={() => setMegaOpen(true)}
         onMouseLeave={() => setMegaOpen(false)}
+        role="region"
+        aria-label="Collections Submenu"
       >
         <div className={styles.megaInner}>
           {Object.entries(megaData).map(([heading, items]) => (
             <div className={styles.megaCol} key={heading}>
-              <h4>{heading}</h4>
-              {items.map((it) => (
-                <Link
-                  key={it.name}
-                  to={it.href}
-                  onClick={() => setMegaOpen(false)}
-                >
-                  {it.name}
-                </Link>
-              ))}
+              <h4 className={styles.megaHeading}>{heading}</h4>
+              <ul className={styles.megaList}>
+                {items.map((it) => (
+                  <li key={it.name}>
+                    <Link
+                      to={it.href}
+                      className={styles.megaLink}
+                      onClick={() => setMegaOpen(false)}
+                    >
+                      {it.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </div>
           ))}
 
-          <div className={styles.megaCol}>
-            <h4>Exclusive Masterpiece</h4>
+          {/* Featured Editorial Preview */}
+          <div className={styles.megaEditorial}>
+            <span className={styles.megaEditorialTag}>Singular Masterpiece</span>
             <Link
-              className={styles.megaImg}
               to="/exclusive-designs"
+              className={styles.megaImgWrap}
               onClick={() => setMegaOpen(false)}
             >
               <img
@@ -204,23 +293,25 @@ export default function Header() {
                 loading="lazy"
               />
             </Link>
-            <p
-              style={{
-                fontSize: '0.74rem',
-                color: 'var(--muted)',
-                margin: '8px 0 0',
-                letterSpacing: '0.04em',
-              }}
-            >
+            <p className={styles.megaEditorialCaption}>
               One design. One owner. Forever yours.
             </p>
+            <Link
+              to="/exclusive-designs"
+              className={styles.megaEditorialBtn}
+              onClick={() => setMegaOpen(false)}
+            >
+              Discover Exclusive Creations →
+            </Link>
           </div>
         </div>
       </div>
 
-      {/* ── Mobile Menu Drawer ── */}
+      {/* ============================================================
+          MOBILE DRAWER
+          ============================================================ */}
       <div
-        className={`${styles.mobileMenu} ${mobileOpen ? styles.mobileMenuOpen : ''}`}
+        className={`${styles.mobileDrawer} ${mobileOpen ? styles.mobileDrawerOpen : ''}`}
         aria-hidden={!mobileOpen}
       >
         <div className={styles.mobileHeader}>
@@ -229,44 +320,46 @@ export default function Header() {
             className={styles.logoLink}
             onClick={() => setMobileOpen(false)}
           >
-            <BrandLogo height={34} />
+            <BrandLogo height={34} variant="dark" />
           </Link>
           <button
-            className={styles.iconBtn}
+            className={styles.mobileCloseBtn}
             onClick={() => setMobileOpen(false)}
             aria-label="Close menu"
             type="button"
           >
-            <X size={20} strokeWidth={1.5} />
+            <X size={22} strokeWidth={1.5} />
           </button>
         </div>
 
-        <div className={styles.mobileBody}>
-          <div className={styles.mobileGroup}>
-            <Link
-              className={styles.mobileTrigger}
-              to="/"
-              onClick={() => setMobileOpen(false)}
-            >
-              Home
-            </Link>
-          </div>
+        {/* Mobile Search Button */}
+        <div className={styles.mobileSearchWrap}>
+          <button
+            type="button"
+            className={styles.mobileSearchBtn}
+            onClick={() => {
+              setMobileOpen(false);
+              toggleSearch();
+            }}
+          >
+            <Search size={16} strokeWidth={1.6} />
+            <span>Search fine jewellery...</span>
+          </button>
+        </div>
 
-          <div className={styles.mobileGroup}>
-            <Link
-              className={styles.mobileTrigger}
-              to="/about"
-              onClick={() => setMobileOpen(false)}
-            >
-              About Us
-            </Link>
-          </div>
+        <div className={styles.mobileLinks}>
+          <Link
+            className={styles.mobileLink}
+            to="/"
+            onClick={() => setMobileOpen(false)}
+          >
+            <span>Home</span>
+          </Link>
 
-          {/* Collections with Sub-categories */}
-          <div className={styles.mobileGroup}>
+          {/* Expandable Collections */}
+          <div className={styles.mobileAccordion}>
             <button
-              className={styles.mobileTrigger}
-              aria-expanded={mobileGroup === 'Collections'}
+              className={styles.mobileAccordionTrigger}
               onClick={() =>
                 setMobileGroup(mobileGroup === 'Collections' ? null : 'Collections')
               }
@@ -277,13 +370,13 @@ export default function Header() {
                 size={16}
                 style={{
                   transform: mobileGroup === 'Collections' ? 'rotate(180deg)' : 'none',
-                  transition: 'transform .25s ease',
+                  transition: 'transform 0.25s ease',
                 }}
               />
             </button>
             <div
-              className={styles.mobileSub}
-              style={{ maxHeight: mobileGroup === 'Collections' ? 400 : 0 }}
+              className={styles.mobileSubList}
+              style={{ maxHeight: mobileGroup === 'Collections' ? 360 : 0 }}
             >
               <Link to="/collections" onClick={() => setMobileOpen(false)}>
                 All Jewellery
@@ -306,117 +399,60 @@ export default function Header() {
             </div>
           </div>
 
-          <div className={styles.mobileGroup}>
-            <Link
-              className={styles.mobileTrigger}
-              to="/exclusive-designs"
-              onClick={() => setMobileOpen(false)}
-              style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
-            >
-              <span>Exclusive Designs</span>
-              <span
-                style={{
-                  fontSize: '0.62rem',
-                  padding: '2px 6px',
-                  borderRadius: 999,
-                  background: 'var(--burgundy)',
-                  color: '#FFF',
-                  letterSpacing: '0.08em',
-                }}
-              >
-                1-OF-1
-              </span>
-            </Link>
-          </div>
+          <Link
+            className={styles.mobileLink}
+            to="/exclusive-collection"
+            onClick={() => setMobileOpen(false)}
+          >
+            <span>Exclusive Collection</span>
+            <span className={styles.subBadge} style={{ marginLeft: 'auto' }}>1-OF-1</span>
+          </Link>
 
-          <div className={styles.mobileGroup}>
-            <Link
-              className={styles.mobileTrigger}
-              to="/bespoke"
-              onClick={() => setMobileOpen(false)}
-            >
-              Bespoke Jewellery
-            </Link>
-          </div>
+          <Link
+            className={styles.mobileLink}
+            to="/bespoke"
+            onClick={() => setMobileOpen(false)}
+          >
+            <span>Bespoke Studio</span>
+          </Link>
 
-          <div className={styles.mobileGroup}>
-            <Link
-              className={styles.mobileTrigger}
-              to="/grown-diamonds"
-              onClick={() => setMobileOpen(false)}
-            >
-              The Art of Grown Diamonds
-            </Link>
-          </div>
+          <Link
+            className={styles.mobileLink}
+            to="/craftsmanship"
+            onClick={() => setMobileOpen(false)}
+          >
+            <span>Craftsmanship</span>
+          </Link>
 
-          <div className={styles.mobileGroup}>
-            <Link
-              className={styles.mobileTrigger}
-              to="/contact"
-              onClick={() => setMobileOpen(false)}
-            >
-              Contact & Lucknow Showroom
-            </Link>
-          </div>
+          <Link
+            className={styles.mobileLink}
+            to="/about"
+            onClick={() => setMobileOpen(false)}
+          >
+            <span>About Us</span>
+          </Link>
 
-          <div className={styles.mobileGroup}>
-            <Link
-              className={styles.mobileTrigger}
-              to="/wishlist"
-              onClick={() => setMobileOpen(false)}
-            >
-              My Saved Pieces ({wishlistCount})
-            </Link>
-          </div>
+          <Link
+            className={styles.mobileLink}
+            to="/contact"
+            onClick={() => setMobileOpen(false)}
+          >
+            <span>Visit Atelier</span>
+          </Link>
 
-          <div className={styles.mobileGroup}>
-            <Link
-              className={styles.mobileTrigger}
-              to="/admin"
-              onClick={() => setMobileOpen(false)}
-              style={{ fontSize: '0.9rem', color: 'var(--muted)' }}
-            >
-              Staff Portal (CMS)
-            </Link>
-          </div>
-
-          {/* Quick WhatsApp Action inside Mobile Drawer */}
-          <div style={{ marginTop: 28 }}>
+          <div style={{ marginTop: 'auto', paddingTop: 24, borderTop: '1px solid #ECE3D9' }}>
             <a
               href={directWhatsAppUrl}
               target="_blank"
               rel="noopener noreferrer"
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: 8,
-                background: 'var(--burgundy)',
-                color: '#FAF6F1',
-                padding: '12px 18px',
-                borderRadius: 2,
-                fontSize: '0.74rem',
-                letterSpacing: '0.14em',
-                textTransform: 'uppercase',
-                textDecoration: 'none',
-                fontWeight: 500,
-              }}
+              className={styles.mobileConciergeBtn}
             >
-              <MessageCircle size={16} />
+              <MessageCircle size={18} />
               <span>Connect on WhatsApp</span>
             </a>
           </div>
         </div>
       </div>
-
-      {/* Mobile backdrop */}
-      {mobileOpen && (
-        <div
-          className={styles.mobileOverlay}
-          onClick={() => setMobileOpen(false)}
-          aria-hidden="true"
-        />
-      )}
     </header>
   );
 }

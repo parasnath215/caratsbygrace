@@ -5,7 +5,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import {
-  Sparkles,
   ShieldCheck,
   Award,
   Gem,
@@ -15,6 +14,7 @@ import {
   MapPin,
   CheckCircle2,
 } from 'lucide-react';
+import BrandLogo from '../components/ui/BrandLogo';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 import styles from './AboutPage.module.css';
 
@@ -35,7 +35,7 @@ export default function AboutPage() {
     {
       title: 'EXCEPTIONAL CUT',
       desc: 'Precision-focused cuts designed to maximise brilliance.',
-      icon: Sparkles,
+      icon: Gem,
     },
     {
       title: 'CAREFULLY SELECTED DIAMONDS',
@@ -75,11 +75,7 @@ export default function AboutPage() {
       <section className={styles.heroSection} aria-label="Brand Introduction">
         <div className={styles.container}>
           {/* Breadcrumb */}
-          <nav className={styles.breadcrumb} aria-label="Breadcrumb">
-            <Link to="/">Home</Link>
-            <span>/</span>
-            <span>About Us</span>
-          </nav>
+
 
           <div className={styles.heroGrid}>
             <div className={styles.heroContent}>
@@ -589,6 +585,7 @@ export default function AboutPage() {
               </p>
 
               <div className={styles.founderSignatureBlock}>
+                <BrandLogo variant="stacked-dark" height={54} style={{ marginBottom: 16 }} />
                 <span className={styles.foundersNames}>NISHI & PRATEEK</span>
                 <span className={styles.foundersRole}>
                   Founders, Carats by Grace

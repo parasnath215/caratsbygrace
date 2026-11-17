@@ -353,7 +353,6 @@ export default function CartDrawer({
         {items.length === 0 ? (
           /* ---------- Empty ---------- */
           <div className="cd-empty">
-            <div className="cd-empty__spark" aria-hidden="true">✦ ✦ ✦</div>
             <h3>Your bag is empty</h3>
             <p>Begin with the new edit — pieces made to be worn, not kept away.</p>
             <button className="cd-cta" onClick={onContinueShopping || onClose}>

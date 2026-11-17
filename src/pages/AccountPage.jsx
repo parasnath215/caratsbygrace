@@ -342,7 +342,7 @@ export default function AccountPage() {
                     rel="noreferrer"
                     className="ac-btn ac-btn--solid"
                   >
-                    Book Atelier Consultation ✦
+                    Book Atelier Consultation
                   </a>
                 </div>
               </div>

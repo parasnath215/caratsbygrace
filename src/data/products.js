@@ -4,15 +4,18 @@
    ============================================================ */
 
 export const INITIAL_PRODUCTS = [
-  // ── Exclusive / One of One Creations (Designs That Never Repeat) ─────────
+  // ── The Exclusive Collection (Singular One-of-One Creations) ─────────────
   {
     id: 'cg-ex-001',
     slug: 'the-empress-pear-suite',
     name: 'The Empress Pear Diamond Suite',
     category: 'necklaces',
-    collection: 'the-empress',
+    collection: 'the-exclusive-collection',
     isOneOfOne: true,
+    isExclusiveCollection: true,
     status: 'available', // 'available' | 'sold'
+    price: 1850000,
+    priceDisplay: '₹18,50,000',
     specs: '18K White Gold · 7.50 ct Total Weight · VVS1 Clarity · D-E Colour · IGI Certified',
     metal: '18K White Gold',
     diamondShape: 'Pear & Round Brilliant',
@@ -23,6 +26,8 @@ export const INITIAL_PRODUCTS = [
     certification: 'IGI Certified (Grown Diamond)',
     description:
       'Created as a singular, never-to-be-repeated atelier masterwork. A cascading rivière of pear-shaped grown diamonds tapering into a magnificent 3.50 ct centre drop.',
+    story:
+      'Conceived over six months in our private atelier, The Empress Pear Diamond Suite balances regal majesty with fluid ergonomic weightlessness. Each pear-shaped grown diamond is individually calibrated for fire and symmetry.',
     images: [
       '/assets/model2/cg_jewellers8471.webp',
       '/assets/model2/cg_jewellers8620.webp',
@@ -37,9 +42,12 @@ export const INITIAL_PRODUCTS = [
     slug: 'solis-yellow-cushion-ring',
     name: 'Solis Fancy Vivid Yellow Cushion Ring',
     category: 'rings',
-    collection: 'the-empress',
+    collection: 'the-exclusive-collection',
     isOneOfOne: true,
+    isExclusiveCollection: true,
     status: 'available',
+    price: 680000,
+    priceDisplay: '₹6,80,000',
     specs: '18K Two-Tone Gold · 3.20 ct Fancy Vivid Yellow Cushion · VVS2 Clarity · IGI Certified',
     metal: '18K Yellow & White Gold',
     diamondShape: 'Cushion Cut',
@@ -50,6 +58,8 @@ export const INITIAL_PRODUCTS = [
     certification: 'IGI Certified',
     description:
       'An arresting one-of-a-kind statement ring centering a vivid golden-yellow grown diamond within micro-pavé halos of brilliant colourless diamonds.',
+    story:
+      'The Solis ring captures the golden warmth of midday sun. The canary cushion centerpiece has intense optical purity, framed in 18K yellow gold prongs on a platinum basket.',
     images: [
       '/assets/model1/m1_8403_final.webp',
       '/assets/model1/m1_8425_final.webp',
@@ -63,10 +73,13 @@ export const INITIAL_PRODUCTS = [
     slug: 'nocturne-emerald-cut-choker',
     name: 'Nocturne Geometric Diamond Choker',
     category: 'necklaces',
-    collection: 'the-nocturne-edit',
+    collection: 'the-exclusive-collection',
     isOneOfOne: true,
+    isExclusiveCollection: true,
     status: 'sold', // Archived sold piece
-    specs: '18K White Gold · 10.20 ct Total Weight · VVS Clarity · Sold to Private Collector',
+    price: null,
+    priceDisplay: 'Acquired · Private Collection',
+    specs: '18K White Gold · 10.20 ct Total Weight · VVS Clarity · Acquired by Private Collector',
     metal: '18K White Gold',
     diamondShape: 'Emerald & Baguette Cut',
     caratWeight: '10.20 ct TW',
@@ -76,6 +89,8 @@ export const INITIAL_PRODUCTS = [
     certification: 'IGI Certified',
     description:
       'An archival one-of-one creation crafted once and forever retired. Art-deco architectural geometry featuring calibrated baguette and step-cut grown diamonds.',
+    story:
+      'Acquired by a private patron and permanently retired. Its step-cut architecture creates a mesmerizing hall-of-mirrors scintillation that will never be replicated.',
     images: [
       '/assets/model2/m2_8090.webp',
       '/assets/model2/m2_8095.webp',
@@ -89,9 +104,12 @@ export const INITIAL_PRODUCTS = [
     slug: 'aurora-sculpted-mesh-cuff',
     name: 'Aurora Architectural Diamond Cuff',
     category: 'bracelets',
-    collection: 'the-empress',
+    collection: 'the-exclusive-collection',
     isOneOfOne: true,
+    isExclusiveCollection: true,
     status: 'available',
+    price: 840000,
+    priceDisplay: '₹8,40,000',
     specs: '18K Yellow Gold · 4.80 ct Brilliant Pavé · VVS1 Clarity · Hinged Silhouette',
     metal: '18K Yellow Gold',
     diamondShape: 'Round Brilliant & Marquise',
@@ -102,9 +120,259 @@ export const INITIAL_PRODUCTS = [
     certification: 'IGI Certified',
     description:
       'Individually sculpted by hand with articulated gold mesh and pavé-set grown diamonds that catch ambient light from every viewing angle.',
+    story:
+      'Engineered with an invisible internal spring clasp, the Aurora cuff contours like a second skin while radiating 4.80 carats of handset pavé diamonds.',
     images: [
       '/assets/model2/m2_8124.webp',
       '/assets/model2/m2_8182.webp',
+    ],
+    isNew: true,
+    isBestseller: false,
+    featured: true,
+  },
+  {
+    id: 'cg-ex-005',
+    slug: 'sitara-marquise-riviere',
+    name: 'Sitara Celestial Marquise Rivière',
+    category: 'necklaces',
+    collection: 'the-exclusive-collection',
+    isOneOfOne: true,
+    isExclusiveCollection: true,
+    status: 'available',
+    price: 1420000,
+    priceDisplay: '₹14,20,000',
+    specs: '18K Rose & White Gold · 8.40 ct Marquise Diamonds · VVS1 · IGI Certified',
+    metal: '18K Two-Tone Gold',
+    diamondShape: 'Marquise Brilliant',
+    caratWeight: '8.40 ct TW',
+    clarity: 'VVS1',
+    colour: 'D-E',
+    cut: 'Super Ideal',
+    certification: 'IGI Certified',
+    description:
+      'A continuous stellar constellation of marquise-cut grown diamonds, set with delicate knife-edge claws that make each stone appear to float on the collarbone.',
+    story:
+      'Inspired by starlight over nocturnal dunes. 42 hand-selected marquise diamonds arranged in gradual ascension towards a majestic double-marquise drop.',
+    images: [
+      '/assets/model2/cg_jewellers8625.webp',
+      '/assets/model2/cg_jewellers8471.webp',
+    ],
+    isNew: true,
+    isBestseller: false,
+    featured: true,
+  },
+  {
+    id: 'cg-ex-006',
+    slug: 'vespera-radiant-solitaire-ring',
+    name: 'Vespera Radiant-Cut Solitaire Ring',
+    category: 'rings',
+    collection: 'the-exclusive-collection',
+    isOneOfOne: true,
+    isExclusiveCollection: true,
+    status: 'available',
+    price: 790000,
+    priceDisplay: '₹7,90,000',
+    specs: '950 Platinum · 4.10 ct Radiant Cut VVS1 · D Colour · Architectural Basket',
+    metal: '950 Platinum',
+    diamondShape: 'Radiant Cut',
+    caratWeight: '4.10 ct Centre',
+    clarity: 'VVS1',
+    colour: 'D Colour (Colourless)',
+    cut: 'Super Ideal',
+    certification: 'IGI Certified',
+    description:
+      'A formidable 4.10-carat D-Colour radiant diamond commanding maximum brilliance, mounted in bespoke 950 platinum with micro-French pavé gallery rails.',
+    story:
+      'Radiant faceting marries the geometric purity of an emerald cut with the fire of a round brilliant. Only one example crafted in the history of the atelier.',
+    images: [
+      '/assets/model1/m1_8252_final.webp',
+      '/assets/model1/m1_8253_final.webp',
+    ],
+    isNew: true,
+    isBestseller: false,
+    featured: true,
+  },
+  {
+    id: 'cg-ex-007',
+    slug: 'kavya-royal-chandelier-earrings',
+    name: 'Kavya Royal Chandelier Ear-Pendants',
+    category: 'earrings',
+    collection: 'the-exclusive-collection',
+    isOneOfOne: true,
+    isExclusiveCollection: true,
+    status: 'sold',
+    price: null,
+    priceDisplay: 'Acquired · Private Collection',
+    specs: '18K White Gold · 6.20 ct Total Weight · VVS Clarity · Acquired by Private Patron',
+    metal: '18K White Gold',
+    diamondShape: 'Pear & Marquise Cut',
+    caratWeight: '6.20 ct TW',
+    clarity: 'VVS',
+    colour: 'D-F',
+    cut: 'Ideal',
+    certification: 'IGI Certified',
+    description:
+      'Archival heirloom ear-pendants featuring sovereign chandelier drops that dance in kinetic harmony with the wearer’s movement.',
+    story:
+      'This masterpiece found its home during our private salon preview and has been permanently archived. No second pairing will ever be created.',
+    images: [
+      '/assets/model2/m2_8467.webp',
+      '/assets/model2/m2_8463.webp',
+    ],
+    isNew: false,
+    isBestseller: false,
+    featured: true,
+  },
+  {
+    id: 'cg-ex-008',
+    slug: 'seraphina-baguette-collar',
+    name: 'Seraphina Tapered Baguette Collar',
+    category: 'necklaces',
+    collection: 'the-exclusive-collection',
+    isOneOfOne: true,
+    isExclusiveCollection: true,
+    status: 'available',
+    price: 1260000,
+    priceDisplay: '₹12,60,000',
+    specs: '18K Yellow Gold · 7.80 ct Baguette & Brilliant Diamonds · VVS1 · Hand-Articulated',
+    metal: '18K Yellow Gold',
+    diamondShape: 'Baguette & Round Brilliant',
+    caratWeight: '7.80 ct TW',
+    clarity: 'VVS1',
+    colour: 'E-F',
+    cut: 'Step Cut & Brilliant',
+    certification: 'IGI Certified',
+    description:
+      'A modern sculptural statement choker composed of calibrated tapered baguettes flanked by micro-claw brilliants in warm 18K yellow gold.',
+    story:
+      'Engineered over 140 bench hours. Each baguette is custom step-cut to fit the tapering arc of the collarbone with micrometer precision.',
+    images: [
+      '/assets/model2/m2_8353.webp',
+      '/assets/model2/m2_8365.webp',
+    ],
+    isNew: true,
+    isBestseller: false,
+    featured: true,
+  },
+  {
+    id: 'cg-ex-009',
+    slug: 'mira-floating-halo-solitaire',
+    name: 'Mira Floating Halo Solitaire Ring',
+    category: 'rings',
+    collection: 'the-exclusive-collection',
+    isOneOfOne: true,
+    isExclusiveCollection: true,
+    status: 'available',
+    price: 540000,
+    priceDisplay: '₹5,40,000',
+    specs: '18K Rose Gold · 2.70 ct Oval Solitaire · VVS1 Clarity · Floating Diamond Gallery',
+    metal: '18K Rose Gold',
+    diamondShape: 'Oval Brilliant',
+    caratWeight: '2.70 ct Centre',
+    clarity: 'VVS1',
+    colour: 'E',
+    cut: 'Super Ideal',
+    certification: 'IGI Certified',
+    description:
+      'A luminous 2.70 ct oval grown diamond suspended over a hidden floating diamond collar, allowing 360-degree light absorption.',
+    story:
+      'Warm blush 18K rose gold contrasts with icy VVS1 grown diamond scintillation. Designed as a romantic yet uncompromising one-of-one silhouette.',
+    images: [
+      '/assets/model1/m1_8404_final.webp',
+      '/assets/model1/m1_8403_final.webp',
+    ],
+    isNew: true,
+    isBestseller: false,
+    featured: true,
+  },
+  {
+    id: 'cg-ex-010',
+    slug: 'astraea-sculptural-diamond-bangle',
+    name: 'Astraea Sculptural Diamond Bangle',
+    category: 'bracelets',
+    collection: 'the-exclusive-collection',
+    isOneOfOne: true,
+    isExclusiveCollection: true,
+    status: 'sold',
+    price: null,
+    priceDisplay: 'Acquired · Private Collection',
+    specs: '18K Yellow Gold · 5.10 ct TW · VVS Clarity · Acquired by Private Collector',
+    metal: '18K Yellow Gold',
+    diamondShape: 'Round Brilliant & Pear',
+    caratWeight: '5.10 ct TW',
+    clarity: 'VVS',
+    colour: 'D-F',
+    cut: 'Ideal',
+    certification: 'IGI Certified',
+    description:
+      'A bypass structured open bangle with cascading diamond clusters at each terminus. Acquired and retired forever.',
+    story:
+      'This iconic design marked the atelier’s sovereign exploration of sculptural open kadas. The original master wax has been destroyed after casting.',
+    images: [
+      '/assets/model1/m1_8247_final.webp',
+      '/assets/model1/m1_8201_final.webp',
+    ],
+    isNew: false,
+    isBestseller: false,
+    featured: true,
+  },
+  {
+    id: 'cg-ex-011',
+    slug: 'elysian-cascading-diamond-drops',
+    name: 'Elysian Cascading Diamond Drops',
+    category: 'earrings',
+    collection: 'the-exclusive-collection',
+    isOneOfOne: true,
+    isExclusiveCollection: true,
+    status: 'available',
+    price: 490000,
+    priceDisplay: '₹4,90,000',
+    specs: '18K White Gold · 3.50 ct Pear & Round Diamonds · VVS1 Clarity · Articulated Drops',
+    metal: '18K White Gold',
+    diamondShape: 'Pear & Round Cut',
+    caratWeight: '3.50 ct TW',
+    clarity: 'VVS1',
+    colour: 'D-E',
+    cut: 'Super Ideal',
+    certification: 'IGI Certified',
+    description:
+      'Dramatic three-tiered drop earrings that catch every movement with shimmering diamond refractions, handcrafted in 18K white gold.',
+    story:
+      'Engineered with micro-hinges to prevent twisting while worn, ensuring the pear-shaped centerpieces remain forward-facing under evening lighting.',
+    images: [
+      '/assets/model1/m1_8440_final.webp',
+      '/assets/model1/m1_8441_final.webp',
+    ],
+    isNew: true,
+    isBestseller: false,
+    featured: true,
+  },
+  {
+    id: 'cg-ex-012',
+    slug: 'zenith-art-deco-signet-ring',
+    name: 'Zenith Art Deco Signet Solitaire',
+    category: 'rings',
+    collection: 'the-exclusive-collection',
+    isOneOfOne: true,
+    isExclusiveCollection: true,
+    status: 'available',
+    price: 610000,
+    priceDisplay: '₹6,10,000',
+    specs: '18K Yellow Gold · 3.00 ct Emerald Cut VVS1 · Fluted Architecture',
+    metal: '18K Yellow Gold',
+    diamondShape: 'Emerald Cut',
+    caratWeight: '3.00 ct Centre',
+    clarity: 'VVS1',
+    colour: 'F Colour',
+    cut: 'Step Cut',
+    certification: 'IGI Certified',
+    description:
+      'A bold architectural signet ring holding an exceptional 3.00 ct emerald-cut diamond in flush bezel setting, with fluted gold shanks.',
+    story:
+      'A nod to modern sovereign jewelry, celebrating solid geometric presence and the pure, undisturbed crystal transparency of grown diamond step faceting.',
+    images: [
+      '/assets/model2/m2_8186.webp',
+      '/assets/model2/m2_8188.webp',
     ],
     isNew: true,
     isBestseller: false,
@@ -609,7 +877,16 @@ export function getStoredProducts() {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return INITIAL_PRODUCTS;
     const parsed = JSON.parse(raw);
-    return Array.isArray(parsed) && parsed.length > 0 ? parsed : INITIAL_PRODUCTS;
+    if (Array.isArray(parsed) && parsed.length > 0) {
+      // If cached data lacks the new exclusive collection items, refresh with INITIAL_PRODUCTS
+      const hasExclusive = parsed.some((p) => p.isExclusiveCollection);
+      if (!hasExclusive) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(INITIAL_PRODUCTS));
+        return INITIAL_PRODUCTS;
+      }
+      return parsed;
+    }
+    return INITIAL_PRODUCTS;
   } catch (err) {
     console.error('Failed to read products from storage', err);
     return INITIAL_PRODUCTS;
