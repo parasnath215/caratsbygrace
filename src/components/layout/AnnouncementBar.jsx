@@ -5,7 +5,7 @@ import styles from './AnnouncementBar.module.css';
 // [PLACEHOLDER: confirm messages with client]
 const MESSAGES = [
   '✦ Private Salon Viewings & Bespoke Consultations Available',
-  '✦ Certified BIS 750 Hallmarked Gold & Natural Diamonds',
+  '✦ Certified BIS 750 Hallmarked Gold & Lab-Grown Diamonds',
   'Book a personal atelier consultation →',
 ];
 

@@ -321,7 +321,7 @@ export const faqs = [
   {
     question: 'What hallmark certifications do your pieces carry?',
     answer:
-      'All our gold jewellery carries BIS hallmark certification as mandated by the Bureau of Indian Standards. Diamond pieces are accompanied by IGI or GIA certificates specifying cut, clarity, colour, and carat weight.',
+      'All our gold jewellery carries BIS hallmark certification as mandated by the Bureau of Indian Standards. Our lab-grown diamond pieces are accompanied by IGI certificates specifying cut, clarity, colour, and carat weight.',
   },
   {
     question: 'Do you offer customisation or bespoke jewellery services?',
@@ -336,7 +336,7 @@ export const faqs = [
   {
     question: 'How do you ensure responsible sourcing?',
     answer:
-      'We source all diamonds through Kimberley Process certified channels and work exclusively with ethically licensed gemstone suppliers. Our gold is sourced from LBMA-accredited refiners committed to responsible mining practices.',
+      'We work with ethically created, certified lab-grown diamonds, offering full transparency and conscious brilliance with zero environmental disruption. Our gold is sourced from LBMA-accredited refiners committed to responsible standards.',
   },
   {
     question: 'Can I get my jewellery resized or repaired after purchase?',

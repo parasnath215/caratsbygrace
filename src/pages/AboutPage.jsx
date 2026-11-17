@@ -286,7 +286,7 @@ export default function AboutPage() {
           <span className="ab-eyebrow">The House of Grace</span>
           <h1 className="ab-display ab-hero__title">Every Carat, A Choice.</h1>
           <p className="ab-hero__lede">
-            Founded by Nishi Athwani, Carats by Grace was born from a desire to reimagine modern diamond jewellery — pieces considered in proportion, crafted with restraint, and made to be lived in every day.
+            Founded by Nishi Athwani, Carats by Grace was born from a desire to reimagine modern lab-grown diamond jewellery — pieces considered in proportion, crafted with restraint, and made to be lived in every day.
           </p>
         </div>
       </section>
@@ -310,7 +310,7 @@ export default function AboutPage() {
                 For generations, fine jewellery in India has often been reserved for rare family celebrations and locked away in bank vaults. Carats by Grace was born to change that dialogue.
               </p>
               <p>
-                Founded by creator and fashion storyteller <strong>Nishi Athwani</strong>, the brand brings a fresh, contemporary sensibility to the world of fine diamonds. Each piece is designed to transition seamlessly from your morning espresso to evening galas — marrying heirloom longevity with daily wearability.
+                Founded by creator and fashion storyteller <strong>Nishi Athwani</strong>, the brand brings a fresh, contemporary sensibility to the world of certified lab-grown diamonds. Each piece is designed to transition seamlessly from your morning espresso to evening galas — marrying heirloom longevity with daily wearability.
               </p>
               <div className="ab-quote">
                 <p>

@@ -259,13 +259,13 @@ const DEFAULT_PRODUCT = {
   ],
   details: {
     "Product details": [
-      "18K hallmarked yellow gold with a 0.42 ct centre diamond.",
-      "VVS-EF grade clarity with conflict-free origin.",
+      "18K hallmarked yellow gold with a 0.42 ct centre lab-grown diamond.",
+      "VVS-EF grade clarity lab-grown diamond with conscious brilliance.",
       "Individually hand-finished in our atelier.",
     ],
     "Certification": [
       "Certified by the Bureau of Indian Standards (BIS Hallmark 750).",
-      "Accompanied by an individual laboratory diamond grading report.",
+      "Accompanied by an individual laboratory grading report (IGI).",
     ],
     "Care": [
       "Store separately in the signature suede pouch provided.",

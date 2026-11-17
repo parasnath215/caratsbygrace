@@ -400,7 +400,7 @@ export default function ProductQuickViewModal({ product, isOpen, onClose }) {
 
                   <div className="pq-trust-list">
                     <div className="pq-trust-item">
-                      <span>✦</span> Certified VVS-EF Diamond & BIS Hallmarked
+                      <span>✦</span> Certified VVS-EF Lab-Grown Diamond & BIS Hallmarked
                     </div>
                     <div className="pq-trust-item">
                       <span>✦</span> Private Salon & Virtual Atelier Viewing Available
@@ -471,7 +471,7 @@ export default function ProductQuickViewModal({ product, isOpen, onClose }) {
 
                   <p className="pq-desc">
                     Made quietly by master artisans. Each piece is set with meticulously
-                    inspected diamonds and individually stamped with hallmark certification.
+                    inspected lab-grown diamonds and individually stamped with hallmark certification.
                     Bespoke customization and private viewing available on request.
                   </p>
 
@@ -601,7 +601,7 @@ export default function ProductQuickViewModal({ product, isOpen, onClose }) {
                 <p>
                   Thank you, <strong>{clientName}</strong>. Our private jewellery
                   concierge has received your enquiry for <strong>{product.name}</strong>.
-                  We will contact you via WhatsApp / phone shortly with certified diamond
+                  We will contact you via WhatsApp / phone shortly with certified lab-grown diamond
                   details, video certificates, and custom options.
                 </p>
 

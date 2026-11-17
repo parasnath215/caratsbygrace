@@ -267,7 +267,7 @@ export default function CraftsmanshipPage() {
           <span className="cr-eyebrow">Atelier Standards</span>
           <h1 className="cr-display cr-hero__title">Considered At Every Step.</h1>
           <p className="cr-hero__lede">
-            Fine jewellery engineered with architectural balance, handcrafted in certified 18K solid gold, and set with master gemological precision.
+            Fine jewellery engineered with architectural balance, handcrafted in certified 18K solid gold, and set with master gemological precision using certified lab-grown diamonds.
           </p>
         </div>
       </section>
@@ -294,7 +294,7 @@ export default function CraftsmanshipPage() {
                 By blending cutting-edge optical modeling with age-old bench goldsmithing techniques, our master artisans ensure that every piece is structurally sound, brilliantly refractive, and durable enough to wear without hesitation.
               </p>
               <p>
-                Every jewel created in our atelier carries an authentic BIS 750 hallmark stamp for gold purity and is accompanied by laboratory diamond certification.
+                Every jewel created in our atelier carries an authentic BIS 750 hallmark stamp for gold purity and is set with IGI-certified lab-grown diamonds offering conscious brilliance and identical physical fire.
               </p>
             </div>
           </div>
@@ -312,9 +312,9 @@ export default function CraftsmanshipPage() {
           <div className="cr-steps__grid">
             <div className="cr-step-card">
               <div className="cr-step-card__num">01</div>
-              <h3>Curated Diamonds</h3>
+              <h3>Curated Lab-Grown Diamonds</h3>
               <p>
-                Each diamond is hand-selected for optimal cut symmetry, clarity, and vivid light dispersion. Graded and verified with recognized laboratory reports (IGI).
+                Each lab-grown diamond is hand-selected for optimal cut symmetry, clarity, and vivid light dispersion. Graded and verified with recognized laboratory reports (IGI).
               </p>
             </div>
 

@@ -37,12 +37,6 @@ const footerLinks = {
     { label: 'Our Story', href: '/about' },
     { label: 'Craftsmanship', href: '/craftsmanship' },
   ],
-  Atelier: [
-    { label: 'Bespoke Commissions', href: '/bespoke' },
-    { label: 'Jewelry Care Guide', href: '/policies/care' },
-    { label: 'Privacy Policy', href: '/policies/privacy' },
-    { label: 'Terms of Service', href: '/policies/terms' },
-  ],
   Contact: [
     { label: 'hello@caratsbygrace.com', href: 'mailto:hello@caratsbygrace.com' },
     { label: '+91 91205 30531', href: 'tel:+919120530531' },
@@ -127,7 +121,7 @@ export default function Footer() {
 
             {/* Atelier credentials */}
             <p className={styles.payments} aria-label="Atelier Credentials">
-              Book Appointment · IGI Certified Diamonds
+              Book Appointment · IGI Certified Lab-Grown Diamonds
             </p>
 
             {/* Back to top */}

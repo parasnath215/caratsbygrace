@@ -613,7 +613,7 @@ const FAQS = [
   },
   {
     q: "Are your pieces certified?",
-    a: "Yes. Every piece of Carats by Grace fine jewellery is crafted in hallmarked 18K gold (BIS Hallmark 750) and accompanied by individual diamond grading certification from recognized gemmological laboratories (GIA / IGI)."
+    a: "Yes. Every piece of Carats by Grace fine jewellery is crafted in hallmarked 18K gold (BIS Hallmark 750) and set with certified lab-grown diamonds, accompanied by individual grading certification from recognized gemmological laboratories (such as IGI)."
   },
   {
     q: "What are your shipping timelines?",
@@ -1078,7 +1078,7 @@ function Hero({ scrolled }) {
 /* Trust */
 function Trust() {
   const items = [
-    { icon: "shield-check", label: "IGI Certified Diamonds" },
+    { icon: "shield-check", label: "Certified Lab-Grown Diamonds" },
     { icon: "gem", label: "Exceptional Craftsmanship" },
     { icon: "heart", label: "Made for Your Story" },
     { icon: "calendar", label: "Personalised Consultations" },
@@ -1364,8 +1364,8 @@ function Craft() {
   const steps = [
     {
       n: "01",
-      t: "Choosing your diamond",
-      d: "We select each diamond for its sparkle, cut, and clarity, so your jewellery shines beautifully from every angle."
+      t: "Curating lab-grown diamonds",
+      d: "We select each lab-grown diamond for its sparkle, cut, and clarity, so your jewellery shines beautifully from every angle."
     },
     {
       n: "02",
@@ -1458,7 +1458,7 @@ function Why() {
   const items = [
     { t: "Considered design", d: "Proportions, weight, and silhouette chosen with restraint to celebrate the beauty of solid precious metals." },
     { t: "Everyday fine", d: "Crafted for effortless daily wear with secure low-profile settings that transition seamlessly into the evening." },
-    { t: "Heirloom craftsmanship", d: "Individually hallmarked 18K gold and conflict-free natural diamonds, accompanied by lifetime authentication." },
+    { t: "Heirloom craftsmanship", d: "Individually hallmarked 18K gold and certified lab-grown diamonds, accompanied by lifetime authentication." },
   ];
   return (
     <section className="cg-section cg-wrap" aria-labelledby="why-h">
@@ -1792,7 +1792,7 @@ function Footer() {
         <div className="cg-footer__bottom">
           <span>© {new Date().getFullYear()} Carats by Grace. All rights reserved.</span>
           <div className="cg-footer__credential" aria-label="Atelier Credentials">
-            Private Salon Viewing by Appointment · IGI Certified Diamonds
+            Private Salon Viewing by Appointment · IGI Certified Lab-Grown Diamonds
           </div>
           <a className="cg-backtop" href="#top"
             onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}>
