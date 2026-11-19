@@ -2,7 +2,7 @@
 // Carats by Grace — Showroom Experience, Location & Consultation Booking
 
 import React from 'react';
-import { MapPin, Phone, Mail, Clock, MessageCircle, ExternalLink, Calendar } from 'lucide-react';
+import { MapPin, Phone, Clock, MessageCircle, ExternalLink, Calendar } from 'lucide-react';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 import {
   SHOWROOM_ADDRESS,
@@ -80,18 +80,6 @@ export default function ContactPage() {
                   <p className={styles.infoValue}>
                     <a href={`tel:${SHOWROOM_PHONE.replace(/\s+/g, '')}`}>
                       {SHOWROOM_PHONE}
-                    </a>
-                  </p>
-                </div>
-              </div>
-
-              <div className={styles.infoItem}>
-                <Mail className={styles.infoIcon} size={22} />
-                <div>
-                  <span className={styles.infoLabel}>Email</span>
-                  <p className={styles.infoValue}>
-                    <a href="mailto:hello@caratsbygrace.com">
-                      hello@caratsbygrace.com
                     </a>
                   </p>
                 </div>

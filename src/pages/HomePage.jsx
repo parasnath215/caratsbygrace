@@ -24,6 +24,10 @@ import {
   User,
   Star,
   CheckCircle2,
+  CircleDollarSign,
+  RefreshCw,
+  Truck,
+  Crown,
 } from 'lucide-react';
 import BrandLogo from '../components/ui/BrandLogo';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
@@ -43,7 +47,7 @@ import {
   GOOGLE_MAPS_LINK,
   INSTAGRAM_LINK,
 } from '../utils/whatsapp';
-import ExclusiveAnnouncementSection from '../components/exclusive/ExclusiveAnnouncementSection';
+import ExclusiveSwipableSection from '../components/exclusive/ExclusiveSwipableSection';
 import InstagramReelsSection from '../components/home/InstagramReelsSection';
 
 /* ===========================================================================
@@ -377,21 +381,32 @@ const HOME_CSS = `
 
 /* ── Why Carats by Grace ── */
 .cg-why-grid {
-  display: grid; grid-template-columns: repeat(5, 1fr);
-  gap: 20px; margin-top: 40px; text-align: center;
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 24px; margin-top: 44px; text-align: center;
 }
 .cg-why-card {
-  padding: 28px 18px; background: var(--ivory); border: 1px solid var(--line);
+  padding: 32px 20px 28px; background: var(--ivory); border: 1px solid var(--line);
   border-radius: 2px; display: flex; flex-direction: column; align-items: center;
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.cg-why-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--gold);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.05);
 }
 .cg-why-icon {
-  width: 48px; height: 48px; border-radius: 50%;
+  width: 50px; height: 50px; border-radius: 50%;
   background: rgba(198, 161, 91, 0.12); color: var(--burgundy);
   display: flex; align-items: center; justify-content: center; margin-bottom: 16px;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+.cg-why-card:hover .cg-why-icon {
+  background: var(--burgundy);
+  color: var(--ivory);
 }
 .cg-why-title {
-  font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase;
-  font-weight: 600; margin: 0 0 8px; color: var(--ink);
+  font-size: 0.8rem; letter-spacing: 0.14em; text-transform: uppercase;
+  font-weight: 600; margin: 0 0 10px; color: var(--ink); line-height: 1.45;
 }
 .cg-why-desc { font-size: 0.84rem; line-height: 1.55; color: var(--muted); margin: 0; }
 
@@ -476,7 +491,7 @@ const HOME_CSS = `
 /* Responsive */
 @media (max-width: 1100px) {
   .cg-cat-grid { grid-template-columns: repeat(3, 1fr); }
-  .cg-why-grid { grid-template-columns: repeat(3, 1fr); }
+  .cg-why-grid { grid-template-columns: repeat(2, 1fr); }
   .cg-testi-grid { grid-template-columns: 1fr; }
   .cg-coll-grid { grid-template-columns: 1fr; }
   .cg-insta-grid { grid-template-columns: repeat(3, 1fr); }
@@ -494,8 +509,12 @@ const HOME_CSS = `
     gap: 32px;
   }
   .cg-excl-gallery { grid-template-columns: 1fr; }
-  .cg-why-grid { grid-template-columns: 1fr; }
+  .cg-why-grid { grid-template-columns: repeat(2, 1fr); }
   .cg-cat-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 600px) {
+  .cg-why-grid { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 540px) {
@@ -576,11 +595,6 @@ export default function HomePage() {
       </section>
 
       {/* ============================================================
-          EXCLUSIVE COLLECTION ANNOUNCEMENT (Landing-Page Block)
-          ============================================================ */}
-      <ExclusiveAnnouncementSection />
-
-      {/* ============================================================
           PART 2: SECTION 5 — SHOP BY CATEGORY
           ============================================================ */}
       <section className="cg-section" aria-label="Shop by Category">
@@ -604,6 +618,12 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* ============================================================
+          THE EXCLUSIVE COLLECTION (Swipable Section with View More Card)
+          Placed just above Featured Collections
+          ============================================================ */}
+      <ExclusiveSwipableSection />
 
       {/* ============================================================
           PART 2: SECTION 6 — FEATURED COLLECTIONS
@@ -725,102 +745,88 @@ export default function HomePage() {
       </section>
 
       {/* ============================================================
-          PART 2: SECTION 8 — THE ART OF GROWN DIAMONDS
-          ============================================================ */}
-      <section className="cg-section cg-science-section">
-        <div className="cg-wrap">
-          <div className="cg-science-grid">
-            <div>
-              <span className="cg-eyebrow">The Science of Brilliance</span>
-              <h2 className="cg-display" style={{ fontSize: 'clamp(2.2rem, 4.2vw, 3.4rem)' }}>
-                THE SCIENCE OF BRILLIANCE.<br />
-                THE ART OF PERFECTION.
-              </h2>
-              <p style={{ fontSize: '1.05rem', lineHeight: 1.8, color: '#4A3E3D' }}>
-                Grown diamonds possess the same essential physical, chemical and
-                optical properties as mined diamonds. Created through advanced
-                technology, they offer the same diamond brilliance with a
-                different origin story.
-              </p>
-
-              <div className="cg-comp-pills">
-                <div className="cg-comp-pill">
-                  <span>Carbon Composition</span>
-                  <strong>100% Pure Crystallized Carbon</strong>
-                </div>
-                <div className="cg-comp-pill">
-                  <span>Hardness on Mohs Scale</span>
-                  <strong>10 (Equal to Mined Diamonds)</strong>
-                </div>
-                <div className="cg-comp-pill">
-                  <span>Optical Refractive Index</span>
-                  <strong>2.42 (Identical Scintillation & Fire)</strong>
-                </div>
-                <div className="cg-comp-pill">
-                  <span>Chemical Purity</span>
-                  <strong>Type IIa (Top 2% Purity in the World)</strong>
-                </div>
-              </div>
-
-              <Link to="/grown-diamonds" className="cg-btn cg-btn-solid">
-                DISCOVER GROWN DIAMONDS
-                <ArrowRight size={16} />
-              </Link>
-            </div>
-
-            <div style={{ position: 'relative', borderRadius: 2, overflow: 'hidden', boxShadow: '0 20px 48px rgba(0,0,0,0.1)' }}>
-              <img
-                src="/assets/model2/m2_8153.webp"
-                alt="Science and Art of Grown Diamonds"
-                loading="lazy"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ============================================================
-          PART 2: SECTION 10 — WHY CARATS BY GRACE?
+          PART 2: SECTION 10 — WHY CHOOSE CARATS BY GRACE?
           ============================================================ */}
       <section className="cg-section" style={{ background: '#FAF6F1', borderTop: '1px solid var(--line)' }}>
         <div className="cg-wrap">
-          <div style={{ textAlign: 'center', maxWidth: 640, margin: '0 auto' }}>
+          <div style={{ textAlign: 'center', maxWidth: 680, margin: '0 auto' }}>
             <span className="cg-eyebrow">The Atelier Distinction</span>
-            <h2 className="cg-display" style={{ fontSize: 'clamp(2rem, 3.8vw, 3rem)' }}>
-              Why Carats by Grace?
+            <h2 className="cg-display" style={{ fontSize: 'clamp(2rem, 3.8vw, 3rem)', fontStyle: 'italic', textTransform: 'uppercase' }}>
+              Why Choose Carats by Grace?
             </h2>
+            <p style={{ fontSize: '1.05rem', color: 'var(--muted)', marginTop: '-6px', marginBottom: '8px', lineHeight: 1.6 }}>
+              The assurance behind every brilliant creation.
+            </p>
           </div>
 
           <div className="cg-why-grid">
             <div className="cg-why-card">
               <div className="cg-why-icon"><Award size={22} /></div>
-              <h3 className="cg-why-title">IGI CERTIFIED DIAMONDS</h3>
-              <p className="cg-why-desc">Independently documented with microscopic laser inscription.</p>
-            </div>
-
-            <div className="cg-why-card">
-              <div className="cg-why-icon"><Compass size={22} /></div>
-              <h3 className="cg-why-title">EXCEPTIONAL CRAFTSMANSHIP</h3>
-              <p className="cg-why-desc">Hand-finished in solid 18K gold and 950 platinum.</p>
+              <h3 className="cg-why-title">01. IGI CERTIFIED DIAMONDS</h3>
+              <p className="cg-why-desc">Every diamond comes with trusted IGI certification and verified authenticity.</p>
             </div>
 
             <div className="cg-why-card">
               <div className="cg-why-icon"><Gem size={22} /></div>
-              <h3 className="cg-why-title">DISTINCTIVE DESIGNS</h3>
-              <p className="cg-why-desc">Art-deco and modern silhouettes made to stand apart.</p>
-            </div>
-
-            <div className="cg-why-card">
-              <div className="cg-why-icon"><Compass size={22} /></div>
-              <h3 className="cg-why-title">BESPOKE CUSTOMISATION</h3>
-              <p className="cg-why-desc">Tailored around your individual proportions and vision.</p>
+              <h3 className="cg-why-title">02. VVS CLARITY DIAMONDS</h3>
+              <p className="cg-why-desc">Exceptional brilliance, superior clarity and exquisite sparkle.</p>
             </div>
 
             <div className="cg-why-card">
               <div className="cg-why-icon"><ShieldCheck size={22} /></div>
-              <h3 className="cg-why-title">PERSONAL CONSULTATIONS</h3>
-              <p className="cg-why-desc">Private viewings in our Mahanagar, Lucknow salon.</p>
+              <h3 className="cg-why-title">03. BIS HALLMARKED GOLD</h3>
+              <p className="cg-why-desc">Gold jewellery crafted with BIS-hallmarked gold, assuring verified purity.</p>
             </div>
+
+            <div className="cg-why-card">
+              <div className="cg-why-icon"><CircleDollarSign size={22} /></div>
+              <h3 className="cg-why-title">04. ASSURED BUYBACK</h3>
+              <p className="cg-why-desc">Enjoy the confidence of an assured buyback policy.</p>
+            </div>
+
+            <div className="cg-why-card">
+              <div className="cg-why-icon"><RefreshCw size={22} /></div>
+              <h3 className="cg-why-title">05. LIFETIME EXCHANGE</h3>
+              <p className="cg-why-desc">The flexibility to exchange your jewellery with our lifetime exchange benefit.</p>
+            </div>
+
+            <div className="cg-why-card">
+              <div className="cg-why-icon"><Truck size={22} /></div>
+              <h3 className="cg-why-title">06. PAN INDIA DELIVERY</h3>
+              <p className="cg-why-desc">Bringing exceptional brilliance right to your doorstep, across India.</p>
+            </div>
+
+            <div className="cg-why-card">
+              <div className="cg-why-icon"><Crown size={22} /></div>
+              <h3 className="cg-why-title">07. EXCLUSIVE ONE-TIME DESIGNS</h3>
+              <p className="cg-why-desc">Distinctive creations, designed to be yours alone. No repeats, just exclusivity.</p>
+            </div>
+
+            <div className="cg-why-card">
+              <div className="cg-why-icon"><Compass size={22} /></div>
+              <h3 className="cg-why-title">08. BESPOKE CUSTOMISATION</h3>
+              <p className="cg-why-desc">Personalise your diamonds with designs crafted around your vision.</p>
+            </div>
+          </div>
+
+          <div style={{ textAlign: 'center', marginTop: 36 }}>
+            <Link
+              to="/purchase-policy"
+              style={{
+                fontSize: '0.76rem',
+                letterSpacing: '0.2em',
+                textTransform: 'uppercase',
+                color: 'var(--burgundy)',
+                fontWeight: 600,
+                textDecoration: 'underline',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 8,
+              }}
+            >
+              <span>Explore Full Lifetime Exchange &amp; Buy Back Terms</span>
+              <ArrowRight size={14} />
+            </Link>
           </div>
         </div>
       </section>
@@ -1035,68 +1041,6 @@ export default function HomePage() {
           PART 2: SECTION 15 — LIVE INSTAGRAM REELS INTEGRATION
           ============================================================ */}
       <InstagramReelsSection />
-
-      {/* ============================================================
-          FOOTER (Part 5, Section 23 — No Ecommerce / No Online Payment)
-          ============================================================ */}
-      <footer style={{ background: '#17120F', color: 'var(--ivory)', padding: '64px 0 32px', borderTop: '1px solid #2B2120' }}>
-        <div className="cg-wrap">
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 36, marginBottom: 48 }}>
-            <div>
-              <BrandLogo variant="light" height={44} />
-              <p style={{ color: 'rgba(250, 246, 241, 0.75)', fontSize: '0.88rem', lineHeight: 1.7, marginTop: 16 }}>
-                Carats by Grace — Premium grown diamond fine jewellery atelier.
-                Mahanagar, Lucknow.
-              </p>
-            </div>
-
-            <div>
-              <h4 style={{ fontSize: '0.74rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--gold)', marginBottom: 16 }}>
-                Quick Navigation
-              </h4>
-              <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 10, fontSize: '0.86rem' }}>
-                <li><Link to="/about" style={{ color: 'rgba(250, 246, 241, 0.8)' }}>About Us</Link></li>
-                <li><Link to="/collections" style={{ color: 'rgba(250, 246, 241, 0.8)' }}>Collections</Link></li>
-                <li><Link to="/exclusive-designs" style={{ color: 'rgba(250, 246, 241, 0.8)' }}>Exclusive Designs</Link></li>
-                <li><Link to="/grown-diamonds" style={{ color: 'rgba(250, 246, 241, 0.8)' }}>Grown Diamonds</Link></li>
-                <li><Link to="/contact" style={{ color: 'rgba(250, 246, 241, 0.8)' }}>Contact & Showroom</Link></li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 style={{ fontSize: '0.74rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--gold)', marginBottom: 16 }}>
-                Showroom & Concierge
-              </h4>
-              <p style={{ fontSize: '0.86rem', color: 'rgba(250, 246, 241, 0.8)', lineHeight: 1.6, margin: '0 0 10px' }}>
-                {SHOWROOM_ADDRESS}
-              </p>
-              <p style={{ fontSize: '0.86rem', color: 'rgba(250, 246, 241, 0.8)', margin: '0 0 10px' }}>
-                Tel: <a href={`tel:${SHOWROOM_PHONE.replace(/\s+/g, '')}`} style={{ color: 'var(--gold)' }}>{SHOWROOM_PHONE}</a>
-              </p>
-              <p style={{ fontSize: '0.86rem', color: 'rgba(250, 246, 241, 0.8)', margin: '0 0 16px' }}>
-                Email: <a href="mailto:hello@caratsbygrace.com" style={{ color: 'var(--gold)' }}>hello@caratsbygrace.com</a>
-              </p>
-              <a
-                href={GOOGLE_MAPS_LINK}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{ fontSize: '0.74rem', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--gold)' }}
-              >
-                View on Google Maps ↗
-              </a>
-            </div>
-          </div>
-
-          <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.1)', paddingTop: 24, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12, fontSize: '0.76rem', color: 'rgba(250, 246, 241, 0.6)' }}>
-            <span>© {new Date().getFullYear()} Carats by Grace. All rights reserved.</span>
-            <div style={{ display: 'flex', gap: 16 }}>
-              <Link to="/about" style={{ color: 'inherit' }}>Privacy Policy</Link>
-              <Link to="/about" style={{ color: 'inherit' }}>Terms of Service</Link>
-              <Link to="/admin" style={{ color: 'inherit' }}>Admin Portal</Link>
-            </div>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }

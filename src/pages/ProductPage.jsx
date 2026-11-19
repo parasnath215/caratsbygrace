@@ -669,41 +669,71 @@ export default function ProductPage() {
           <div className="pd-specs-card">
             <h3 className="pd-specs-title">
               <ShieldCheck size={14} />
-              Diamond & Atelier Specifications
+              Diamond &amp; Atelier Specifications
             </h3>
             <div className="pd-specs-grid">
+              {product.itemNo && (
+                <div className="pd-spec-item">
+                  <span className="pd-spec-label">Item No / SKU</span>
+                  <span className="pd-spec-val">{product.itemNo}</span>
+                </div>
+              )}
+              {product.designNo && (
+                <div className="pd-spec-item">
+                  <span className="pd-spec-label">Design Code</span>
+                  <span className="pd-spec-val">{product.designNo}</span>
+                </div>
+              )}
+              {product.huid && (
+                <div className="pd-spec-item">
+                  <span className="pd-spec-label">BIS Hallmark (HUID)</span>
+                  <span className="pd-spec-val" style={{ color: 'var(--burgundy)', fontWeight: 600 }}>{product.huid}</span>
+                </div>
+              )}
               <div className="pd-spec-item">
-                <span className="pd-spec-label">Diamond Type</span>
-                <span className="pd-spec-val">100% Grown Diamond</span>
-              </div>
-              <div className="pd-spec-item">
-                <span className="pd-spec-label">Diamond Shape</span>
-                <span className="pd-spec-val">{product.diamondShape || 'Round Brilliant'}</span>
-              </div>
-              <div className="pd-spec-item">
-                <span className="pd-spec-label">Carat Weight</span>
-                <span className="pd-spec-val">{product.caratWeight || 'Varies by selection'}</span>
-              </div>
-              <div className="pd-spec-item">
-                <span className="pd-spec-label">Clarity Grade</span>
-                <span className="pd-spec-val">{product.clarity || 'VVS (Very Very Slightly Included)'}</span>
-              </div>
-              <div className="pd-spec-item">
-                <span className="pd-spec-label">Colour Grade</span>
-                <span className="pd-spec-val">{product.colour || 'D – F (Colourless)'}</span>
-              </div>
-              <div className="pd-spec-item">
-                <span className="pd-spec-label">Cut Precision</span>
-                <span className="pd-spec-val">{product.cut || 'Excellent / Super Ideal'}</span>
+                <span className="pd-spec-label">Certification</span>
+                <span className="pd-spec-val">{product.certification || 'IGI Certified Diamond'}</span>
               </div>
               <div className="pd-spec-item">
                 <span className="pd-spec-label">Precious Metal</span>
                 <span className="pd-spec-val">{product.metal || '18K Hallmarked Gold'}</span>
               </div>
+              {product.netWeight > 0 && (
+                <div className="pd-spec-item">
+                  <span className="pd-spec-label">Gold Net Weight</span>
+                  <span className="pd-spec-val">{Number(product.netWeight).toFixed(3)} g (Gross: {Number(product.grossWeight).toFixed(3)}g)</span>
+                </div>
+              )}
               <div className="pd-spec-item">
-                <span className="pd-spec-label">Certification</span>
-                <span className="pd-spec-val">{product.certification || 'IGI Certified Diamond'}</span>
+                <span className="pd-spec-label">Diamond Weight</span>
+                <span className="pd-spec-val">{product.caratWeight || 'VVS Grown Diamonds'}</span>
               </div>
+              {product.diamondPcs > 0 && (
+                <div className="pd-spec-item">
+                  <span className="pd-spec-label">Diamond Pieces</span>
+                  <span className="pd-spec-val">{product.diamondPcs} pcs</span>
+                </div>
+              )}
+              <div className="pd-spec-item">
+                <span className="pd-spec-label">Diamond Shape &amp; Cut</span>
+                <span className="pd-spec-val">{product.diamondShape || 'Round Brilliant'}</span>
+              </div>
+              <div className="pd-spec-item">
+                <span className="pd-spec-label">Clarity &amp; Colour</span>
+                <span className="pd-spec-val">{product.clarity || 'VVS'} · {product.colour || 'D–F Colourless'}</span>
+              </div>
+              {product.stoneType && (
+                <div className="pd-spec-item" style={{ gridColumn: 'span 2' }}>
+                  <span className="pd-spec-label">Gemstone Accents</span>
+                  <span className="pd-spec-val">{product.stonePcs} pcs · {product.stoneWeight} ct {product.stoneType}</span>
+                </div>
+              )}
+              {product.diamondDetails && (
+                <div className="pd-spec-item" style={{ gridColumn: 'span 2' }}>
+                  <span className="pd-spec-label">Detailed Stone Lines</span>
+                  <span className="pd-spec-val" style={{ fontSize: '0.8rem', color: 'var(--muted)', lineHeight: 1.45 }}>{product.diamondDetails}</span>
+                </div>
+              )}
             </div>
           </div>
 

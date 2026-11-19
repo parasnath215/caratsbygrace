@@ -11,6 +11,7 @@ import React, {
   useRef,
   useState,
 } from "react";
+import { getStoredProducts } from "../../data/products";
 
 /* ===========================================================================
    1. STYLES
@@ -197,26 +198,22 @@ const COLLECTIONS = [
   { id: "high-jewellery", label: "High Jewellery", meta: "Collection" },
 ];
 
-const PRODUCTS = [
-  { id: "r1", name: "The Aurelia Ring", spec: "18K Gold · 0.42 ct", price: 64000, cat: "Rings", keywords: "ring gold solitaire aurelia",
-    img: "/assets/model1/m1_8252_final.webp" },
-  { id: "r2", name: "Ruby Halo", spec: "Rose Gold · Ruby", price: 132000, cat: "Rings", keywords: "ring ruby rose gold cocktail",
-    img: "/assets/model1/m1_8403_final.webp" },
-  { id: "r3", name: "Grace Solitaire", spec: "18K · 0.60 ct", price: 98000, cat: "Rings", keywords: "ring solitaire white gold bridal",
-    img: "/assets/model2/m2_8124.webp" },
-  { id: "e1", name: "Drop Lumière", spec: "18K · 0.30 ct", price: 76000, cat: "Earrings", keywords: "earrings drops gold diamonds",
-    img: "/assets/model1/m1_8440_final.webp" },
-  { id: "e2", name: "Petal Studs", spec: "Rose Gold", price: 32000, cat: "Earrings", keywords: "earrings studs rose gold everyday",
-    img: "/assets/model2/m2_8126.webp" },
-  { id: "e3", name: "Nightfall Hoops", spec: "18K · Diamonds", price: 118000, cat: "Earrings", keywords: "earrings hoops diamonds",
-    img: "/assets/model1/m1_8306_final.webp" },
-  { id: "n1", name: "Lumen Pendant", spec: "18K · 0.25 ct", price: 54000, cat: "Necklaces", keywords: "necklace pendant gold",
-    img: "/assets/model2/cg_jewellers8471.webp" },
-  { id: "n3", name: "Étoile Necklace", spec: "18K · Diamonds", price: 156000, cat: "Necklaces", keywords: "necklace diamonds bridal",
-    img: "/assets/model1/m1_8247_final.webp" },
-  { id: "b1", name: "Slip Bracelet", spec: "18K Gold", price: 58000, cat: "Bracelets", keywords: "bracelet gold everyday",
-    img: "/assets/model2/m2_8124.webp" },
-];
+const getSearchProducts = () => {
+  try {
+    return getStoredProducts().map((p) => ({
+      id: p.id,
+      slug: p.slug,
+      name: p.name,
+      spec: p.specs,
+      price: p.price,
+      cat: p.category,
+      keywords: `${p.name} ${p.itemNo || ''} ${p.designNo || ''} ${p.huid || ''} ${p.metal || ''} ${p.diamondShape || ''} ${p.category} ${p.diamondDetails || ''}`.toLowerCase(),
+      img: p.images[0] || '',
+    }));
+  } catch {
+    return [];
+  }
+};
 
 const RECENT_KEY = "cbg_recent_searches_v1";
 const RECENT_MAX = 6;
@@ -336,7 +333,7 @@ export default function SearchOverlay({
   const localResults = useMemo(() => {
     const q = query.trim();
     if (!q) return { products: [], collections: [] };
-    const products = PRODUCTS
+    const products = getSearchProducts()
       .map((p) => ({
         p,
         score: Math.max(
@@ -367,7 +364,7 @@ export default function SearchOverlay({
       list.push({ kind: "collection", label: c.label, href: `/collections/${c.id}` })
     );
     results.products.forEach((p) =>
-      list.push({ kind: "product", label: p.name, href: `/products/${p.id}`, id: p.id })
+      list.push({ kind: "product", label: p.name, href: `/products/${p.slug || p.id}`, id: p.id })
     );
     return list;
   }, [results, hasQuery]);
@@ -598,7 +595,7 @@ export default function SearchOverlay({
                               id={`so-item-${flatIndex}`}
                               role="listitem"
                               className={`so-result ${isActive ? "is-active" : ""}`}
-                              onClick={() => pickResult({ href: `/products/${p.id}` }, p.name)}
+                              onClick={() => pickResult({ href: `/products/${p.slug || p.id}` }, p.name)}
                             >
                               <img className="so-result__img" src={p.img} alt="" loading="lazy" />
                               <div className="so-result__body">

@@ -26,16 +26,14 @@ export default function ExclusiveCollectionPage() {
 
   const allProducts = useMemo(() => getStoredProducts(), []);
 
-  // Strict list of the 12 exclusive pieces
+  // Complete archive of exclusive 1-of-1 pieces
   const pieces = useMemo(() => {
-    return allProducts
-      .filter(
-        (p) =>
-          p.isExclusiveCollection ||
-          p.collection === 'the-exclusive-collection' ||
-          p.isOneOfOne
-      )
-      .slice(0, 12);
+    return allProducts.filter(
+      (p) =>
+        p.isExclusiveCollection ||
+        p.collection === 'the-exclusive-collection' ||
+        p.isOneOfOne
+    );
   }, [allProducts]);
 
   const pageWhatsAppUrl = buildWhatsAppUrl({

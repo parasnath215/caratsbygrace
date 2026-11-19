@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Instagram, ArrowUp, MessageCircle, MapPin, Phone, Mail } from 'lucide-react';
+import { Instagram, ArrowUp, MessageCircle, MapPin, Phone } from 'lucide-react';
 import BrandLogo from '../ui/BrandLogo';
 import {
   SHOWROOM_ADDRESS,
@@ -46,6 +46,7 @@ export default function Footer() {
             <div className={styles.col}>
               <h3 className={styles.colHeading}>Fine Jewellery</h3>
               <ul className={styles.linkList}>
+                <li><Link to="/collections" className={styles.footerLink}>All Collections</Link></li>
                 <li><Link to="/collections/rings" className={styles.footerLink}>Rings & Solitaires</Link></li>
                 <li><Link to="/collections/rings" className={styles.footerLink}>Engagement Rings</Link></li>
                 <li><Link to="/collections/earrings" className={styles.footerLink}>Earrings & Studs</Link></li>
@@ -55,13 +56,17 @@ export default function Footer() {
               </ul>
             </div>
 
-            {/* Col 2: The Atelier */}
+            {/* Col 2: The Atelier & Policies */}
             <div className={styles.col}>
               <h3 className={styles.colHeading}>The Atelier</h3>
               <ul className={styles.linkList}>
                 <li><Link to="/about" className={styles.footerLink}>About Us & Founders</Link></li>
                 <li><Link to="/exclusive-designs" className={styles.footerLink}>Designs That Never Repeat</Link></li>
+                <li><Link to="/exclusive-collection" className={styles.footerLink}>The Exclusive Collection</Link></li>
                 <li><Link to="/grown-diamonds" className={styles.footerLink}>The Art of Grown Diamonds</Link></li>
+                <li><Link to="/craftsmanship" className={styles.footerLink}>Craftsmanship & Standards</Link></li>
+                <li><Link to="/purchase-policy" className={styles.footerLink}>Purchase Policy (Exchange & Buy Back)</Link></li>
+                <li><Link to="/terms-and-conditions" className={styles.footerLink}>Terms & Conditions</Link></li>
               </ul>
             </div>
 
@@ -82,13 +87,18 @@ export default function Footer() {
                 <li style={{ fontSize: '0.78rem', color: 'rgba(250, 246, 241, 0.65)', marginTop: 4 }}>
                   Hours: {SHOWROOM_HOURS}
                 </li>
-                <li style={{ marginTop: 6 }}>
+                <li style={{ marginTop: 8 }}>
+                  <Link to="/contact" className={styles.footerLink} style={{ color: 'var(--gold)' }}>
+                    Book Private Consultation →
+                  </Link>
+                </li>
+                <li style={{ marginTop: 4 }}>
                   <a
                     href={GOOGLE_MAPS_LINK}
                     target="_blank"
                     rel="noopener noreferrer"
                     className={styles.footerLink}
-                    style={{ color: 'var(--gold)', textDecoration: 'underline' }}
+                    style={{ color: 'rgba(250, 246, 241, 0.75)', textDecoration: 'underline' }}
                   >
                     View on Google Maps ↗
                   </a>
@@ -171,9 +181,19 @@ export default function Footer() {
             </button>
           </div>
 
-          <p className={styles.legal}>
-            © {new Date().getFullYear()} Carats by Grace. All rights reserved. Mahanagar, Lucknow.
-          </p>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12, marginTop: 12 }}>
+            <p className={styles.legal} style={{ margin: 0 }}>
+              © {new Date().getFullYear()} Carats by Grace. All rights reserved. Mahanagar, Lucknow.
+            </p>
+            <div style={{ display: 'flex', gap: 16, fontSize: '0.74rem' }}>
+              <Link to="/purchase-policy" style={{ color: 'rgba(250, 246, 241, 0.65)', textDecoration: 'none' }}>
+                Purchase &amp; Exchange Policy
+              </Link>
+              <Link to="/terms-and-conditions" style={{ color: 'rgba(250, 246, 241, 0.65)', textDecoration: 'none' }}>
+                Terms &amp; Conditions
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
     </footer>

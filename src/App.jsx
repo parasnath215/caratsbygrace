@@ -17,6 +17,8 @@ const GrownDiamondsPage   = lazy(() => import('./pages/GrownDiamondsPage'));
 const ContactPage         = lazy(() => import('./pages/ContactPage'));
 const AdminPage           = lazy(() => import('./pages/AdminPage'));
 const CraftsmanshipPage   = lazy(() => import('./pages/CraftsmanshipPage'));
+const PurchasePolicyPage  = lazy(() => import('./pages/PurchasePolicyPage'));
+const TermsPage           = lazy(() => import('./pages/TermsPage'));
 const SearchOverlay       = lazy(() => import('./components/search/SearchOverlay'));
 const ProductQuickViewModal = lazy(() => import('./components/product/ProductQuickViewModal'));
 const Header              = lazy(() => import('./components/layout/Header'));
@@ -65,7 +67,6 @@ function BrandedFallback() {
 
 function AppRoutes() {
   const location = useLocation();
-  const isHome = location.pathname === '/';
 
   React.useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'instant' });
@@ -94,8 +95,14 @@ function AppRoutes() {
         <Route path="/about"                  element={<AboutPage />} />
         <Route path="/about-us"               element={<AboutPage />} />
         <Route path="/craftsmanship"          element={<CraftsmanshipPage />} />
+        <Route path="/purchase-policy"        element={<PurchasePolicyPage />} />
+        <Route path="/exchange-policy"        element={<PurchasePolicyPage />} />
+        <Route path="/buyback-policy"         element={<PurchasePolicyPage />} />
+        <Route path="/terms-and-conditions"   element={<TermsPage />} />
+        <Route path="/terms"                  element={<TermsPage />} />
+        <Route path="/terms-of-service"       element={<TermsPage />} />
       </Routes>
-      {!isHome && <Footer />}
+      <Footer />
     </>
   );
 }
