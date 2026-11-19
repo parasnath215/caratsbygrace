@@ -140,7 +140,7 @@ export default function AboutPage() {
             <div className={styles.perspectiveVisual}>
               <div className={styles.perspectiveVisualFrame}>
                 <img
-                  src="/assets/model2/m2_8153.jpg"
+                  src="/assets/model2/m2_8153.webp"
                   alt="The Evolution of Grown Diamonds — Science Meets Artistry"
                   loading="lazy"
                 />
@@ -520,7 +520,7 @@ export default function AboutPage() {
             <div className={styles.experienceRight}>
               <div className={styles.experienceVisualFrame}>
                 <img
-                  src="/assets/model2/cg_jewellers8593.jpg"
+                  src="/assets/model2/m2_8339.webp"
                   alt="Carats by Grace Atelier Destination in Mahanagar, Lucknow"
                   loading="lazy"
                 />

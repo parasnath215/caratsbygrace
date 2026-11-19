@@ -366,8 +366,8 @@ const HERO_IMAGES = {
   bangles: "/assets/categories/cat_bangles.webp",
   pendants: "/assets/categories/cat_pendants.webp",
   bridal: "/assets/model2/m2_8463.webp",
-  bestsellers: "/assets/model1/m1_8252_final.webp",
-  all: "/assets/model1/m1_8424_final.webp",
+  bestsellers: "/assets/model2/m2_8090.webp",
+  all: "/assets/model2/m2_8339.webp",
 };
 
 const BASE_PRODUCTS = [

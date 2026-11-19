@@ -902,7 +902,7 @@ export default function HomePage() {
             <div className="cg-philosophy-img-wrap">
               <img
                 src="/assets/model1/m1_8446_final.webp"
-                alt="Carats by Grace Craftsmanship and Founders"
+                alt="Carats by Grace Craftsmanship and Heritage"
                 loading="lazy"
                 className="cg-philosophy-img"
               />
@@ -997,7 +997,7 @@ export default function HomePage() {
 
             <div style={{ borderRadius: 2, overflow: 'hidden', boxShadow: '0 16px 40px rgba(0,0,0,0.1)' }}>
               <img
-                src="/assets/model2/cg_jewellers8593.webp"
+                src="/assets/model2/m2_8339.webp"
                 alt="Carats by Grace Mahanagar Lucknow Atelier"
                 loading="lazy"
               />
