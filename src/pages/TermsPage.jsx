@@ -198,12 +198,12 @@ export default function TermsPage() {
           {/* Section 1 */}
           <div className="cg-terms-section">
             <h2 className="cg-terms-section-title">
-              <Shield size={20} /> 1. Nature of Service &amp; Direct WhatsApp Ordering Model
+              1. Nature of Service &amp; Direct WhatsApp Ordering Model
             </h2>
             <p>
               Carats by Grace operates as an elite fine jewellery atelier. To preserve the exclusivity, personal attention,
               and tailor-made craftsmanship that high jewellery demands, <strong>we do not operate an automated e-commerce
-              shopping cart or public online checkout</strong>.
+                shopping cart or public online checkout</strong>.
             </p>
             <p>
               Our website serves as a digital catalogue and editorial showcase. All online consultations, inquiries,
@@ -215,7 +215,7 @@ export default function TermsPage() {
           {/* Section 2 */}
           <div className="cg-terms-section">
             <h2 className="cg-terms-section-title">
-              <FileText size={20} /> 2. Quotations, Pricing &amp; Market Fluctuations
+              2. Quotations, Pricing &amp; Market Fluctuations
             </h2>
             <p>
               Fine jewellery pricing reflects the prevailing market rates of precious metals (18K and 22K BIS-hallmarked gold)
@@ -231,7 +231,7 @@ export default function TermsPage() {
           {/* Section 3 */}
           <div className="cg-terms-section">
             <h2 className="cg-terms-section-title">
-              <Award size={20} /> 3. Diamond Certification &amp; Gold Hallmarking Guarantee
+              3. Diamond Certification &amp; Gold Hallmarking Guarantee
             </h2>
             <p>
               Every diamond and precious metal creation leaves our atelier with authentic certification of quality and purity:
@@ -246,7 +246,7 @@ export default function TermsPage() {
           {/* Section 4 */}
           <div className="cg-terms-section">
             <h2 className="cg-terms-section-title">
-              <Truck size={20} /> 4. Pan-India Delivery &amp; Transit Insurance
+              4. Pan-India Delivery &amp; Transit Insurance
             </h2>
             <p>
               We provide secure, fully insured doorstep delivery across India:
@@ -263,7 +263,7 @@ export default function TermsPage() {
           {/* Section 5 */}
           <div className="cg-terms-section">
             <h2 className="cg-terms-section-title">
-              <Scale size={20} /> 5. Lifetime Exchange &amp; Buy Back Policy
+              5. Lifetime Exchange &amp; Buy Back Policy
             </h2>
             <p>
               All purchases made through Carats by Grace are eligible for our comprehensive Lifetime Exchange and Buy Back policies,
@@ -286,7 +286,7 @@ export default function TermsPage() {
           {/* Section 6 */}
           <div className="cg-terms-section">
             <h2 className="cg-terms-section-title">
-              <AlertTriangle size={20} /> 6. Bespoke, Customised &amp; Exclusive One-of-One Pieces
+              6. Bespoke, Customised &amp; Exclusive One-of-One Pieces
             </h2>
             <ul className="cg-terms-list">
               <li><strong>Exclusive One-of-One Creations:</strong> Pieces designated as &quot;One of One&quot; or part of our Empress and High Jewellery collections are unique works of art. Once acquired, they will never be reproduced or re-crafted by Carats by Grace.</li>
@@ -297,7 +297,7 @@ export default function TermsPage() {
           {/* Section 7 */}
           <div className="cg-terms-section">
             <h2 className="cg-terms-section-title">
-              <Lock size={20} /> 7. Intellectual Property &amp; Brand Rights
+              7. Intellectual Property &amp; Brand Rights
             </h2>
             <p>
               All visual assets, photographic works, 3D renderings, jewellery silhouettes, bespoke motifs, text,
@@ -309,7 +309,7 @@ export default function TermsPage() {
           {/* Section 8 */}
           <div className="cg-terms-section">
             <h2 className="cg-terms-section-title">
-              <HelpCircle size={20} /> 8. Governing Law &amp; Jurisdiction
+              8. Governing Law &amp; Jurisdiction
             </h2>
             <p>
               These terms and conditions, and any disputes or claims arising out of transactions with Carats by Grace,
