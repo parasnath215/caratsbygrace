@@ -5,9 +5,7 @@ import styles from './AnnouncementBar.module.css';
 
 const MESSAGES = [
   'The Exclusive Collection · Singular Creations, Never to be Repeated',
-  'Atelier Salon & Private Consultations · Mahanagar, Lucknow',
   'Certified BIS 750 Hallmarked Gold & IGI Certified Grown Diamonds',
-  'Bespoke Private Atelier Consultations Available · Book a Visit →',
 ];
 
 export default function AnnouncementBar() {

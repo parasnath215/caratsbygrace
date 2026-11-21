@@ -343,8 +343,6 @@ function Icon({ name, size = 18, className }) {
   return <svg {...common}>{paths[name] || null}</svg>;
 }
 
-const INR = (n) => "₹" + n.toLocaleString("en-IN");
-
 /* ===========================================================================
    3. PLACEHOLDER DATA
    In a real build this would come from your Node API (/api/products).
@@ -352,12 +350,6 @@ const INR = (n) => "₹" + n.toLocaleString("en-IN");
 const METALS = ["Yellow Gold", "Rose Gold", "White Gold", "Platinum"];
 const OCCASIONS = ["Everyday", "Gifting", "Bridal", "Festive", "Anniversary"];
 const CATEGORIES = ["Rings", "Earrings", "Necklaces", "Bracelets", "Bangles", "Pendants"];
-const PRICE_BANDS = [
-  { key: "lt50", label: "Under ₹50K", min: 0, max: 50000 },
-  { key: "50to100", label: "₹50K – ₹1L", min: 50000, max: 100000 },
-  { key: "gt100", label: "Above ₹1L", min: 100000, max: Infinity },
-];
-
 const HERO_IMAGES = {
   rings: "/assets/categories/cat_rings.webp",
   earrings: "/assets/categories/cat_earrings.webp",
@@ -553,10 +545,9 @@ function ProductCard({ p, index, saved, onToggleSave, onEnquire }) {
       </div>
       <div className="cp-card__body" onClick={() => onEnquire(p)} style={{ cursor: "pointer" }}>
         <h3 className="cp-card__name">{p.name}</h3>
-        <span className="cp-card__spec">{p.spec}</span>
-        <div className="cp-card__row">
-          <span className="cp-eyebrow" style={{ fontSize: ".6rem" }}>{p.metal}</span>
-        </div>
+        <span className="cp-card__spec" style={{ color: 'var(--muted)', fontSize: '0.78rem', textTransform: 'capitalize' }}>
+          {p.metal || '18KT Gold'}
+        </span>
       </div>
     </article>
   );
@@ -584,9 +575,6 @@ export default function CollectionPage() {
     everyday: "Everyday Fine",
     festive: "Festive Edit",
     anniversary: "Anniversary Collection",
-    "under-50k": "Under ₹50,000",
-    "50k-1l": "₹50,000 – ₹1,00,000",
-    "above-1l": "Above ₹1,00,000",
   };
 
   const collectionTitle = searchQuery
@@ -612,12 +600,6 @@ export default function CollectionPage() {
       return match ? [match] : [];
     }
     return [];
-  });
-  const [priceBand, setPriceBand] = useState(() => {
-    if (slug === "under-50k") return "lt50";
-    if (slug === "50k-1l") return "50to100";
-    if (slug === "above-1l") return "gt100";
-    return null;
   });
   const [sort, setSort] = useState("featured");
   const [visible, setVisible] = useState(PAGE_SIZE);
@@ -669,19 +651,16 @@ export default function CollectionPage() {
       setCategories(matchCat ? [matchCat] : []);
       const matchOcc = OCCASIONS.find((o) => o.toLowerCase() === slug.toLowerCase());
       setOccasions(matchOcc ? [matchOcc] : []);
-      if (slug === "under-50k") setPriceBand("lt50");
-      else if (slug === "50k-1l") setPriceBand("50to100");
-      else if (slug === "above-1l") setPriceBand("gt100");
-      else setPriceBand(null);
+      
     } else {
       setCategories([]);
       setOccasions([]);
-      setPriceBand(null);
+      
     }
   }, [slug]);
 
   // reset pagination whenever filters/sort change
-  useEffect(() => { setVisible(PAGE_SIZE); }, [categories, metals, occasions, priceBand, sort]);
+  useEffect(() => { setVisible(PAGE_SIZE); }, [categories, metals, occasions, sort]);
 
   // Combined live catalog from dynamic CMS and base items
   const allCatalog = useMemo(() => {
@@ -727,17 +706,43 @@ export default function CollectionPage() {
     return combined;
   }, []);
 
-  // ---- derived list
+    // ---- derived list
   const filtered = useMemo(() => {
-    const band = PRICE_BANDS.find((b) => b.key === priceBand);
     let list = allCatalog.filter((p) => {
       if (categories.length && !categories.includes(p.cat)) return false;
       if (metals.length && !metals.includes(p.metal)) return false;
       if (occasions.length && !occasions.some((o) => p.occ.includes(o))) return false;
-      if (band && (p.price < band.min || p.price >= band.max)) return false;
       if (searchQuery) {
-        const haystack = `${p.name} ${p.cat} ${p.metal} ${p.spec} ${p.occ.join(" ")}`.toLowerCase();
-        if (!haystack.includes(searchQuery.toLowerCase())) return false;
+        const qTokens = searchQuery.toLowerCase().split(/\s+/).filter(Boolean);
+        const isEarring = p.cat?.toLowerCase() === 'earrings' || p.name.toLowerCase().includes('earring') || p.name.toLowerCase().includes('hoop') || p.name.toLowerCase().includes('stud');
+        const isRing = p.cat?.toLowerCase() === 'rings' || p.name.toLowerCase().includes('ring') || p.name.toLowerCase().includes('band') || p.name.toLowerCase().includes('solitaire');
+        const isNecklace = p.cat?.toLowerCase() === 'necklaces' || p.name.toLowerCase().includes('necklace') || p.name.toLowerCase().includes('choker') || p.name.toLowerCase().includes('chain');
+        const isBracelet = p.cat?.toLowerCase() === 'bracelets' || p.cat?.toLowerCase() === 'bangles' || p.name.toLowerCase().includes('bracelet') || p.name.toLowerCase().includes('bangle');
+        const isPendant = p.cat?.toLowerCase() === 'pendants' || p.name.toLowerCase().includes('pendant');
+
+        const words = [
+          p.name,
+          p.cat,
+          p.metal,
+          p.spec,
+          Array.isArray(p.occ) ? p.occ.join(' ') : (p.occ || ''),
+          isEarring ? 'earrings earring hoops hoop studs stud drops drop chandelier ear-pendants dangle' : '',
+          isRing ? 'rings ring band solitaire engagement bridal wedding cocktail eternity anniversary' : '',
+          isNecklace ? 'necklaces necklace choker chain pendant lariat bridal' : '',
+          isBracelet ? 'bracelets bracelet bangles bangle cuff kada' : '',
+          isPendant ? 'pendants pendant necklace chain' : '',
+          (p.metal || '').toLowerCase().includes('gold') ? 'gold yellow rose white 18kt 14kt 18k 14k' : '',
+          'everyday daily fine jewellery grown diamond gifting'
+        ].join(' ').toLowerCase().split(/[\s,·\-_/]+/).filter(Boolean);
+
+        const fullText = words.join(' ');
+        if (!fullText.includes(searchQuery.toLowerCase().trim())) {
+          const matched = qTokens.filter((tok) => {
+            const stem = tok.replace(/(?:es|s)$/, '');
+            return words.some((w) => w === tok || (stem.length >= 3 && (w === stem || w.startsWith(stem))) || (tok.length >= 3 && w.startsWith(tok)));
+          });
+          if (matched.length === 0) return false;
+        }
       }
       return true;
     });
@@ -748,7 +753,7 @@ export default function CollectionPage() {
       default: break; // featured
     }
     return list;
-  }, [allCatalog, categories, metals, occasions, priceBand, sort, searchQuery]);
+  }, [allCatalog, categories, metals, occasions, sort, searchQuery]);
 
   const total = filtered.length;
   const shown = filtered.slice(0, visible);
@@ -764,11 +769,7 @@ export default function CollectionPage() {
     ...categories.map((c) => ({ key: `cat:${c}`, label: c, clear: () => setCategories((a) => a.filter((x) => x !== c)) })),
     ...metals.map((m) => ({ key: `metal:${m}`, label: m, clear: () => setMetals((a) => a.filter((x) => x !== m)) })),
     ...occasions.map((o) => ({ key: `occ:${o}`, label: o, clear: () => setOccasions((a) => a.filter((x) => x !== o)) })),
-    ...(priceBand ? [{
-      key: `price:${priceBand}`,
-      label: PRICE_BANDS.find((b) => b.key === priceBand)?.label || priceBand,
-      clear: () => setPriceBand(null),
-    }] : []),
+    
     ...(searchQuery ? [{
       key: "q",
       label: `“${searchQuery}”`,
@@ -778,10 +779,10 @@ export default function CollectionPage() {
         setSearchParams(next, { replace: true });
       },
     }] : []),
-  ], [categories, metals, occasions, priceBand, searchQuery, searchParams, setSearchParams]);
+  ], [categories, metals, occasions, searchQuery, searchParams, setSearchParams]);
 
   const clearAll = () => {
-    setCategories([]); setMetals([]); setOccasions([]); setPriceBand(null);
+    setCategories([]); setMetals([]); setOccasions([]); 
     if (searchQuery) {
       const next = new URLSearchParams(searchParams);
       next.delete("q");

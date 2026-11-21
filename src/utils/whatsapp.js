@@ -10,10 +10,17 @@ export const INSTAGRAM_LINK = 'https://www.instagram.com/caratsbygrace/';
 
 /**
  * Builds an official URL-encoded WhatsApp link with brand-standard pre-filled copy.
+ * Keeps inventory IDs (Product ID, Item No, Design No, HUID) intact in the background
+ * preformatted WhatsApp enquiry message to the atelier owner.
  *
  * @param {Object} options
- * @param {'order'|'exclusive'|'bespoke'|'consultation'|'general'|'wishlist'} options.type
+ * @param {'order'|'exclusive'|'bespoke'|'consultation'|'general'|'wishlist'} [options.type='general']
+ * @param {Object} [options.product] - Full product entity containing background IDs
  * @param {string} [options.productName]
+ * @param {string} [options.productId]
+ * @param {string} [options.itemNo]
+ * @param {string} [options.designNo]
+ * @param {string} [options.huid]
  * @param {string} [options.productUrl]
  * @param {string} [options.specs]
  * @param {Object} [options.bespokeData] - { shape, metal, preference, message, name, phone }
@@ -24,6 +31,7 @@ export const INSTAGRAM_LINK = 'https://www.instagram.com/caratsbygrace/';
 export function buildWhatsAppUrl(options = {}) {
   const {
     type = 'general',
+    product,
     productName = '',
     productUrl = typeof window !== 'undefined' ? window.location.href : '',
     specs = '',
@@ -32,43 +40,86 @@ export function buildWhatsAppUrl(options = {}) {
     customMessage = '',
   } = options;
 
+  const productObj = product || {};
+  const resolvedName = productName || productObj.name || 'Signature Design';
+  const resolvedId = options.productId || options.id || productObj.id || '';
+  const resolvedItemNo = options.itemNo || productObj.itemNo || '';
+  const resolvedDesignNo = options.designNo || productObj.designNo || '';
+  const resolvedHuid = options.huid || productObj.huid || '';
+  const resolvedMetal = options.metal || productObj.metal || '';
+  const resolvedCarat = options.caratWeight || productObj.caratWeight || '';
+  const resolvedSpecs =
+    specs ||
+    productObj.specs ||
+    (resolvedMetal && resolvedCarat ? `${resolvedMetal} · ${resolvedCarat}` : resolvedMetal || resolvedCarat || '');
+
   let text = '';
 
   if (customMessage) {
     text = customMessage;
-  } else if (type === 'order') {
-    text = `Hello Carats by Grace!
+  } else if (type === 'order' || type === 'exclusive' || type === 'product') {
+    const isExcl =
+      type === 'exclusive' ||
+      Boolean(
+        productObj.isOneOfOne ||
+        productObj.collection === 'exclusive-designs' ||
+        productObj.isExclusiveCollection ||
+        productObj.collection === 'the-exclusive-collection'
+      );
 
-I'm interested in the following jewellery design:
+    const lines = [
+      'Hello Carats by Grace!',
+      '',
+      isExcl
+        ? 'I am enquiring about this exclusive one-of-one creation:'
+        : 'I am interested in enquiring about this jewellery design:',
+      '',
+      `Design: ${resolvedName}`,
+    ];
 
-Design Name: ${productName || 'Signature Design'}
-${specs ? `Specifications: ${specs}\n` : ''}Product Link: ${productUrl}
+    if (resolvedId) lines.push(`Product ID: ${resolvedId}`);
+    if (resolvedItemNo) lines.push(`Item No: ${resolvedItemNo}`);
+    if (resolvedDesignNo) lines.push(`Design Code: ${resolvedDesignNo}`);
+    if (resolvedHuid) lines.push(`BIS Hallmark (HUID): ${resolvedHuid}`);
+    if (resolvedSpecs) lines.push(`Specifications: ${resolvedSpecs}`);
+    if (productUrl) lines.push(`Product Link: ${productUrl}`);
 
-Please share more details regarding pricing, availability and customisation options.
-
-Thank you!`;
-  } else if (type === 'exclusive') {
-    text = `Hello Carats by Grace!
-
-I am enquiring about this exclusive one-of-one creation:
-
-Design Name: ${productName || 'Exclusive One-of-One Piece'}
-Status: One Design · One Owner · Forever Yours
-Product Link: ${productUrl}
-
-Please confirm if this exclusive creation is currently available and share the acquisition details.
-
-Thank you!`;
+    lines.push('');
+    lines.push(
+      isExcl
+        ? 'Please confirm if this exclusive creation is currently available and share the private viewing details.'
+        : 'Please share further details regarding private viewing and availability.'
+    );
+    lines.push('');
+    lines.push('Thank you!');
+    text = lines.join('\n');
   } else if (type === 'bespoke') {
-    const { name, phone, preference, shape, metal, message } = bespokeData;
-    text = `Hello Carats by Grace!
+    const { name, phone, preference, shape, metal, message, details } = bespokeData || {};
+    const bespokeDetails = details || options.details || {};
+    const styleNote = bespokeDetails.style || message || '';
 
-I would like to enquire about bespoke jewellery customisation:
+    const lines = [
+      'Hello Carats by Grace!',
+      '',
+      'I would like to enquire about bespoke jewellery customisation:',
+      '',
+    ];
 
-${name ? `Name: ${name}\n` : ''}${phone ? `Contact: ${phone}\n` : ''}${preference ? `Jewellery Preference: ${preference}\n` : ''}${shape ? `Preferred Diamond Shape: ${shape}\n` : ''}${metal ? `Preferred Metal: ${metal}\n` : ''}${message ? `Vision / Notes: ${message}\n` : ''}
-I would love to explore customising my diamond jewellery with your atelier.
+    if (name) lines.push(`Name: ${name}`);
+    if (phone) lines.push(`Contact: ${phone}`);
+    if (preference) lines.push(`Jewellery Preference: ${preference}`);
+    if (shape) lines.push(`Preferred Diamond Shape: ${shape}`);
+    if (metal) lines.push(`Preferred Metal: ${metal}`);
+    if (styleNote) lines.push(`Vision / Notes: ${styleNote}`);
+    if (resolvedId) lines.push(`Reference Product ID: ${resolvedId}`);
+    if (resolvedItemNo) lines.push(`Reference Item No: ${resolvedItemNo}`);
+    if (productUrl) lines.push(`Reference Link: ${productUrl}`);
 
-Thank you!`;
+    lines.push('');
+    lines.push('I would love to explore customising fine jewellery with your atelier.');
+    lines.push('');
+    lines.push('Thank you!');
+    text = lines.join('\n');
   } else if (type === 'consultation') {
     text = `Hello Carats by Grace!
 
@@ -78,10 +129,17 @@ Please let me know the available time slots for a private viewing.
 
 Thank you!`;
   } else if (type === 'wishlist') {
-    const itemList = items.map((it, idx) => `${idx + 1}. ${it.name} (${it.specs || 'Grown Diamond'})`).join('\n');
+    const itemList = items
+      .map((it, idx) => {
+        const itemSpecs = it.spec || it.specs || it.metal || 'Grown Diamond';
+        const itemCode = it.itemNo ? ` · SKU: ${it.itemNo}` : (it.id ? ` · ID: ${it.id}` : '');
+        return `${idx + 1}. ${it.name} (${itemSpecs}${itemCode})`;
+      })
+      .join('\n');
+
     text = `Hello Carats by Grace!
 
-I have shortlisted the following designs from your digital catalogue and would like to enquire about their pricing and availability:
+I have shortlisted the following designs from your digital catalogue and would like to enquire about availability and a private viewing:
 
 ${itemList || 'Shortlisted items'}
 

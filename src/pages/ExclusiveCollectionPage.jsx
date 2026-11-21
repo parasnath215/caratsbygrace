@@ -215,7 +215,7 @@ export default function ExclusiveCollectionPage() {
                           <span className={styles.nameUnderline} />
                         </span>
                         <span className={styles.piecePrice}>
-                          {piece.priceDisplay || 'Price on Request'}
+                          {piece.metal || '18KT Gold'}
                         </span>
                       </div>
                     </Link>

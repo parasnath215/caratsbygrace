@@ -298,17 +298,15 @@ export default function ExclusiveSwipableSection() {
 
                   {/* Card Body */}
                   <div className={styles.cardBody}>
-                    <span className={styles.cardSpecs} title={displaySpecs}>
-                      {displaySpecs}
-                    </span>
                     <h3 className={styles.cardTitle} title={card.name}>
                       {card.name}
                     </h3>
+                    <span className={styles.cardSpecs} title={card.metal || '18KT Gold'}>
+                      {card.metal || '18KT Gold'}
+                    </span>
 
                     <div className={styles.cardFooter}>
-                      <span className={styles.cardPrice}>
-                        {card.priceDisplay || 'Price on Request'}
-                      </span>
+                      <span className={styles.cardPrice} style={{ display: 'none' }} />
                       <button
                         type="button"
                         className={styles.viewPieceBtn}

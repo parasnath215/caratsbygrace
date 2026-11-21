@@ -40,31 +40,30 @@ const SEARCH_CSS = `
   overflow-y:auto;overscroll-behavior:contain}
 .so-panel.is-open{opacity:1;transform:none;pointer-events:auto}
 
-/* Header row */
-.so-head{position:sticky;top:0;background:var(--so-white);z-index:2;
+/* Header row — unified single luxury search bar */
+.so-head{position:sticky;top:0;background:var(--so-white);z-index:10;
   border-bottom:1px solid var(--so-line);
-  padding:24px var(--so-pad-x) 20px;display:flex;
-  justify-content:space-between;align-items:center;gap:20px}
-.so-head__label{font-size:.68rem;letter-spacing:.24em;text-transform:uppercase;
-  color:var(--so-muted)}
-.so-close{width:44px;height:44px;display:grid;place-items:center;
-  color:var(--so-ink);border-radius:999px;transition:color .25s var(--so-ease)}
-.so-close:hover{color:var(--so-burgundy)}
-
-/* Search input */
-.so-search{padding:28px var(--so-pad-x) 20px;
-  max-width:980px;margin:0 auto;width:100%}
+  padding:16px var(--so-pad-x);display:flex;
+  align-items:center;gap:18px}
 .so-field{position:relative;display:flex;align-items:center;
-  border-bottom:1px solid var(--so-ink);padding-bottom:12px}
+  flex:1;max-width:980px;margin:0 auto}
 .so-field__icon{color:var(--so-muted);flex:none;margin-right:14px}
 .so-input{flex:1;border:0;background:transparent;font-family:var(--so-serif);
-  font-size:clamp(1.3rem,3.2vw,2rem);font-weight:400;color:var(--so-ink);
+  font-size:clamp(1.2rem,2.6vw,1.8rem);font-weight:400;color:var(--so-ink);
   padding:6px 0;letter-spacing:-.005em}
 .so-input:focus{outline:none}
 .so-input::placeholder{color:var(--so-muted);opacity:.7}
-.so-clear{color:var(--so-muted);padding:8px;flex:none;
-  transition:color .25s var(--so-ease)}
-.so-clear:hover{color:var(--so-burgundy)}
+.so-input::-webkit-search-cancel-button,
+.so-input::-webkit-search-decoration{display:none !important;-webkit-appearance:none !important}
+.so-clear-btn{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--so-muted);background:none;border:0;padding:6px 12px;
+  cursor:pointer;transition:color .2s var(--so-ease);font-family:var(--so-sans);
+  font-weight:500;flex:none}
+.so-clear-btn:hover{color:var(--so-burgundy)}
+.so-close{width:42px;height:42px;display:grid;place-items:center;
+  color:var(--so-ink);border-radius:999px;border:0;background:none;
+  cursor:pointer;transition:all .25s var(--so-ease);flex:none}
+.so-close:hover{color:var(--so-burgundy);background:var(--so-ivory)}
 
 /* Body — shared container */
 .so-body{flex:1;max-width:980px;margin:0 auto;width:100%;
@@ -169,7 +168,7 @@ function Icon({ name, size = 18 }) {
   return <svg {...common}>{paths[name] || null}</svg>;
 }
 
-const INR = (n) => "₹" + n.toLocaleString("en-IN");
+
 
 /* ===========================================================================
    3. CONFIG + PLACEHOLDER DATA
@@ -181,7 +180,7 @@ const SUGGESTIONS = [
   "Everyday gold hoops",
   "Ruby cocktail ring",
   "Diamond studs",
-  "Gifting under ₹50K",
+  "The Gifting Edit",
   "Layered necklaces",
 ];
 
@@ -198,20 +197,59 @@ const COLLECTIONS = [
   { id: "high-jewellery", label: "High Jewellery", meta: "Collection" },
 ];
 
+const BASE_SEARCH_ITEMS = [
+  { id: "r1", name: "The Aurelia Ring", cat: "Rings", metal: "Yellow Gold", spec: "18KT Yellow Gold", img: "/assets/model1/m1_8252_final.webp" },
+  { id: "r2", name: "Ruby Halo", cat: "Rings", metal: "Rose Gold", spec: "18KT Rose Gold", img: "/assets/model1/m1_8403_final.webp" },
+  { id: "r3", name: "Grace Solitaire", cat: "Rings", metal: "White Gold", spec: "18KT White Gold", img: "/assets/model2/m2_8124.webp" },
+  { id: "r4", name: "Étoile Band", cat: "Rings", metal: "Yellow Gold", spec: "18KT Yellow Gold", img: "/assets/model1/m1_8255_final.webp" },
+  { id: "e1", name: "Drop Lumière", cat: "Earrings", metal: "Yellow Gold", spec: "18KT Yellow Gold", img: "/assets/model1/m1_8440_final.webp" },
+  { id: "e2", name: "Petal Studs", cat: "Earrings", metal: "Rose Gold", spec: "18KT Rose Gold", img: "/assets/model2/m2_8126.webp" },
+  { id: "e3", name: "Nightfall Hoops", cat: "Earrings", metal: "White Gold", spec: "18KT White Gold", img: "/assets/model1/m1_8306_final.webp" },
+  { id: "e4", name: "Dewdrop Mini", cat: "Earrings", metal: "Yellow Gold", spec: "18KT Yellow Gold", img: "/assets/model2/cg_jewellers8612.webp" },
+  { id: "n1", name: "Lumen Pendant", cat: "Necklaces", metal: "Yellow Gold", spec: "18KT Yellow Gold", img: "/assets/model2/cg_jewellers8471.webp" },
+  { id: "n2", name: "Sculpt Chain", cat: "Necklaces", metal: "Rose Gold", spec: "18KT Rose Gold", img: "/assets/model2/m2_8090.webp" },
+  { id: "n3", name: "Étoile Necklace", cat: "Necklaces", metal: "White Gold", spec: "18KT White Gold", img: "/assets/model1/m1_8247_final.webp" },
+  { id: "n4", name: "Grace Lariat", cat: "Necklaces", metal: "Yellow Gold", spec: "18KT Yellow Gold", img: "/assets/model1/m1_8444_final.webp" },
+  { id: "b1", name: "Slip Bracelet", cat: "Bracelets", metal: "Yellow Gold", spec: "18KT Yellow Gold", img: "/assets/model2/m2_8124.webp" },
+  { id: "b2", name: "Halo Bangle", cat: "Bangles", metal: "Rose Gold", spec: "18KT Rose Gold", img: "/assets/model1/m1_8247_final.webp" },
+  { id: "p1", name: "Sol Pendant", cat: "Pendants", metal: "Yellow Gold", spec: "18KT Yellow Gold", img: "/assets/categories/cat_pendants.webp" },
+  { id: "p2", name: "Teardrop Pendant", cat: "Pendants", metal: "White Gold", spec: "18KT White Gold", img: "/assets/model2/cg_jewellers8619.webp" },
+  { id: "r5", name: "Vow Ring", cat: "Rings", metal: "Platinum", spec: "Platinum", img: "/assets/model1/m1_8245_final.webp" },
+  { id: "e5", name: "Cascade Drops", cat: "Earrings", metal: "Yellow Gold", spec: "18KT Yellow Gold", img: "/assets/model1/m1_8443_final.webp" },
+];
+
 const getSearchProducts = () => {
   try {
-    return getStoredProducts().map((p) => ({
+    const stored = getStoredProducts().map((p) => ({
       id: p.id,
       slug: p.slug,
       name: p.name,
-      spec: p.specs,
-      price: p.price,
-      cat: p.category,
-      keywords: `${p.name} ${p.itemNo || ''} ${p.designNo || ''} ${p.huid || ''} ${p.metal || ''} ${p.diamondShape || ''} ${p.category} ${p.diamondDetails || ''}`.toLowerCase(),
-      img: p.images[0] || '',
+      metal: p.metal || '18KT Gold',
+      spec: p.metal || '18KT Gold',
+      cat: p.category ? (p.category.charAt(0).toUpperCase() + p.category.slice(1).toLowerCase()) : 'Fine Jewellery',
+      keywords: `${p.name} ${p.itemNo || ''} ${p.designNo || ''} ${p.huid || ''} ${p.metal || ''} ${p.diamondShape || ''} ${p.category || ''} ${p.diamondDetails || ''} ${p.description || ''}`.toLowerCase(),
+      img: p.images?.[0] || '',
     }));
+
+    const seen = new Set(stored.map((x) => x.id));
+    const combined = [...stored];
+    for (const b of BASE_SEARCH_ITEMS) {
+      if (!seen.has(b.id)) {
+        combined.push({
+          id: b.id,
+          slug: b.id,
+          name: b.name,
+          metal: b.metal,
+          spec: b.spec,
+          cat: b.cat,
+          keywords: `${b.name} ${b.cat} ${b.metal} ${b.spec}`.toLowerCase(),
+          img: b.img,
+        });
+      }
+    }
+    return combined;
   } catch {
-    return [];
+    return BASE_SEARCH_ITEMS;
   }
 };
 
@@ -329,27 +367,96 @@ export default function SearchOverlay({
     return () => { clearTimeout(t); ctrl.abort(); };
   }, [query, fetcher]);
 
-  // Local fallback results + collection matches
+  // Local fallback results + collection matches with smart token matching
   const localResults = useMemo(() => {
-    const q = query.trim();
+    const q = query.trim().toLowerCase();
     if (!q) return { products: [], collections: [] };
-    const products = getSearchProducts()
-      .map((p) => ({
-        p,
-        score: Math.max(
-          scoreMatch(p.name, q),
-          scoreMatch(p.cat, q),
-          scoreMatch(p.keywords || "", q)
-        ),
-      }))
-      .filter((x) => x.score > 0)
+
+    const tokens = q.split(/\s+/).filter(Boolean);
+    const catalog = getSearchProducts();
+
+    const scoredProducts = catalog
+      .map((p) => {
+        const isEarring = p.cat?.toLowerCase() === 'earrings' || p.name.toLowerCase().includes('earring') || p.name.toLowerCase().includes('hoop') || p.name.toLowerCase().includes('stud');
+        const isRing = p.cat?.toLowerCase() === 'rings' || p.name.toLowerCase().includes('ring') || p.name.toLowerCase().includes('band') || p.name.toLowerCase().includes('solitaire');
+        const isNecklace = p.cat?.toLowerCase() === 'necklaces' || p.name.toLowerCase().includes('necklace') || p.name.toLowerCase().includes('choker') || p.name.toLowerCase().includes('chain');
+        const isBracelet = p.cat?.toLowerCase() === 'bracelets' || p.cat?.toLowerCase() === 'bangles' || p.name.toLowerCase().includes('bracelet') || p.name.toLowerCase().includes('bangle');
+        const isPendant = p.cat?.toLowerCase() === 'pendants' || p.name.toLowerCase().includes('pendant');
+
+        const words = [
+          p.name,
+          p.cat,
+          p.metal,
+          p.spec,
+          p.keywords || '',
+          isEarring ? 'earrings earring hoops hoop studs stud drops drop chandelier ear-pendants dangle' : '',
+          isRing ? 'rings ring band solitaire engagement bridal wedding cocktail eternity anniversary' : '',
+          isNecklace ? 'necklaces necklace choker chain pendant lariat bridal' : '',
+          isBracelet ? 'bracelets bracelet bangles bangle cuff kada' : '',
+          isPendant ? 'pendants pendant necklace chain' : '',
+          (p.metal || '').toLowerCase().includes('gold') ? 'gold yellow rose white 18kt 14kt 18k 14k' : '',
+          'everyday daily fine jewellery grown diamond gifting'
+        ].join(' ').toLowerCase().split(/[\s,·\-_/]+/).filter(Boolean);
+
+        const fullText = words.join(' ');
+        let matchedTokens = 0;
+        let score = 0;
+
+        if (fullText.includes(q)) {
+          score += 120;
+        }
+
+        tokens.forEach((tok) => {
+          const stem = tok.replace(/(?:es|s)$/, '');
+          let tokMatched = false;
+
+          for (const w of words) {
+            if (w === tok) {
+              tokMatched = true;
+              score += 40;
+              if (p.name.toLowerCase().includes(tok)) score += 30;
+              if ((p.cat || '').toLowerCase() === tok) score += 30;
+              break;
+            } else if (stem.length >= 3 && (w === stem || w.startsWith(stem))) {
+              tokMatched = true;
+              score += 25;
+              if (p.name.toLowerCase().includes(stem)) score += 20;
+              if ((p.cat || '').toLowerCase().includes(stem)) score += 20;
+              break;
+            } else if (tok.length >= 3 && w.startsWith(tok)) {
+              tokMatched = true;
+              score += 25;
+              break;
+            }
+          }
+
+          if (tokMatched) {
+            matchedTokens++;
+          }
+        });
+
+        if (tokens.length > 1) {
+          score += matchedTokens * 35;
+          if (matchedTokens === tokens.length) {
+            score += 90;
+          }
+        }
+
+        return { p, score, matchedTokens };
+      })
+      .filter((x) => x.score > 0 && x.matchedTokens > 0)
       .sort((a, b) => b.score - a.score)
       .slice(0, 8)
       .map((x) => x.p);
+
     const collections = COLLECTIONS
-      .filter((c) => scoreMatch(c.label, q) > 0)
+      .filter((c) => {
+        const cLabel = c.label.toLowerCase();
+        return tokens.some((t) => cLabel.includes(t)) || cLabel.includes(q);
+      })
       .slice(0, 4);
-    return { products, collections };
+
+    return { products: scoredProducts, collections };
   }, [query]);
 
   const results = fetcher ? remote : localResults;
@@ -445,13 +552,6 @@ export default function SearchOverlay({
         aria-hidden={!open}
       >
         <div className="so-head">
-          <span id="so-title" className="so-head__label">Search</span>
-          <button className="so-close" aria-label="Close search" onClick={onClose}>
-            <Icon name="close" />
-          </button>
-        </div>
-
-        <div className="so-search">
           <div className="so-field">
             <span className="so-field__icon" aria-hidden="true">
               <Icon name="search" size={22} />
@@ -464,7 +564,7 @@ export default function SearchOverlay({
               ref={inputRef}
               id="so-input"
               className="so-input"
-              type="search"
+              type="text"
               autoComplete="off"
               placeholder="Search rings, earrings, collections…"
               value={query}
@@ -477,12 +577,26 @@ export default function SearchOverlay({
               }
             />
             {query && (
-              <button className="so-clear" aria-label="Clear search"
-                      onClick={() => { setQuery(""); inputRef.current?.focus(); }}>
-                <Icon name="close" size={16} />
+              <button
+                type="button"
+                className="so-clear-btn"
+                aria-label="Clear search input"
+                onClick={() => { setQuery(""); inputRef.current?.focus(); }}
+              >
+                Clear
               </button>
             )}
           </div>
+
+          <button
+            type="button"
+            className="so-close"
+            aria-label="Close search overlay"
+            title="Close (Esc)"
+            onClick={onClose}
+          >
+            <Icon name="close" size={20} />
+          </button>
         </div>
 
         <div className="so-body" id="so-results">

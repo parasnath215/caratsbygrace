@@ -8,10 +8,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import {
   Search,
   Gem,
-  Store,
-  Camera,
-  Mic,
-  Menu,
+  Store, Menu,
   X,
   ChevronDown,
   MessageCircle,
@@ -126,33 +123,7 @@ export default function Header() {
               </span>
             </div>
 
-            <div className={styles.searchPillActions}>
-              <button
-                type="button"
-                className={styles.pillActionBtn}
-                title="Search by image"
-                aria-label="Search by image"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  toggleSearch();
-                }}
-              >
-                <Camera size={17} strokeWidth={1.6} />
-              </button>
-              <button
-                type="button"
-                className={styles.pillActionBtn}
-                title="Voice search"
-                aria-label="Voice search"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  toggleSearch();
-                }}
-              >
-                <Mic size={17} strokeWidth={1.6} />
-              </button>
             </div>
-          </div>
 
           {/* Right: Action icons & guaranteed visible Book a Visit CTA */}
           <div className={styles.actionIconsRow}>

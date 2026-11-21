@@ -21,12 +21,6 @@ export const navLinks = [
       { label: 'Everyday',    slug: 'rings/everyday' },
       { label: 'Anniversary', slug: 'rings/anniversary' },
     ],
-    byPrice: [
-      { label: 'Under ₹30,000',       slug: 'rings?maxPrice=30000' },
-      { label: '₹30,000 – ₹75,000',   slug: 'rings?minPrice=30000&maxPrice=75000' },
-      { label: '₹75,000 – ₹1,50,000', slug: 'rings?minPrice=75000&maxPrice=150000' },
-      { label: 'Above ₹1,50,000',      slug: 'rings?minPrice=150000' },
-    ],
     editorialImage: { src: '/assets/categories/cat_rings.webp', alt: 'Curated rings editorial' },
   },
   {
@@ -45,12 +39,6 @@ export const navLinks = [
       { label: 'Festive',     slug: 'earrings/festive' },
       { label: 'Everyday',    slug: 'earrings/everyday' },
       { label: 'Office Wear', slug: 'earrings/office' },
-    ],
-    byPrice: [
-      { label: 'Under ₹20,000',       slug: 'earrings?maxPrice=20000' },
-      { label: '₹20,000 – ₹50,000',   slug: 'earrings?minPrice=20000&maxPrice=50000' },
-      { label: '₹50,000 – ₹1,00,000', slug: 'earrings?minPrice=50000&maxPrice=100000' },
-      { label: 'Above ₹1,00,000',      slug: 'earrings?minPrice=100000' },
     ],
     editorialImage: { src: '/assets/categories/cat_earrings.webp', alt: 'Curated earrings editorial' },
   },
@@ -71,12 +59,6 @@ export const navLinks = [
       { label: 'Casual',  slug: 'necklaces/casual' },
       { label: 'Gifting', slug: 'necklaces/gifting' },
     ],
-    byPrice: [
-      { label: 'Under ₹30,000',         slug: 'necklaces?maxPrice=30000' },
-      { label: '₹30,000 – ₹1,00,000',   slug: 'necklaces?minPrice=30000&maxPrice=100000' },
-      { label: '₹1,00,000 – ₹2,00,000', slug: 'necklaces?minPrice=100000&maxPrice=200000' },
-      { label: 'Above ₹2,00,000',        slug: 'necklaces?minPrice=200000' },
-    ],
     editorialImage: { src: '/assets/categories/cat_necklaces.webp', alt: 'Curated necklaces editorial' },
   },
   {
@@ -95,12 +77,6 @@ export const navLinks = [
       { label: 'Festive',  slug: 'bracelets/festive' },
       { label: 'Everyday', slug: 'bracelets/everyday' },
       { label: 'Gifting',  slug: 'bracelets/gifting' },
-    ],
-    byPrice: [
-      { label: 'Under ₹25,000',       slug: 'bracelets?maxPrice=25000' },
-      { label: '₹25,000 – ₹75,000',   slug: 'bracelets?minPrice=25000&maxPrice=75000' },
-      { label: '₹75,000 – ₹1,50,000', slug: 'bracelets?minPrice=75000&maxPrice=150000' },
-      { label: 'Above ₹1,50,000',      slug: 'bracelets?minPrice=150000' },
     ],
     editorialImage: { src: '/assets/categories/cat_bracelets.webp', alt: 'Curated bracelets editorial' },
   },
@@ -121,11 +97,6 @@ export const navLinks = [
       { label: 'Sikh Wedding',   slug: 'bridal/sikh' },
       { label: 'South Indian',   slug: 'bridal/south-indian' },
     ],
-    byPrice: [
-      { label: 'Under ₹1,00,000',        slug: 'bridal?maxPrice=100000' },
-      { label: '₹1,00,000 – ₹2,50,000',  slug: 'bridal?minPrice=100000&maxPrice=250000' },
-      { label: 'Above ₹2,50,000',         slug: 'bridal?minPrice=250000' },
-    ],
     editorialImage: { src: '/assets/model2/m2_8463.webp', alt: 'Bridal jewellery editorial' },
   },
   {
@@ -144,12 +115,6 @@ export const navLinks = [
       { label: 'Birthday',     slug: 'gifting/birthday' },
       { label: 'Baby Shower',  slug: 'gifting/baby-shower' },
     ],
-    byPrice: [
-      { label: 'Under ₹10,000',     slug: 'gifting?maxPrice=10000' },
-      { label: '₹10,000 – ₹30,000', slug: 'gifting?minPrice=10000&maxPrice=30000' },
-      { label: '₹30,000 – ₹75,000', slug: 'gifting?minPrice=30000&maxPrice=75000' },
-      { label: 'Above ₹75,000',      slug: 'gifting?minPrice=75000' },
-    ],
     editorialImage: { src: '/assets/categories/cat_pendants.webp', alt: 'Gifting jewellery editorial' },
   },
   {
@@ -166,10 +131,6 @@ export const navLinks = [
       { label: 'Black Tie',  slug: 'high-jewellery/black-tie' },
       { label: 'Investment', slug: 'high-jewellery/investment' },
       { label: 'Heirloom',   slug: 'high-jewellery/heirloom' },
-    ],
-    byPrice: [
-      { label: '₹1,00,000 – ₹2,50,000', slug: 'high-jewellery?maxPrice=250000' },
-      { label: 'Above ₹2,50,000',        slug: 'high-jewellery?minPrice=250000' },
     ],
     editorialImage: { src: '/assets/model1/m1_8306_final.webp', alt: 'High jewellery editorial' },
   },

@@ -312,11 +312,9 @@ export default function ProductQuickViewModal({ product, isOpen, onClose }) {
 
     const orderUrl = buildWhatsAppUrl({
       type: 'order',
-      product: {
-        name: product.name,
-        slug: product.slug || product.id,
-        specs: product.specs,
-      },
+      product: product,
+      productName: product.name,
+      productUrl: `${window.location.origin}/products/${product.slug || product.id}`,
     });
     window.open(orderUrl, '_blank');
   };
@@ -392,27 +390,44 @@ export default function ProductQuickViewModal({ product, isOpen, onClose }) {
                   'Crafted with hand-selected VVS clarity lab-grown diamonds in our Mahanagar atelier.'}
               </p>
 
-              {/* Diamond Specs Matrix */}
+              {/* Diamond Specs Matrix — 7 Clean Specifications */}
               <div className="pq-specs">
                 <div className="pq-spec-item">
-                  <span className="pq-spec-k">Diamond Shape</span>
-                  <span className="pq-spec-v">{product.diamondShape || 'Round Brilliant'}</span>
-                </div>
-                <div className="pq-spec-item">
-                  <span className="pq-spec-k">Carat Weight</span>
-                  <span className="pq-spec-v">{product.caratWeight || 'Varies by setting'}</span>
-                </div>
-                <div className="pq-spec-item">
-                  <span className="pq-spec-k">Clarity</span>
-                  <span className="pq-spec-v">{product.clarity || 'VVS Grade'}</span>
+                  <span className="pq-spec-k">Certification</span>
+                  <span className="pq-spec-v">IGI Certified</span>
                 </div>
                 <div className="pq-spec-item">
                   <span className="pq-spec-k">Precious Metal</span>
-                  <span className="pq-spec-v">{product.metal || '18K Gold'}</span>
+                  <span className="pq-spec-v">{product.metal || '18KT Gold'}</span>
+                </div>
+                <div className="pq-spec-item">
+                  <span className="pq-spec-k">Gold Net Weight</span>
+                  <span className="pq-spec-v">
+                    {product.netWeight > 0
+                      ? `${Number(product.netWeight).toFixed(3)} g (Gross: ${Number(product.grossWeight || product.netWeight).toFixed(3)}g)`
+                      : product.grossWeight > 0
+                      ? `${Number(product.grossWeight).toFixed(3)} g`
+                      : 'Crafted to Order'}
+                  </span>
+                </div>
+                <div className="pq-spec-item">
+                  <span className="pq-spec-k">Diamond Weight</span>
+                  <span className="pq-spec-v">{product.caratWeight || 'VVS Grown Diamonds'}</span>
+                </div>
+                <div className="pq-spec-item">
+                  <span className="pq-spec-k">Diamond Pieces</span>
+                  <span className="pq-spec-v">{product.diamondPcs > 0 ? `${product.diamondPcs} pcs` : '1 pc'}</span>
+                </div>
+                <div className="pq-spec-item">
+                  <span className="pq-spec-k">Diamond Shape &amp; Cut</span>
+                  <span className="pq-spec-v">{product.diamondShape || 'Round Brilliant'}</span>
+                </div>
+                <div className="pq-spec-item">
+                  <span className="pq-spec-k">Clarity &amp; Colour</span>
+                  <span className="pq-spec-v">{product.clarity || 'VVS'} · {product.colour || 'D-F Colourless'}</span>
                 </div>
               </div>
-
-              {isOneOfOne && isSold && (
+                {isOneOfOne && isSold && (
                 <div style={{ fontSize: '0.78rem', color: '#821D38', background: 'rgba(93, 10, 36, 0.08)', padding: '10px 14px', borderRadius: 2, marginBottom: 16 }}>
                   <strong>One Design. One Owner.</strong> This piece has found its owner and will never be remade. Inquire for a bespoke commission.
                 </div>

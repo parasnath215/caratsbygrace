@@ -135,9 +135,6 @@ export default function Footer() {
                 <span>WhatsApp Atelier</span>
               </a>
               <div style={{ marginTop: 20 }}>
-                <Link to="/admin" style={{ fontSize: '0.72rem', color: 'rgba(250, 246, 241, 0.4)', textDecoration: 'none' }}>
-                  Staff CMS Portal
-                </Link>
               </div>
             </div>
           </div>

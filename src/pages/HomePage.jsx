@@ -693,7 +693,7 @@ export default function HomePage() {
                 DESIGNS THAT NEVER REPEAT.
               </h2>
               <div style={{ fontFamily: 'var(--serif)', fontSize: '1.4rem', color: 'var(--gold-light)', fontStyle: 'italic', marginBottom: 20 }}>
-                ONE DESIGN. ONE OWNER. FOREVER YOURS.
+                One Design. One Owner. Forever Yours.
               </div>
 
               <p style={{ color: 'rgba(250, 246, 241, 0.88)', lineHeight: 1.8, fontSize: '1rem' }}>
@@ -727,7 +727,6 @@ export default function HomePage() {
                   </div>
                   <div className="cg-excl-details">
                     <h3>{piece.name}</h3>
-                    <span>{piece.specs}</span>
                     <div style={{ marginTop: 12 }}>
                       <Link
                         to={`/products/${piece.slug}`}
