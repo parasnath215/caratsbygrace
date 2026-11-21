@@ -83,7 +83,7 @@ export default function Header() {
   return (
     <header className={styles.headerWrapper} onMouseLeave={() => setMegaOpen(false)}>
       {/* ── Top Announcement Bar with Dismiss Cross Button ── */}
-      <AnnouncementBar />
+      {/* <AnnouncementBar /> — Hidden for now */}
 
       {/* ============================================================
           ROW 1: MAIN HEADER

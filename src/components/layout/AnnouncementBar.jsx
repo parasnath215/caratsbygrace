@@ -7,6 +7,9 @@ const MESSAGES = [
 ];
 
 export default function AnnouncementBar() {
+  // Hidden from top for now per user request
+  return null;
+
   const { announcementVisible, dismissAnnouncement } = useUI();
   const [index, setIndex] = useState(0);
   const [fade, setFade] = useState(true);
