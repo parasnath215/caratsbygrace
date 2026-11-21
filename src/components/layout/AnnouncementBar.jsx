@@ -4,8 +4,6 @@ import { useUI } from '../../context/UIContext';
 import styles from './AnnouncementBar.module.css';
 
 const MESSAGES = [
-  'The Exclusive Collection · Singular Creations, Never to be Repeated',
-  'Certified BIS 750 Hallmarked Gold & IGI Certified Grown Diamonds',
 ];
 
 export default function AnnouncementBar() {
